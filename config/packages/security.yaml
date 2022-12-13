@@ -1,0 +1,13 @@
+security:
+  firewalls:
+    develop:
+      pattern: ^/(_(profiler|wdt)|css|images|js)/
+      security: false
+    main:
+      pattern: '^/api'
+      stateless: true
+      custom_authenticators:
+        - App\Application\Security\Authenticator\Authenticator
+
+  access_control:
+    - { path: '^/api', roles: ROLE_CORE }

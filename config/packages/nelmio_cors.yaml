@@ -1,0 +1,12 @@
+nelmio_cors:
+    defaults:
+        allow_origin: []
+        allow_methods: []
+        allow_headers: ['Accept', 'Content-type']
+        max_age: 0
+    paths:
+        '^/api/':
+            allow_credentials: true
+            allow_origin: ['http://admin.tac.com']
+            allow_methods: ['POST', 'PUT', 'GET', 'DELETE', 'OPTIONS']
+            max_age: 3600

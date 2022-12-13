@@ -1,0 +1,13 @@
+services:
+  _defaults:
+    public: true
+
+  App\Infrastructure\Persistence\Doctrine\Repository\AttributeValueRepository:
+    arguments: [ '@doctrine.orm.entity_manager' ]
+    public: true
+
+  App\Infrastructure\Queue\Amqp\ChannelInterface:
+    class: App\Infrastructure\Queue\Amqp\NullChannel
+    public: true
+
+  App\Application\Shared\Contract\TransactionServiceInterface: '@App\Infrastructure\Test\Stub\TransactionalServiceStub'

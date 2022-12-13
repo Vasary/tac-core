@@ -1,0 +1,65 @@
+parameters:
+
+services:
+    _defaults:
+        autowire: true
+        autoconfigure: true
+
+    App\:
+        resource: '../src/'
+        exclude:
+            - '../src/Kernel.php'
+            - '../src/Domain/Model'
+            - '../src/Domain/Factory'
+            - '../src/Domain/ValueObject'
+            - '../src/Shared'
+
+    Symfony\Bridge\Monolog\Processor\TokenProcessor:
+        tags:
+            - { name: monolog.processor, handler: main }
+
+    Symfony\Bridge\Monolog\Processor\RouteProcessor:
+        tags:
+            - { name: monolog.processor, handler: main }
+
+    App\Infrastructure\Logging\Processor\TraceIdProcessor:
+        tags:
+            - { name: monolog.processor, handler: main }
+
+    App\Infrastructure\Persistence\Doctrine\EventSubscriber\SoftDeleteEventSubscriber:
+        tags:
+            - { name: doctrine.event_listener, event: 'onFlush' }
+
+    App\Presentation\ExceptionListener\ExceptionListener:
+        tags:
+            - { name: kernel.event_listener, event: kernel.exception }
+
+    App\Presentation\ExceptionListener\ExceptionHandler\ChainRunner:
+        arguments:
+            - - '@App\Presentation\ExceptionListener\ExceptionHandler\Handler\TranslatableExceptionHandler'
+              - '@App\Presentation\ExceptionListener\ExceptionHandler\Handler\UniqueConstraintViolationExceptionHandler'
+              - '@App\Presentation\ExceptionListener\ExceptionHandler\Handler\ValidationExceptionHandler'
+
+    PhpAmqpLib\Connection\AMQPConnection:
+        class: PhpAmqpLib\Connection\AMQPStreamConnection
+        arguments:
+            $host: '%env(MQ_HOST)%'
+            $port: '%env(MQ_PORT)%'
+            $user: '%env(MQ_USER)%'
+            $password: '%env(MQ_PASSWORD)%'
+            $vhost: '%env(MQ_VHOST)%'
+            $heartbeat: 60
+            $read_write_timeout: 30
+            $keepalive: false
+
+    PhpAmqpLib\Channel\AMQPChannel:
+        class: PhpAmqpLib\Channel\AMQPChannel
+        arguments:
+            $connection: '@PhpAmqpLib\Connection\AMQPConnection'
+
+    App\Infrastructure\Queue\Amqp\ChannelInterface:
+        class: App\Infrastructure\Queue\Amqp\Channel
+        arguments:
+            $channel: '@PhpAmqpLib\Channel\AMQPChannel'
+
+    App\Application\Shared\Contract\TransactionServiceInterface: '@App\Infrastructure\Persistence\Doctrine\Transactional\DoctrineTransactionService'
