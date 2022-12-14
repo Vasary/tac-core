@@ -1,0 +1,40 @@
+name: Tests
+on:
+  push:
+    branches:
+      - master
+      - feature/*
+jobs:
+  tests:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: true
+      matrix:
+        php-versions: ['8.1']
+    name: PHP ${{ matrix.php-versions }}
+    steps:
+      - name: Setup PHP ${{ matrix.php-versions }}
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: ${{ matrix.php-versions }}
+          extensions: uopz redis pdo pdo_sqlite sockets intl
+          coverage: xdebug
+
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: PHP Security Checker
+        uses: StephaneBour/actions-php-security-checker@1.2
+        with:
+          composer-lock: './composer.lock'
+
+      - name: Install Dependencies (PHP vendors)
+        run: composer install -q --no-ansi --no-interaction --no-scripts --no-suggest --no-progress --prefer-dist
+
+      - name: Execute tests via PHPUnit
+        run: bin/phpunit --coverage-text
+
+      - name: Coverage Report as Comment (Clover)
+        uses: lucassabreu/comment-coverage-clover@main
+        with:
+          file: coverage.xml

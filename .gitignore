@@ -6,7 +6,7 @@
 /var/
 /vendor/
 /.idea
+/.fleet
 .phpunit.result.cache
-/phpunit.xml
-
 /.php-cs-fixer.cache
+/clover.xml
