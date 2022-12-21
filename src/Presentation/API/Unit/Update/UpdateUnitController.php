@@ -7,6 +7,10 @@ namespace App\Presentation\API\Unit\Update;
 use App\Application\Unit\Business\UnitFacadeInterface;
 use App\Infrastructure\Annotation\Route;
 use App\Infrastructure\Controller\AbstractController;
+use App\Infrastructure\OpenAPI\AccessDeniedResponse;
+use App\Infrastructure\OpenAPI\Put;
+use App\Infrastructure\OpenAPI\Unit\UpdateRequest;
+use App\Infrastructure\OpenAPI\Unit\UpdateResponse;
 use App\Infrastructure\Response\JsonResponse;
 use App\Presentation\API\Unit\Update\Request\UpdateUnitRequest;
 use App\Presentation\API\Unit\Update\Response\UpdateUnitResponse;
@@ -19,6 +23,10 @@ final class UpdateUnitController extends AbstractController
     {
     }
 
+    #[Put('/api/units')]
+    #[UpdateRequest]
+    #[UpdateResponse]
+    #[AccessDeniedResponse]
     public function __invoke(UpdateUnitRequest $request): JsonResponse
     {
         return new UpdateUnitResponse(

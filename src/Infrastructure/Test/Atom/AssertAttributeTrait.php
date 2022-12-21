@@ -57,7 +57,6 @@ trait AssertAttributeTrait
         $this->assertArrayHasKey('updatedAt', $attribute);
         $this->assertArrayHasKey('deletedAt', $attribute);
         $this->assertArrayHasKey('creator', $attribute);
-        $this->assertArrayHasKey('identifier', $attribute['creator']);
     }
 
     public function assertAttributeValue(array $attribute): void

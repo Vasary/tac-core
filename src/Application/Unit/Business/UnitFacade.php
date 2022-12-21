@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\Application\Unit\Business;
 
-use App\Application\Shared\Service\Transactional\TransactionalServiceInterface;
 use App\Application\Unit\Business\Creator\CreatorInterface;
 use App\Application\Unit\Business\Finder\FinderInterface;
 use App\Application\Unit\Business\Updater\UpdaterInterface;
@@ -13,7 +12,6 @@ use App\Shared\Transfer\CreateUnitTransfer;
 use App\Shared\Transfer\DeleteUnitTransfer;
 use App\Shared\Transfer\GetUnitTransfer;
 use App\Shared\Transfer\UpdateUnitTransfer;
-use Doctrine\ORM\EntityManagerInterface;
 use Generator;
 
 final class UnitFacade implements UnitFacadeInterface

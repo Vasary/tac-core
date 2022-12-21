@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Infrastructure\Serializer\Normalizer;
 
 use App\Domain\Model\Glossary;
+use App\Infrastructure\Map\ParametersList;
 use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
 
 final class GlossaryNormalizer implements NormalizerInterface
@@ -14,10 +15,10 @@ final class GlossaryNormalizer implements NormalizerInterface
         /* @var Glossary $object */
         return
             [
-                'objectId' => (string) $object->parent(),
-                'field' => $object->field(),
-                'value' => $object->value(),
-                'locale' => (string)$object->locale(),
+                ParametersList::OBJECT_ID => (string) $object->parent(),
+                ParametersList::FIELD => $object->field(),
+                ParametersList::VALUE => $object->value(),
+                ParametersList::LOCALE => (string)$object->locale(),
             ];
     }
 

@@ -59,6 +59,7 @@
         "symfony/polyfill-php81": "*"
     },
     "scripts": {
+        "docs": "vendor/bin/openapi src -o openapi.yaml",
         "auto-scripts": {
             "cache:clear": "symfony-cmd",
             "assets:install %PUBLIC_DIR%": "symfony-cmd"
@@ -92,6 +93,7 @@
         "symfony/css-selector": "6.1.*",
         "symfony/phpunit-bridge": "^6.1",
         "symfony/stopwatch": "6.1.*",
-        "symfony/web-profiler-bundle": "6.1.*"
+        "symfony/web-profiler-bundle": "6.1.*",
+        "zircote/swagger-php": "^4.5"
     }
 }

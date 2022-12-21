@@ -7,6 +7,7 @@ namespace App\Infrastructure\Serializer\Normalizer;
 use App\Domain\Factory\TypeFactory;
 use App\Domain\Model\Attribute;
 use App\Domain\Model\AttributeValue;
+use App\Infrastructure\Map\ParametersList;
 use RuntimeException;
 use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
 
@@ -17,20 +18,20 @@ final class AttributeValueNormalizer implements NormalizerInterface
         /* @var AttributeValue $object */
         return
             [
-                'id' => (string) $object->getId(),
-                'attribute' => [
-                    'id' => (string) $object->getAttribute()->getId(),
-                    'code' => $object->getAttribute()->getCode(),
-                    'type' => (string) $object->getAttribute()->getType(),
-                    'name' => (string)$object->getAttribute()->getName(),
-                    'description' => (string)$object->getAttribute()->getDescription(),
-                    'value' => $this->castType($object->getValue(), $object->getAttribute()),
+                ParametersList::ID => (string) $object->getId(),
+                ParametersList::ATTRIBUTE => [
+                    ParametersList::ID => (string) $object->getAttribute()->getId(),
+                    ParametersList::CODE => $object->getAttribute()->getCode(),
+                    ParametersList::TYPE => (string) $object->getAttribute()->getType(),
+                    ParametersList::NAME => (string)$object->getAttribute()->getName(),
+                    ParametersList::DESCRIPTION => (string)$object->getAttribute()->getDescription(),
+                    ParametersList::VALUE => $this->castType($object->getValue(), $object->getAttribute()),
                 ],
-                'parent' => (string) $object->getParent(),
-                'creator' => $object->getCreator()->getEmail(),
-                'createdAt' => $object->getCreatedAt()->format(DATE_ATOM),
-                'updatedAt' => $object->getUpdatedAt()->format(DATE_ATOM),
-                'deletedAt' => $object->getDeletedAt()?->format(DATE_ATOM),
+                ParametersList::PARENT => (string) $object->getParent(),
+                ParametersList::CREATOR => $object->getCreator()->getEmail(),
+                ParametersList::CREATED_AT => $object->getCreatedAt()->format(DATE_ATOM),
+                ParametersList::UPDATED_AT => $object->getUpdatedAt()->format(DATE_ATOM),
+                ParametersList::DELETED_AT => $object->getDeletedAt()?->format(DATE_ATOM),
             ];
     }
 

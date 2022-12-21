@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Infrastructure\Serializer\Normalizer;
 
 use App\Domain\Model\Category;
+use App\Infrastructure\Map\ParametersList;
 use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
 
 final class CategoryNormalizer implements NormalizerInterface
@@ -14,12 +15,12 @@ final class CategoryNormalizer implements NormalizerInterface
         /* @var Category $object */
         return
             [
-                'id' => (string)$object->getId(),
-                'name' => (string)$object->getName(),
-                'creator' => $object->getCreator()->getEmail(),
-                'createdAt' => $object->getCreatedAt()->format(\DATE_ATOM),
-                'updatedAt' => $object->getUpdatedAt()->format(\DATE_ATOM),
-                'deletedAt' => $object->getDeletedAt()?->format(\DATE_ATOM),
+                ParametersList::ID => (string)$object->getId(),
+                ParametersList::NAME => (string)$object->getName(),
+                ParametersList::CREATOR => $object->getCreator()->getEmail(),
+                ParametersList::CREATED_AT => $object->getCreatedAt()->format(\DATE_ATOM),
+                ParametersList::UPDATED_AT => $object->getUpdatedAt()->format(\DATE_ATOM),
+                ParametersList::DELETED_AT => $object->getDeletedAt()?->format(\DATE_ATOM),
             ];
     }
 
