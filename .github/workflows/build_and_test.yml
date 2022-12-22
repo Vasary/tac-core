@@ -10,7 +10,7 @@ jobs:
     strategy:
       fail-fast: true
       matrix:
-        php-versions: ['8.1']
+        php-versions: ['8.1', '8.2']
     name: PHP ${{ matrix.php-versions }}
     steps:
       - name: Setup PHP ${{ matrix.php-versions }}
@@ -37,4 +37,4 @@ jobs:
       - name: Coverage Report as Comment (Clover)
         uses: lucassabreu/comment-coverage-clover@main
         with:
-          file: coverage.xml
+          file: resource/coverage.xml
