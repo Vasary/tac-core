@@ -7,20 +7,18 @@ namespace App\Infrastructure\Queue\Message;
 final class Message
 {
     public function __construct(
-        private readonly object $event
+        private readonly string $event,
+        private readonly string $destinationStamp
     ) {
     }
 
-    public function getEvent(): object
+    public function getEvent(): string
     {
         return $this->event;
     }
 
-    public function getName(): string
+    public function getDestinationStamp(): string
     {
-        $class = explode('\\', get_class($this->event));
-        end($class);
-
-        return strtolower(preg_replace('/(?<!^)[A-Z]/', '.$0', current($class)));
+        return $this->destinationStamp;
     }
 }

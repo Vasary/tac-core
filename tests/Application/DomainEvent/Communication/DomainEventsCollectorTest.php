@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Tests\Application\DomainEvent\Communication;
 
-use App\Application\DomainEvent\Communication\DomainEventsCollector;
+use App\Application\DomainEvent\Communication\Observer\DomainEventsCollector;
 use App\Application\DomainEvent\Persistence\EventStore;
 use App\Domain\Model\User;
 use App\Infrastructure\Test\AbstractUnitTestCase;

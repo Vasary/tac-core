@@ -4,22 +4,20 @@ declare(strict_types=1);
 
 namespace App\Tests\Application\DomainEvent\Communication;
 
-use App\Application\DomainEvent\Communication\PublishDomainEventsSubscriber;
+use App\Application\DomainEvent\Business\EventsManager\EventsManagerInterface;
+use App\Application\DomainEvent\Communication\Subscriber\DomainEventsSubscriber;
 use App\Application\DomainEvent\Persistence\EventStore;
-use App\Application\Shared\Contract\EventPublisherInterface;
-use App\Infrastructure\Queue\Message\Message;
 use App\Infrastructure\Test\AbstractUnitTestCase;
 use Mockery;
 use stdClass;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Event\ResponseEvent;
-use Symfony\Component\HttpKernel\KernelEvents;
 
 final class PublishDomainEventsSubscriberTest extends AbstractUnitTestCase
 {
     public function testSubscriberPosition(): void
     {
-        $position = PublishDomainEventsSubscriber::getSubscribedEvents();
+        $position = DomainEventsSubscriber::getSubscribedEvents();
 
         $this->assertIsArray($position);
         $this->assertArrayHasKey('kernel.response', $position);
@@ -35,16 +33,16 @@ final class PublishDomainEventsSubscriberTest extends AbstractUnitTestCase
         $eventStore = Mockery::mock(EventStore::class);
         $eventStore->shouldNotHaveReceived('dequeue');
 
-        $publisher = Mockery::mock(EventPublisherInterface::class);
-        $publisher->shouldNotHaveReceived('publish');
-
         $response = Mockery::mock(Response::class);
         $response->shouldReceive('isSuccessful')->andReturn(false);
 
         $event = Mockery::mock(ResponseEvent::class);
         $event->shouldReceive('getResponse')->andReturn($response);
 
-        $subscriber = new PublishDomainEventsSubscriber($eventStore, $publisher);
+        $eventsManagerMock = Mockery::mock(EventsManagerInterface::class);
+        $eventsManagerMock->shouldNotHaveReceived('publish');
+
+        $subscriber = new DomainEventsSubscriber($eventStore, $eventsManagerMock);
 
         $subscriber->publishEvents($event);
 
@@ -58,16 +56,16 @@ final class PublishDomainEventsSubscriberTest extends AbstractUnitTestCase
         $eventStore = Mockery::mock(EventStore::class);
         $eventStore->shouldReceive('dequeue')->andYield($stdClass);
 
-        $publisher = Mockery::mock(EventPublisherInterface::class);
-        $publisher->shouldReceive('publish')->once();
-
         $response = Mockery::mock(Response::class);
         $response->shouldReceive('isSuccessful')->andReturn(true);
 
         $event = Mockery::mock(ResponseEvent::class);
         $event->shouldReceive('getResponse')->andReturn($response);
 
-        $subscriber = new PublishDomainEventsSubscriber($eventStore, $publisher);
+        $eventsManagerMock = Mockery::mock(EventsManagerInterface::class);
+        $eventsManagerMock->shouldReceive('publish')->andReturn(null);
+
+        $subscriber = new DomainEventsSubscriber($eventStore, $eventsManagerMock);
 
         $subscriber->publishEvents($event);
 
