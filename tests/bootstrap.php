@@ -10,6 +10,7 @@ $console = sprintf('%s/../bin/console', __DIR__);
 
 passthru(
     <<<CMD
+    touch resource/events.log && \
     php $console doctrine:database:drop --force --env=test && \
     php $console doctrine:database:create --no-interaction --env=test && \
     php $console doctrine:sc:up --force
