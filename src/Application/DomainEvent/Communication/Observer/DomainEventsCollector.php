@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Application\DomainEvent\Communication;
+namespace App\Application\DomainEvent\Communication\Observer;
 
 use App\Application\DomainEvent\Persistence\EventStore;
 use App\Domain\Model\RaiseEventsInterface;

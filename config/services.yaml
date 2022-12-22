@@ -63,3 +63,9 @@ services:
             $channel: '@PhpAmqpLib\Channel\AMQPChannel'
 
     App\Application\Shared\Contract\TransactionServiceInterface: '@App\Infrastructure\Persistence\Doctrine\Transactional\DoctrineTransactionService'
+
+    App\Application\DomainEvent\Business\EventsLogWriter:
+        arguments: ['%kernel.project_dir%/resource/events.log']
+
+    App\Application\DomainEvent\Business\EventsLogReader\EventsLogReader:
+        arguments: ['%kernel.project_dir%/resource/events.log']
