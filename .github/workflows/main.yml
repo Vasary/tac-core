@@ -3,6 +3,7 @@ on:
   push:
     branches:
       - main
+      - renovate/*
 jobs:
   security:
     runs-on: ubuntu-latest
