@@ -2,6 +2,9 @@ services:
   _defaults:
     public: true
 
+  doctrine.orm.default_entity_manager:
+    lazy: true
+
   App\Infrastructure\Persistence\Doctrine\Repository\AttributeValueRepository:
     arguments: [ '@doctrine.orm.entity_manager' ]
     public: true
@@ -11,3 +14,4 @@ services:
     public: true
 
   App\Application\Shared\Contract\TransactionServiceInterface: '@App\Infrastructure\Test\Stub\TransactionalServiceStub'
+
