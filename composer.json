@@ -89,7 +89,7 @@
         "nette/php-generator": "^4.0",
         "phpunit/phpunit": "^9.4",
         "slope-it/clock-mock": "^0.3.2",
-        "symfony/browser-kit": "6.1.*",
+        "symfony/browser-kit": "6.2.*",
         "symfony/css-selector": "6.1.*",
         "symfony/phpunit-bridge": "^6.1",
         "symfony/stopwatch": "6.1.*"
