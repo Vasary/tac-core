@@ -22,30 +22,29 @@ use Symfony\Component\HttpFoundation\Response;
 
 abstract class AbstractWebTestCase extends WebTestCase
 {
-    use CleanModelContextTrait;
-    use RegisterGlossaryTrait;
+    use CleanModelContextTrait, RegisterGlossaryTrait;
 
     protected ?KernelBrowser $browser;
     protected ?Generator $faker = null;
     protected static array $ids = [];
     protected static string $locale = 'en';
-    private ?EntityManagerInterface $entityManager;
 
     public function load(object ...$models): void
     {
         $locale = new Locale(static::$locale);
+        $entityManager = static::getContainer()->get(EntityManagerInterface::class);
 
         foreach ($models as $model) {
             foreach ($this->spawnGlossaryFor($model, $locale) as $glossary) {
-                $this->entityManager->persist($glossary);
-                $this->entityManager->flush();
+                $entityManager->persist($glossary);
+                $entityManager->flush();
             }
 
-            $this->entityManager->persist($model);
-            $this->entityManager->flush();
+            $entityManager->persist($model);
+            $entityManager->flush();
         }
 
-        $this->entityManager->clear();
+        $entityManager->clear();
     }
 
     protected function sendJson(string $method, string $url, array $body): Response
@@ -84,22 +83,25 @@ abstract class AbstractWebTestCase extends WebTestCase
 
     protected function setUp(): void
     {
-        $this->browser = self::createClient();
-        $this->entityManager = self::getContainer()->get(EntityManagerInterface::class);
+        parent::setUp();
+
+        $this->browser = static::createClient();
         $this->faker = Factory::create();
 
         Id::setFactory(new IdFactoryStub(
-            ...array_map(fn (string $id) => new Uuid($id), static::$ids)
+            ...array_map(fn(string $id) => new Uuid($id), static::$ids)
         ));
     }
 
     protected function tearDown(): void
     {
-        $this->entityManager = null;
+        parent::tearDown();
+
         $this->browser = null;
         $this->faker = null;
+
         $this->cleanModelsContexts();
-        self::ensureKernelShutdown();
+
         ClockMock::reset();
         Mockery::close();
 
@@ -115,8 +117,11 @@ abstract class AbstractWebTestCase extends WebTestCase
         int    $expectedCount,
         array  $criteria = [],
         bool   $useSoftDeleteFilter = true
-    ): void {
-        $query = $this->entityManager->getRepository($entity)
+    ): void
+    {
+        $entityManager = static::getContainer()->get(EntityManagerInterface::class);
+
+        $query = $entityManager->getRepository($entity)
             ->createQueryBuilder('c')
             ->select('count(c.id)');
 
@@ -129,8 +134,6 @@ abstract class AbstractWebTestCase extends WebTestCase
             $query->setParameter($value, $value);
         }
 
-        $count = $query->getQuery()->getSingleScalarResult();
-
-        $this->assertEquals($expectedCount, $count);
+        $this->assertEquals($expectedCount, $query->getQuery()->getSingleScalarResult());
     }
 }

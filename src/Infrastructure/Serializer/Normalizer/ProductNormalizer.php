@@ -7,6 +7,7 @@ namespace App\Infrastructure\Serializer\Normalizer;
 use App\Domain\Model\AttributeValue;
 use App\Domain\Model\Product;
 use App\Domain\Model\Unit;
+use App\Infrastructure\Map\ParametersList;
 use Symfony\Component\Serializer\Normalizer\NormalizerAwareInterface;
 use Symfony\Component\Serializer\Normalizer\NormalizerAwareTrait;
 use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
@@ -20,19 +21,19 @@ final class ProductNormalizer implements NormalizerInterface, NormalizerAwareInt
         /* @var Product $object */
         return
             [
-                'id' => (string)$object->getId(),
-                'name' => (string)$object->getName(),
-                'description' => (string)$object->getDescription(),
-                'creator' => $object->getCreator()->getEmail(),
-                'attributes' => $this->normalizer->normalize(array_values($object->getAttributes()->toArray())),
-                'category' => (string)$object->getCategory()->getId(),
-                'units' => array_values(array_map(
-                    fn (Unit $unit) => (string)$unit->getId(),
+                ParametersList::ID => (string)$object->getId(),
+                ParametersList::NAME => (string)$object->getName(),
+                ParametersList::DESCRIPTION => (string)$object->getDescription(),
+                ParametersList::CREATOR => $object->getCreator()->getEmail(),
+                ParametersList::ATTRIBUTES => $this->normalizer->normalize(array_values($object->getAttributes()->toArray())),
+                ParametersList::CATEGORY => (string)$object->getCategory()->getId(),
+                ParametersList::UNITS => array_values(array_map(
+                    fn(Unit $unit) => (string)$unit->getId(),
                     $object->getUnits()->toArray()
                 )),
-                'createdAt' => $object->getCreatedAt()->format(\DATE_ATOM),
-                'updatedAt' => $object->getUpdatedAt()->format(\DATE_ATOM),
-                'deletedAt' => $object->getDeletedAt()?->format(\DATE_ATOM),
+                ParametersList::CREATED_AT => $object->getCreatedAt()->format(\DATE_ATOM),
+                ParametersList::UPDATED_AT => $object->getUpdatedAt()->format(\DATE_ATOM),
+                ParametersList::DELETED_AT => $object->getDeletedAt()?->format(\DATE_ATOM),
             ];
     }
 

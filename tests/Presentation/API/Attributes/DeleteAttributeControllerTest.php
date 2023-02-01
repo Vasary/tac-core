@@ -16,7 +16,7 @@ final class DeleteAttributeControllerTest extends AbstractWebTestCase
     use AssertEventTrait;
 
     private const EVENT = <<<JSON
-{"attribute":{"id":"888c23c6-06fe-4a95-a66c-f292da2f7607","code":"name","name":"name","type":"string","description":"description","creator":{"identifier":"foo@bar.com"},"createdAt":"2022-01-01T00:00:00+00:00","updatedAt":"2022-01-01T00:00:00+00:00","deletedAt":null}}
+{"attribute":{"id":"888c23c6-06fe-4a95-a66c-f292da2f7607","code":"name","name":"name","type":"string","description":"description","creator":"foo@bar.com","createdAt":"2022-01-01T00:00:00+00:00","updatedAt":"2022-01-01T00:00:00+00:00","deletedAt":null}}
 JSON;
 
     public function testShouldSuccessfullyRemoveExistedAttribute(): void

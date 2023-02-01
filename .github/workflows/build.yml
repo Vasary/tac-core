@@ -1,0 +1,92 @@
+name: Test and build
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  artifact:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: true
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      - uses: actions/upload-artifact@master
+        with:
+          name: source
+          path: .
+
+  validate:
+    needs: [ artifact ]
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: true
+    steps:
+      - uses: actions/download-artifact@master
+        with:
+          name: source
+          path: .
+      - name: Validate composer.lock
+        run: composer validate --no-check-all --no-check-publish
+  security:
+    needs: [ artifact ]
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: true
+    steps:
+      - uses: actions/download-artifact@master
+        with:
+          name: source
+          path: .
+      - name: PHP Security Checker
+        uses: StephaneBour/actions-php-security-checker@1.2
+        with:
+          composer-lock: './composer.lock'
+  tests:
+    needs: [ artifact ]
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+    steps:
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.2.1'
+          extensions: uopz redis pdo pdo_sqlite sockets intl
+          coverage: xdebug
+
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: Install Dependencies (PHP vendors)
+        run: composer install --no-ansi --no-interaction --no-suggest --no-progress --prefer-dist
+      - name: Execute tests via PHPUnit
+        run: bin/phpunit
+      - name: Coverage Report as Comment (Clover)
+        uses: lucassabreu/comment-coverage-clover@main
+        with:
+          file: resource/coverage.xml
+  build:
+    needs: [ tests, security, validate ]
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: true
+    steps:
+      - name: Login to DockerHub Registry
+        run: echo ${{ secrets.DOCKERHUB_TOKEN }} | docker login -u ${{ secrets.DOCKERHUB_USERNAME }} --password-stdin
+      - name: Build unit container
+        run: |
+          git clone https://github.com/nginx/unit
+          cd unit
+          git checkout 1.29.0
+          cd pkg/docker
+          make build-php82 VERSION_php=8.2.1
+          cd ../../../
+          rm -rf unit
+        shell: bash
+      - name: Checkout code
+        uses: actions/checkout@v3
+      - name: Build the tagged Docker image
+        run: docker build . --file build/Dockerfile --tag vasary/tac-core:latest
+      - name: Push the latest Docker image
+        run: docker push vasary/tac-core:latest

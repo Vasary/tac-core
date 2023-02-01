@@ -21,9 +21,15 @@ final class EventsManager implements EventsManagerInterface
 
     public function replay(): void
     {
+        uopz_allow_exit(true);
+
         foreach ($this->reader as $event) {
             if (null !== $event) {
-                $this->eventPublisher->publish(new Message($event->event(), $event->destinationStamp()));
+                try {
+                    $this->eventPublisher->publish(new Message($event->event(), $event->destinationStamp()));
+                } catch (\Throwable $throwable) {
+                    dd($event);
+                }
             }
         }
     }

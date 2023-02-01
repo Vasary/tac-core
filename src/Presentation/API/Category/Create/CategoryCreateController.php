@@ -7,6 +7,10 @@ namespace App\Presentation\API\Category\Create;
 use App\Application\Category\Business\CategoryFacadeInterface;
 use App\Infrastructure\Annotation\Route;
 use App\Infrastructure\Controller\AbstractController;
+use App\Infrastructure\OpenAPI\AccessDeniedResponse;
+use App\Infrastructure\OpenAPI\Category\CreateRequest;
+use App\Infrastructure\OpenAPI\Category\CreateResponse;
+use App\Infrastructure\OpenAPI\Post;
 use App\Infrastructure\Response\JsonResponse;
 use App\Presentation\API\Category\Create\Request\CategoryCreateRequest;
 use App\Presentation\API\Category\Create\Response\CategoryCreateResponse;
@@ -19,6 +23,10 @@ final class CategoryCreateController extends AbstractController
     {
     }
 
+    #[Post('/api/category')]
+    #[CreateRequest]
+    #[CreateResponse]
+    #[AccessDeniedResponse]
     public function __invoke(CategoryCreateRequest $request): JsonResponse
     {
         return new CategoryCreateResponse($this->facade->create(CategoryCreateTransfer::fromArray($request->toArray())));

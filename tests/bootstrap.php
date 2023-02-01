@@ -4,8 +4,6 @@ declare(strict_types=1);
 
 require dirname(__DIR__).'/vendor/autoload.php';
 
-uopz_allow_exit(true);
-
 $console = sprintf('%s/../bin/console', __DIR__);
 
 passthru(

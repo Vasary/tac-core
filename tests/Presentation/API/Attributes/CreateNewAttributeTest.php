@@ -23,7 +23,7 @@ JSON;
 JSON;
 
     private const ATTRIBUTE_EVENT = <<<JSON
-{"attribute":{"id":"ea996212-e88c-4323-aeac-a9a008edd515","code":"name","name":"My cool attribute","type":"string","description":"This is my cool description text","creator":{"identifier":"foo@bar.com"},"createdAt":"2022-09-01T00:00:00+00:00","updatedAt":"2022-09-01T00:00:00+00:00","deletedAt":null}}
+{"attribute":{"id":"ea996212-e88c-4323-aeac-a9a008edd515","code":"name","name":"My cool attribute","type":"string","description":"This is my cool description text","creator":"foo@bar.com","createdAt":"2022-09-01T00:00:00+00:00","updatedAt":"2022-09-01T00:00:00+00:00","deletedAt":null}}
 JSON;
 
     protected static array $ids = [

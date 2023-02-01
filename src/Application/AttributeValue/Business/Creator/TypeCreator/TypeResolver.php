@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Application\AttributeValue\Business\Creator\TypeCreator;
 
-final class TypeResolver
+class TypeResolver
 {
     public function __construct(
         private readonly ArrayCreator   $arrayCreator,

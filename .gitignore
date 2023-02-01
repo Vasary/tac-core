@@ -11,3 +11,4 @@
 /.php-cs-fixer.cache
 /clover.xml
 /resource/events.log
+/resource/clover.xml

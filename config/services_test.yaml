@@ -11,3 +11,4 @@ services:
     public: true
 
   App\Application\Shared\Contract\TransactionServiceInterface: '@App\Infrastructure\Test\Stub\TransactionalServiceStub'
+
