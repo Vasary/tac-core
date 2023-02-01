@@ -1,14 +1,5 @@
 {
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
-  "extends": [
-    ":autodetectRangeStrategy",
-    "group:monorepos",
-    "group:symfony",
-    "workarounds:typesNodeVersioning",
-    "workarounds:reduceRepologyServerLoad",
-    "workarounds:doNotUpgradeFromAlpineStableToEdge"
-  ],
-  "automerge": true,
   "automergeType": "pr",
   "automergeSchedule": [
     "every weekday"

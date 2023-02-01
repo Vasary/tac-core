@@ -4,11 +4,11 @@ module.exports = {
     onboardingConfig: {
         extends: ['config:base'],
     },
-    repositories: ['Vasary/tac-core'],
-    renovateFork: true,
+    repositories: ['vasary/tac-core'],
+    includeForks: true,
     gitAuthor: "Renovate bot <bot@renovate.io>",
     username: "renovate",
     onboarding: false,
     printConfig: true,
-    requireConfig: false,
+    requireConfig: "optional"
 };
