@@ -58,7 +58,8 @@ jobs:
           cd pkg/docker
           make build-php82 VERSION_php=8.2.1
           pwd
-          rm -rf ../../../
+          cd ../../../
+          pwd
           rm -rf unit
         shell: bash
 
