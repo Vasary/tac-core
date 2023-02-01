@@ -83,7 +83,7 @@
         }
     },
     "require-dev": {
-        "dg/bypass-finals": "v1.3.1",
+        "dg/bypass-finals": "v1.4.1",
         "fakerphp/faker": "1.21.0",
         "mockery/mockery": "1.5.1",
         "nette/php-generator": "4.0.5",
