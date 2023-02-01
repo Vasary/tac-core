@@ -1,4 +1,4 @@
-name: Tests
+name: Tests and build container
 on:
   push:
     branches:
@@ -22,7 +22,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        php-versions: ['8.1', '8.2']
+        php-versions: ['8.2']
     name: PHP ${{ matrix.php-versions }}
     steps:
       - name: Setup PHP ${{ matrix.php-versions }}

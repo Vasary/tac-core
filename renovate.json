@@ -1,0 +1,48 @@
+{
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "extends": [
+    ":autodetectRangeStrategy",
+    "group:monorepos",
+    "group:symfony",
+    "workarounds:typesNodeVersioning",
+    "workarounds:reduceRepologyServerLoad",
+    "workarounds:doNotUpgradeFromAlpineStableToEdge"
+  ],
+  "automerge": true,
+  "automergeType": "pr",
+  "automergeSchedule": [
+    "every weekday"
+  ],
+  "dependencyDashboard": true,
+  "prConcurrentLimit": 10,
+  "lockFileMaintenance": {
+    "enabled": true
+  },
+  "rangeStrategy": "pin",
+  "labels": [
+    "bot"
+  ],
+  "ignorePaths": [
+    "**/vendor/**"
+  ],
+  "enabledManagers": [
+    "composer"
+  ],
+  "packageRules": [
+    {
+      "automerge": true,
+      "matchUpdateTypes": [
+        "minor",
+        "patch",
+        "pin",
+        "digest"
+      ]
+    },
+    {
+      "automerge": false,
+      "matchUpdateTypes": [
+        "major"
+      ]
+    }
+  ]
+}

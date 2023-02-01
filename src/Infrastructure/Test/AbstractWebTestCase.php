@@ -84,8 +84,8 @@ abstract class AbstractWebTestCase extends WebTestCase
 
     protected function setUp(): void
     {
-        $this->browser = self::createClient();
-        $this->entityManager = self::getContainer()->get(EntityManagerInterface::class);
+        $this->browser = static::createClient();
+        $this->entityManager = static::getContainer()->get(EntityManagerInterface::class);
         $this->faker = Factory::create();
 
         Id::setFactory(new IdFactoryStub(
