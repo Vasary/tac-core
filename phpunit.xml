@@ -31,7 +31,6 @@
         </exclude>
         <report>
             <clover outputFile="resource/clover.xml" />
-            <text outputFile="php://stdout" showUncoveredFiles="false" showOnlySummary="true"/>
         </report>
     </coverage>
     <listeners>
