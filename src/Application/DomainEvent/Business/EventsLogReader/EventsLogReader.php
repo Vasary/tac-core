@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace App\Application\DomainEvent\Business\EventsLogReader;
 
+use RuntimeException;
+
 final class EventsLogReader implements EventsLogReaderInterface
 {
     protected $filePointer;
@@ -52,10 +54,13 @@ final class EventsLogReader implements EventsLogReaderInterface
         $currentLine = fgets($this->filePointer);
 
         if (false !== $currentLine) {
-            $logData = preg_split('/(.+),({.+)/u', $currentLine);
+            if (1 !== preg_match('/^\[(?<destination>.+)]:(?<event>{.+)/u', $currentLine, $matches)) {
+                if (!isset($matches['destination']) || !isset($matches['event'])) {
+                    throw new RuntimeException('Parsing exception');
+                }
+            }
 
-
-            $this->currentElement = new Log($logData[0], $logData[1]);
+            $this->currentElement = new Log($matches['destination'], $matches['event']);
             $this->rowCounter++;
         } else {
             $this->currentElement = null;

@@ -14,7 +14,7 @@ final class EventsLogWriter implements EventsLogWriterInterface
 
     public function write(string $event, string $destinationStamp): void
     {
-        $data = $destinationStamp . ',' . $event . PHP_EOL;
+        $data = '[' . $destinationStamp . ']:' . $event . PHP_EOL;
 
         file_put_contents($this->filePath, $data, FILE_APPEND | LOCK_EX);
     }
