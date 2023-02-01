@@ -58,8 +58,8 @@ jobs:
           cd pkg/docker
           make build-php82 VERSION_php=8.2.1
           pwd
-          rm -rf ../../../../
-          rm -Rf unit
+          rm -rf ../../../
+          rm -rf unit
         shell: bash
 
       - name: Checkout code
