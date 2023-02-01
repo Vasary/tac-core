@@ -14,6 +14,7 @@ jobs:
         with:
           composer-lock: './composer.lock'
   tests:
+    needs: [security]
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
@@ -42,6 +43,7 @@ jobs:
         with:
           file: resource/coverage.xml
   build:
+    needs: [tests]
     runs-on: ubuntu-latest
     strategy:
       fail-fast: true
@@ -66,9 +68,6 @@ jobs:
 
       - name: Build the tagged Docker image
         run: docker build . --file build/Dockerfile --tag vasary/tac-core:latest
-
-      - name: Push the tagged Docker image
-        run: docker push vasary/tac-core:latest
 
       - name: Push the latest Docker image
         run: docker push vasary/tac-core:latest
