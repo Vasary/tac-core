@@ -1,6 +1,7 @@
 {
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
   "extends": [
+    "config:base",
     "group:symfony"
   ],
   "automergeType": "pr",
@@ -14,10 +15,14 @@
   },
   "rangeStrategy": "pin",
   "labels": [
-    "bot"
+    "bot",
+    "dependency"
   ],
   "ignorePaths": [
     "**/vendor/**"
+  ],
+  "ignoreDeps": [
+    "php"
   ],
   "enabledManagers": [
     "composer"
