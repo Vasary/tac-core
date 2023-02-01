@@ -13,7 +13,7 @@
         "nelmio/cors-bundle": "^2.2",
         "php-amqplib/php-amqplib": "^3.2",
         "symfony/console": "*",
-        "symfony/dotenv": "*",
+        "symfony/dotenv": "6.2.5",
         "symfony/flex": "^2",
         "symfony/framework-bundle": "*",
         "symfony/intl": "6.1.*",
