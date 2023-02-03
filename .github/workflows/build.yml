@@ -10,9 +10,6 @@ jobs:
     strategy:
       fail-fast: true
     steps:
-      - name: Install composer
-        uses: php-actions/composer@v6
-
       - name: Checkout
         uses: actions/checkout@v3
 
