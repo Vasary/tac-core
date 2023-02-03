@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace App\Infrastructure\Test;
 
+use App\Infrastructure\Test\Context\ModelContextInterface;
+
 trait CleanModelContextTrait
 {
     protected function cleanModelsContexts(): void
@@ -17,6 +19,7 @@ trait CleanModelContextTrait
         );
 
         foreach ($models as $model) {
+            /** @var ModelContextInterface $context */
             $context = 'App\\Infrastructure\\Test\\Context\\Model\\' . $model;
             $context::clean();
         }

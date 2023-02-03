@@ -7,4 +7,8 @@ namespace App\Infrastructure\Test\Context;
 interface ModelContextInterface
 {
     public function __invoke(bool $theOnlyOne = true): object;
+
+    public static function create(): static;
+
+    public static function clean(): void;
 }
