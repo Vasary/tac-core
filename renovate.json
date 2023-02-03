@@ -38,11 +38,6 @@
       "matchUpdateTypes": ["minor", "patch"]
     },
     {
-      "groupName": "Other dependencies",
-      "matchUpdateTypes": ["minor", "patch"],
-      "automerge": true
-    },
-    {
       "matchUpdateTypes": ["major"],
       "enabled": false
     }
