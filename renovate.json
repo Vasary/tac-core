@@ -8,7 +8,7 @@
     "every weekday"
   ],
   "dependencyDashboard": true,
-  "prConcurrentLimit": 10,
+  "prConcurrentLimit": 1,
   "lockFileMaintenance": {
     "enabled": true
   },
@@ -35,10 +35,16 @@
         "dama/*"
       ],
       "enabled": true,
-      "matchUpdateTypes": [
-        "minor",
-        "patch"
-      ]
+      "matchUpdateTypes": ["minor", "patch"]
+    },
+    {
+      "groupName": "Other dependencies",
+      "matchUpdateTypes": ["minor", "patch"],
+      "automerge": true
+    },
+    {
+      "matchUpdateTypes": ["major"],
+      "enabled": false
     }
   ]
 }
