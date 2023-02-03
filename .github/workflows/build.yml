@@ -37,7 +37,7 @@ jobs:
       - name: Setup PHP
         uses: shivammathur/setup-php@v2
         with:
-          php-version: 8.2.2
+          php-version: 8.2.1
           extensions: uopz redis pdo pdo_sqlite sockets intl
           coverage: xdebug
 
@@ -65,7 +65,7 @@ jobs:
           cd unit
           git checkout 1.29.0
           cd pkg/docker
-          make build-php82 VERSION_php=8.2.2
+          make build-php82 VERSION_php=8.2.1
           cd ../../../
           rm -rf unit
         shell: bash
