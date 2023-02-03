@@ -5,6 +5,16 @@ on:
       - main
 
 jobs:
+  validate:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: true
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Validate composer.lock
+        uses: composer validate --no-check-all --no-check-publish
   security:
     runs-on: ubuntu-latest
     strategy:
@@ -22,12 +32,11 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
-    name: PHP 8.2
     steps:
       - name: Setup PHP
         uses: shivammathur/setup-php@v2
         with:
-          php-version: 8.2
+          php-version: 8.2.2
           extensions: uopz redis pdo pdo_sqlite sockets intl
           coverage: xdebug
 
@@ -39,11 +48,6 @@ jobs:
 
       - name: Execute tests via PHPUnit
         run: bin/phpunit
-
-      - name: Coverage Report as Comment (Clover)
-        uses: lucassabreu/comment-coverage-clover@main
-        with:
-          file: resource/coverage.xml
   build:
     needs: [tests]
     runs-on: ubuntu-latest
