@@ -34,8 +34,8 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v3
 
-      - name: Install Dependencies (PHP vendors)
-        run: composer install -q --no-ansi --no-interaction --no-suggest --no-progress --prefer-dist
+      - name: Install Dependencies
+        run: composer install --no-ansi --no-interaction --no-suggest --no-progress --prefer-dist
 
       - name: Execute tests via PHPUnit
         run: bin/phpunit
@@ -60,7 +60,7 @@ jobs:
           cd unit
           git checkout 1.29.0
           cd pkg/docker
-          make build-php82 VERSION_php=8.2.1
+          make build-php82 VERSION_php=8.2.2
           cd ../../../
           rm -rf unit
         shell: bash
