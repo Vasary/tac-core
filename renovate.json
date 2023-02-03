@@ -29,12 +29,16 @@
   "packageRules": [
     {
       "groupName": "Symfony/Doctrine/DAMA",
-      "matchPackagePatterns": [
+      "matchPackagePrefixes": [
         "symfony/*",
         "doctrine/*",
         "dama/*"
       ],
-      "enabled": true
+      "enabled": true,
+      "matchUpdateTypes": [
+        "minor",
+        "patch"
+      ]
     }
   ]
 }
