@@ -5,6 +5,7 @@
   ],
   "automergeType": "pr",
   "dependencyDashboard": false,
+  "automerge": true,
   "prConcurrentLimit": 10,
   "lockFileMaintenance": {
     "enabled": true
@@ -44,6 +45,11 @@
         "symfony/",
         "doctrine/",
         "dama/"
+      ],
+      "matchUpdateTypes": [
+        "patch",
+        "pin",
+        "digest"
       ],
       "groupName": "main packages",
       "groupSlug": "main"

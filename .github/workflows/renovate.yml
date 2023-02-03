@@ -1,5 +1,7 @@
 name: Renovate
-on: [workflow_dispatch]
+on:
+  schedule:
+    - cron: "0 12 * * *"
 
 jobs:
   renovate:
