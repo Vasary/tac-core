@@ -4,11 +4,8 @@
     "config:base"
   ],
   "automergeType": "pr",
-  "automergeSchedule": [
-    "every weekday"
-  ],
-  "dependencyDashboard": true,
-  "prConcurrentLimit": 1,
+  "dependencyDashboard": false,
+  "prConcurrentLimit": 10,
   "lockFileMaintenance": {
     "enabled": true
   },
@@ -28,18 +25,28 @@
   ],
   "packageRules": [
     {
-      "groupName": "Symfony/Doctrine/DAMA",
-      "matchPackagePrefixes": [
-        "symfony/*",
-        "doctrine/*",
-        "dama/*"
-      ],
-      "enabled": true,
-      "matchUpdateTypes": ["minor", "patch"]
+      "automerge": true,
+      "matchUpdateTypes": [
+        "minor",
+        "patch",
+        "pin",
+        "digest"
+      ]
     },
     {
-      "matchUpdateTypes": ["major"],
-      "enabled": false
+      "automerge": false,
+      "matchUpdateTypes": [
+        "major"
+      ]
+    },
+    {
+      "matchPackagePrefixes": [
+        "symfony/",
+        "doctrine/",
+        "dama/",
+      ],
+      "groupName": "main packages",
+      "groupSlug": "main"
     }
   ]
 }

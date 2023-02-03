@@ -54,7 +54,6 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       fail-fast: true
-    name: Build application container
     steps:
       - name: Login to DockerHub Registry
         run: echo ${{ secrets.DOCKERHUB_TOKEN }} | docker login -u ${{ secrets.DOCKERHUB_USERNAME }} --password-stdin
