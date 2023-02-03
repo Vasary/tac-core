@@ -43,7 +43,7 @@
       "matchPackagePrefixes": [
         "symfony/",
         "doctrine/",
-        "dama/",
+        "dama/"
       ],
       "groupName": "main packages",
       "groupSlug": "main"
