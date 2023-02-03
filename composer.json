@@ -1,4 +1,6 @@
 {
+    "name": "vasary/tac-core",
+    "description": "Product management system",
     "type": "project",
     "license": "proprietary",
     "minimum-stability": "stable",
