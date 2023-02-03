@@ -22,14 +22,12 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
-      matrix:
-        php-versions: ['8.2']
-    name: PHP ${{ matrix.php-versions }}
+    name: PHP 8.2
     steps:
-      - name: Setup PHP ${{ matrix.php-versions }}
+      - name: Setup PHP
         uses: shivammathur/setup-php@v2
         with:
-          php-version: ${{ matrix.php-versions }}
+          php-version: 8.2
           extensions: uopz redis pdo pdo_sqlite sockets intl
           coverage: xdebug
 
