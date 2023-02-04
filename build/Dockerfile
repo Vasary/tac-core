@@ -1,4 +1,4 @@
-FROM php:8.1-fpm-alpine as builder
+FROM php:8.2.1-fpm-alpine as builder
 
 COPY --from=composer:latest /usr/bin/composer /usr/local/bin/composer
 
