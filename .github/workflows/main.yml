@@ -42,6 +42,9 @@ jobs:
           name: source
           path: .
 
+      - name: Test
+        run: ls -lah
+
       - name: Validate composer.lock
         run: composer validate --no-check-all --no-check-publish
 
