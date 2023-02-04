@@ -31,13 +31,16 @@ jobs:
           extensions: uopz redis pdo pdo_sqlite sockets intl
           coverage: xdebug
 
+      - name: Install dependencies
+        run: composer install --no-ansi --no-interaction --no-suggest --no-progress --prefer-dist
+
       - name: Generate swagger.yml
-        run: composer run docs
+        run: vendor/bin/openapi src -o ./github/api/swagger.yml
 
       - name: Build with Jekyll
         uses: actions/jekyll-build-pages@v1
         with:
-          source: ./
+          source: ./github/api
           destination: ./_site
 
       - name: Upload artifact
