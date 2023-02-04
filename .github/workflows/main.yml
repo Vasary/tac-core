@@ -42,18 +42,12 @@ jobs:
           name: source
           path: .
 
-      - name: Test
-        run: ls -lah
-
-      - name: Validate composer.lock
-        run: composer validate --no-check-all --no-check-publish
-
       - name: PHP Security Checker
         uses: StephaneBour/actions-php-security-checker@1.2
         with:
           composer-lock: './composer.lock'
   tests:
-    needs: [validate, security]
+    needs: [artifact]
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
@@ -65,8 +59,10 @@ jobs:
           extensions: uopz redis pdo pdo_sqlite sockets intl
           coverage: xdebug
 
-      - name: Checkout
-        uses: actions/checkout@v3
+      - uses: actions/download-artifact@master
+        with:
+          name: source
+          path: .
 
       - name: Install Dependencies (PHP vendors)
         run: composer install --no-ansi --no-interaction --no-suggest --no-progress --prefer-dist
