@@ -34,6 +34,14 @@ jobs:
       - name: Install dependencies
         run: composer install --no-ansi --no-interaction --no-suggest --no-progress --prefer-dist
 
+      - name: Test
+        run: |
+          ls -lah
+          pws
+          ls -lah ./github
+          ls -lah ./github/api
+        shell: bash
+
       - name: Generate swagger.yml
         run: vendor/bin/openapi src -o ./github/api/swagger.yml
 
