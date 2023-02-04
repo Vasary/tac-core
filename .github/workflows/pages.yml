@@ -34,21 +34,13 @@ jobs:
       - name: Install dependencies
         run: composer install --no-ansi --no-interaction --no-suggest --no-progress --prefer-dist
 
-      - name: Test
-        run: |
-          ls -lah
-          pwd
-          ls -lah ./github
-          ls -lah ./github/api
-        shell: bash
-
       - name: Generate swagger.yml
-        run: vendor/bin/openapi src -o ./github/api/swagger.yml
+        run: vendor/bin/openapi src -o ./pages/swagger.yml
 
       - name: Build with Jekyll
         uses: actions/jekyll-build-pages@v1
         with:
-          source: ./github/api
+          source: ./pages
           destination: ./_site
 
       - name: Upload artifact
