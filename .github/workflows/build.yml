@@ -67,7 +67,7 @@ jobs:
         with:
           file: resource/coverage.xml
   build:
-    needs: [ tests ]
+    needs: [ tests, security, validate ]
     runs-on: ubuntu-latest
     strategy:
       fail-fast: true
