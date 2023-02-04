@@ -4,6 +4,10 @@ on:
     branches:
       - main
 
+concurrency:
+  group: test-and-build
+  cancel-in-progress: true
+
 jobs:
   artifact:
     runs-on: ubuntu-latest

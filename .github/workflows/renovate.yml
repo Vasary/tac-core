@@ -4,6 +4,10 @@ on:
   schedule:
     - cron: "0 * * * *"
 
+concurrency:
+  group: renovate
+  cancel-in-progress: true
+
 jobs:
   renovate:
     name: Update dependencies
