@@ -7,9 +7,6 @@
   "dependencyDashboard": false,
   "automerge": true,
   "prConcurrentLimit": 10,
-  "lockFileMaintenance": {
-    "enabled": true
-  },
   "rangeStrategy": "pin",
   "labels": [
     "bot",
