@@ -8,13 +8,13 @@ use Attribute;
 use OpenApi\Attributes as OA;
 
 #[Attribute(Attribute::IS_REPEATABLE | Attribute::TARGET_CLASS | Attribute::TARGET_METHOD)]
-class UpdateResponse extends OA\Response
+class CreateResponse extends OA\Response
 {
     public function __construct()
     {
         parent::__construct(
-            response: 200,
-            description: 'Get updated category response',
+            response: 201,
+            description: 'Get created category response',
             content: new OA\MediaType(
                 mediaType: 'application/json',
                 schema: new CategorySchema()

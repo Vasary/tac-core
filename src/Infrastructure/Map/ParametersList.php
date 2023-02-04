@@ -9,6 +9,7 @@ final class ParametersList
     public const ID = 'id';
 
     public const NAME = 'name';
+
     public const ALIAS = 'alias';
 
     public const SUGGESTIONS = 'suggestions';

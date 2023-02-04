@@ -7,6 +7,10 @@ namespace App\Presentation\API\Category\Get;
 use App\Application\Category\Business\CategoryFacadeInterface;
 use App\Infrastructure\Annotation\Route;
 use App\Infrastructure\Controller\AbstractController;
+use App\Infrastructure\OpenAPI\AccessDeniedResponse;
+use App\Infrastructure\OpenAPI\Get;
+use App\Infrastructure\OpenAPI\RequestWithId;
+use App\Infrastructure\OpenAPI\Category\GetCategoryResponse as OAGetCategoryResponse;
 use App\Infrastructure\Response\JsonResponse;
 use App\Presentation\API\Category\Get\Request\CategoryGetRequest;
 use App\Presentation\API\Category\Get\Response\GetResponse;
@@ -20,6 +24,10 @@ final class CategoryGetController extends AbstractController
     ) {
     }
 
+    #[Get('/api/category/{id}')]
+    #[RequestWithId]
+    #[OAGetCategoryResponse]
+    #[AccessDeniedResponse]
     public function __invoke(CategoryGetRequest $request): JsonResponse
     {
         return new GetResponse($this->facade->getById(GetCategoryTransfer::fromArray($request->toArray())));

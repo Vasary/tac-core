@@ -9,7 +9,7 @@ use Attribute;
 use OpenApi\Attributes as OA;
 
 #[Attribute(Attribute::IS_REPEATABLE | Attribute::TARGET_CLASS | Attribute::TARGET_METHOD)]
-class UpdateRequest extends OA\RequestBody
+class CreateRequest extends OA\RequestBody
 {
     public function __construct()
     {
@@ -18,16 +18,10 @@ class UpdateRequest extends OA\RequestBody
             content: new OA\JsonContent(
                 properties: [
                     new OA\Property(
-                        property: ParametersList::ID,
-                        description: 'Category ID',
-                        type: 'string',
-                        example: 'a7eb4775-066a-48f0-b162-b798d1a907f5'
-                    ),
-                    new OA\Property(
                         property: ParametersList::NAME,
                         description: 'Category name',
                         type: 'string',
-                        example: 'Frozen'
+                        example: 'Liquid'
                     ),
                 ]
             )

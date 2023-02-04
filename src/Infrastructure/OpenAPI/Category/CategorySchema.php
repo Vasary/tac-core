@@ -2,12 +2,12 @@
 
 declare(strict_types=1);
 
-namespace App\Infrastructure\OpenAPI\Unit;
+namespace App\Infrastructure\OpenAPI\Category;
 
 use App\Infrastructure\Map\ParametersList;
 use OpenApi\Attributes as OA;
 
-class UnitSchema extends OA\Schema
+class CategorySchema extends OA\Schema
 {
     public function __construct()
     {
@@ -15,49 +15,37 @@ class UnitSchema extends OA\Schema
             properties: [
                 new OA\Property(
                     property: ParametersList::ID,
-                    description: 'Unique unit id',
+                    description: 'Unique category id',
                     type: 'string',
-                    example: '147e4f94-315a-46df-a3d5-b9f3bfff3177',
+                    example: '48417967-cc95-4b4f-b69b-4e7cd422ff1a',
                 ),
                 new OA\Property(
                     property: ParametersList::NAME,
-                    description: 'Unit name',
+                    description: 'Category name',
                     type: 'string',
-                    example: 'Kilogram'
-                ),
-                new OA\Property(
-                    property: ParametersList::ALIAS,
-                    description: 'Unique short name',
-                    type: 'string',
-                    example: 'KG'
-                ),
-                new OA\Property(
-                    property: ParametersList::SUGGESTIONS,
-                    description: 'An array of integer for input suggestion',
-                    type: 'string',
-                    example: [10, 20, 30]
+                    example: 'Liquid'
                 ),
                 new OA\Property(
                     property: ParametersList::CREATOR,
-                    description: 'Person Id who creates unit',
+                    description: 'Person Id who creates category',
                     type: 'string',
                     example: 'foo@bar.com'
                 ),
                 new OA\Property(
                     property: ParametersList::CREATED_AT,
-                    description: 'Unit was created at',
+                    description: 'Category was created at',
                     type: 'string',
                     example: '2021-01-03T02:30:00+01:00',
                 ),
                 new OA\Property(
                     property: ParametersList::UPDATED_AT,
-                    description: 'Unit was updated at',
+                    description: 'Category was updated at',
                     type: 'string',
                     example: '2021-01-03T02:30:00+01:00',
                 ),
                 new OA\Property(
                     property: ParametersList::DELETED_AT,
-                    description: 'Unit was deleted at',
+                    description: 'Category was deleted at',
                     type: 'string',
                     example: '2021-01-03T02:30:00+01:00',
                 ),
