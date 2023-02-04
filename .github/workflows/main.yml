@@ -59,10 +59,8 @@ jobs:
           extensions: uopz redis pdo pdo_sqlite sockets intl
           coverage: xdebug
 
-      - uses: actions/download-artifact@master
-        with:
-          name: source
-          path: .
+      - name: Checkout
+        uses: actions/checkout@v3
 
       - name: Install Dependencies (PHP vendors)
         run: composer install --no-ansi --no-interaction --no-suggest --no-progress --prefer-dist
