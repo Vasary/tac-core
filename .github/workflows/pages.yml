@@ -37,7 +37,7 @@ jobs:
       - name: Test
         run: |
           ls -lah
-          pws
+          pwd
           ls -lah ./github
           ls -lah ./github/api
         shell: bash
