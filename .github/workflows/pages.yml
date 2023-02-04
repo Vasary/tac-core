@@ -2,8 +2,8 @@ name: Deploy swagger
 
 on:
   push:
-    branches: ["feature/swagger"]
-  workflow_dispatch:
+    branches:
+      - main
 
 permissions:
   contents: read
