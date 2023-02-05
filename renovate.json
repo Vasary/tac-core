@@ -8,7 +8,7 @@
   "automerge": true,
   "prConcurrentLimit": 10,
   "lockFileMaintenance": {
-    "enabled": false
+    "enabled": true
   },
   "rangeStrategy": "pin",
   "labels": [
