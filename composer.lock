@@ -4,20 +4,20 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "23c9bcef18d2223c531aba7273558780",
+    "content-hash": "545458d73777e1f39d115316dc6c763f",
     "packages": [
         {
             "name": "dama/doctrine-test-bundle",
-            "version": "v7.1.1",
+            "version": "v7.2.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/dmaicher/doctrine-test-bundle.git",
-                "reference": "279a554556bed387a6aaae0c13cc982d4874773b"
+                "reference": "91abe52540370d596199a79eff3d823d5b81d41d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/dmaicher/doctrine-test-bundle/zipball/279a554556bed387a6aaae0c13cc982d4874773b",
-                "reference": "279a554556bed387a6aaae0c13cc982d4874773b",
+                "url": "https://api.github.com/repos/dmaicher/doctrine-test-bundle/zipball/91abe52540370d596199a79eff3d823d5b81d41d",
+                "reference": "91abe52540370d596199a79eff3d823d5b81d41d",
                 "shasum": ""
             },
             "require": {
@@ -26,17 +26,17 @@
                 "ext-json": "*",
                 "php": "^7.3 || ^8.0",
                 "psr/cache": "^1.0 || ^2.0 || ^3.0",
-                "symfony/cache": "^4.4 || ^5.4 || ^6.0",
-                "symfony/framework-bundle": "^4.4 || ^5.4 || ^6.0"
+                "symfony/cache": "^5.4 || ^6.0",
+                "symfony/framework-bundle": "^5.4 || ^6.0"
             },
             "require-dev": {
                 "behat/behat": "^3.0",
                 "doctrine/cache": "^1.12",
                 "phpstan/phpstan": "^1.2",
-                "phpunit/phpunit": "^8.0 || ^9.0",
+                "phpunit/phpunit": "^8.0 || ^9.0 || ^10.0",
                 "symfony/phpunit-bridge": "^6.0",
-                "symfony/process": "^4.4 || ^5.4 || ^6.0",
-                "symfony/yaml": "^4.4 || ^5.4 || ^6.0"
+                "symfony/process": "^5.4 || ^6.0",
+                "symfony/yaml": "^5.4 || ^6.0"
             },
             "type": "symfony-bundle",
             "extra": {
@@ -69,9 +69,9 @@
             ],
             "support": {
                 "issues": "https://github.com/dmaicher/doctrine-test-bundle/issues",
-                "source": "https://github.com/dmaicher/doctrine-test-bundle/tree/v7.1.1"
+                "source": "https://github.com/dmaicher/doctrine-test-bundle/tree/v7.2.0"
             },
-            "time": "2022-07-01T12:06:31+00:00"
+            "time": "2023-02-05T09:12:26+00:00"
         },
         {
             "name": "doctrine/annotations",
@@ -2440,16 +2440,16 @@
         },
         {
             "name": "symfony/cache",
-            "version": "v6.1.11",
+            "version": "v6.2.5",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/cache.git",
-                "reference": "c6a7f2a1c65c30678b82c1171ff99edbeb915be0"
+                "reference": "cfe2d7c87d55b04cbde8fe3c137d9dd66e5d83f4"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/cache/zipball/c6a7f2a1c65c30678b82c1171ff99edbeb915be0",
-                "reference": "c6a7f2a1c65c30678b82c1171ff99edbeb915be0",
+                "url": "https://api.github.com/repos/symfony/cache/zipball/cfe2d7c87d55b04cbde8fe3c137d9dd66e5d83f4",
+                "reference": "cfe2d7c87d55b04cbde8fe3c137d9dd66e5d83f4",
                 "shasum": ""
             },
             "require": {
@@ -2458,7 +2458,7 @@
                 "psr/log": "^1.1|^2|^3",
                 "symfony/cache-contracts": "^1.1.7|^2|^3",
                 "symfony/service-contracts": "^1.1|^2|^3",
-                "symfony/var-exporter": "^5.4|^6.0"
+                "symfony/var-exporter": "^6.2"
             },
             "conflict": {
                 "doctrine/dbal": "<2.13.1",
@@ -2516,7 +2516,7 @@
                 "psr6"
             ],
             "support": {
-                "source": "https://github.com/symfony/cache/tree/v6.1.11"
+                "source": "https://github.com/symfony/cache/tree/v6.2.5"
             },
             "funding": [
                 {
@@ -2532,7 +2532,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2023-01-20T17:44:30+00:00"
+            "time": "2023-01-20T17:45:48+00:00"
         },
         {
             "name": "symfony/cache-contracts",
@@ -6016,16 +6016,16 @@
         },
         {
             "name": "symfony/var-exporter",
-            "version": "v6.1.11",
+            "version": "v6.2.5",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/var-exporter.git",
-                "reference": "d247e6c302964a6f462302e3ab97eb9617c9b583"
+                "reference": "108f9c6451eea8e04a7fb83bbacb5b812ef30e35"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/var-exporter/zipball/d247e6c302964a6f462302e3ab97eb9617c9b583",
-                "reference": "d247e6c302964a6f462302e3ab97eb9617c9b583",
+                "url": "https://api.github.com/repos/symfony/var-exporter/zipball/108f9c6451eea8e04a7fb83bbacb5b812ef30e35",
+                "reference": "108f9c6451eea8e04a7fb83bbacb5b812ef30e35",
                 "shasum": ""
             },
             "require": {
@@ -6065,10 +6065,12 @@
                 "export",
                 "hydrate",
                 "instantiate",
+                "lazy loading",
+                "proxy",
                 "serialize"
             ],
             "support": {
-                "source": "https://github.com/symfony/var-exporter/tree/v6.1.11"
+                "source": "https://github.com/symfony/var-exporter/tree/v6.2.5"
             },
             "funding": [
                 {
@@ -6084,7 +6086,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2023-01-13T08:35:02+00:00"
+            "time": "2023-01-13T08:35:57+00:00"
         },
         {
             "name": "symfony/web-profiler-bundle",
