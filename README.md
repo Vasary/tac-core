@@ -1,6 +1,6 @@
 # TAC Core management service
 
-![Test and build](https://github.com/Vasary/tac-core/actions/workflows/build.yml/badge.svg?branch=main)
+![Test and build](https://github.com/Vasary/tac-core/actions/workflows/build.yml/badge.svg?branch=main) ![Swagger](https://github.com/Vasary/tac-core/actions/workflows/pages.yml/badge.svg?branch=main)
 
 TAC Inventory management service which allows to create and modify products, units, categories and attributes.
 
