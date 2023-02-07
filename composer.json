@@ -9,7 +9,7 @@
         "php": ">=8.2.1",
         "ext-ctype": "*",
         "ext-iconv": "*",
-        "doctrine/doctrine-bundle": "2.8.2",
+        "doctrine/doctrine-bundle": "2.8.3",
         "doctrine/doctrine-migrations-bundle": "3.2.2",
         "doctrine/orm": "2.14.1",
         "nelmio/cors-bundle": "2.2.0",
@@ -28,7 +28,7 @@
         "symfony/validator": "6.1.11",
         "symfony/yaml": "6.1.11",
         "symfony/web-profiler-bundle": "6.1.11",
-        "dama/doctrine-test-bundle": "7.2.0",
+        "dama/doctrine-test-bundle": "7.2.1",
         "doctrine/doctrine-fixtures-bundle": "3.4.2",
         "zircote/swagger-php": "4.6.1"
     },
