@@ -1,6 +1,6 @@
 <?php
 
-declare(strict_types=1);
+declare(strict_types = 1);
 
 namespace App\Application\AttributeValue\Business;
 
@@ -15,7 +15,7 @@ final class AttributeValueFacade implements AttributeValueFacadeInterface
 {
     public function __construct(
         private readonly AttributeValueCreatorInterface $attributeCreator,
-        private readonly FinderInterface                $finder,
+        private readonly FinderInterface $finder,
     ) {
     }
 

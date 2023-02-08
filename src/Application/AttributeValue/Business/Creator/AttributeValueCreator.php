@@ -1,6 +1,6 @@
 <?php
 
-declare(strict_types=1);
+declare(strict_types = 1);
 
 namespace App\Application\AttributeValue\Business\Creator;
 
@@ -16,8 +16,8 @@ use Generator;
 final class AttributeValueCreator implements AttributeValueCreatorInterface
 {
     public function __construct(
-        private readonly TypeResolver                                   $typeResolver,
-        private readonly Security                                       $security,
+        private readonly TypeResolver $typeResolver,
+        private readonly Security $security,
         private readonly AttributeValueToAttributeFacadeBridgeInterface $attributeFacadeBridge,
     ) {
     }
@@ -36,9 +36,9 @@ final class AttributeValueCreator implements AttributeValueCreatorInterface
     }
 
     private function createAttribute(
-        Attribute              $attribute,
+        Attribute $attribute,
         AttributeValueTransfer $transfer,
-        ?Id                    $parent
+        ?Id $parent
     ): AttributeValue {
         return $this
             ->typeResolver

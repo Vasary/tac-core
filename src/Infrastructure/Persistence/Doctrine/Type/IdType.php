@@ -1,6 +1,6 @@
 <?php
 
-declare(strict_types=1);
+declare(strict_types = 1);
 
 namespace App\Infrastructure\Persistence\Doctrine\Type;
 
@@ -48,7 +48,7 @@ final class IdType extends Type
         }
     }
 
-    public function convertToDatabaseValue($value, AbstractPlatform $platform): ?string
+    public function convertToDatabaseValue(mixed $value, AbstractPlatform $platform): ?string
     {
         try {
             return null !== $value ? (string)$value : null;

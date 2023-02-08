@@ -1,6 +1,6 @@
 <?php
 
-declare(strict_types=1);
+declare(strict_types = 1);
 
 namespace App\Domain\ValueObject;
 
@@ -13,6 +13,16 @@ use Stringable;
 final class Id implements Stringable
 {
     private static ?IdFactoryInterface $factory = null;
+
+    public static function fromString(string $id): self
+    {
+        return new self(self::getFactory()->fromString($id));
+    }
+
+    public static function create(): self
+    {
+        return new self(self::getFactory()->v4());
+    }
 
     private function __construct(private readonly Uuid $id)
     {
@@ -33,16 +43,6 @@ final class Id implements Stringable
     public static function setFactory(?IdFactoryInterface $factory): void
     {
         self::$factory = $factory;
-    }
-
-    public static function fromString(string $id): self
-    {
-        return new self(self::getFactory()->fromString($id));
-    }
-
-    public static function create(): self
-    {
-        return new self(self::getFactory()->v4());
     }
 
     public function equalTo(Id $id): bool

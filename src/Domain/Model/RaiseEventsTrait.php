@@ -1,6 +1,6 @@
 <?php
 
-declare(strict_types=1);
+declare(strict_types = 1);
 
 namespace App\Domain\Model;
 
@@ -8,6 +8,9 @@ use App\Domain\Event\EventInterface;
 
 trait RaiseEventsTrait
 {
+    /**
+     * @var EventInterface[]
+     */
     protected array $events = [];
 
     public function popEvents(): array

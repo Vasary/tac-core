@@ -1,6 +1,6 @@
 <?php
 
-declare(strict_types=1);
+declare(strict_types = 1);
 
 namespace App\Infrastructure\Serializer\Normalizer;
 
@@ -34,7 +34,7 @@ final class UnitNormalizer implements NormalizerInterface, NormalizerAwareInterf
             ];
     }
 
-    public function supportsNormalization($data, string $format = null, array $context = []): bool
+    public function supportsNormalization(mixed $data, string $format = null, array $context = []): bool
     {
         return $data instanceof Unit;
     }

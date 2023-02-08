@@ -1,6 +1,6 @@
 <?php
 
-declare(strict_types=1);
+declare(strict_types = 1);
 
 namespace App\Application\Category\Business;
 
@@ -17,9 +17,9 @@ use Generator;
 final class CategoryFacade implements CategoryFacadeInterface
 {
     public function __construct(
-        private readonly CreatorInterface              $creator,
-        private readonly FinderInterface               $finder,
-        private readonly UpdaterInterface              $updater,
+        private readonly CreatorInterface $creator,
+        private readonly FinderInterface $finder,
+        private readonly UpdaterInterface $updater,
     ) {
     }
 

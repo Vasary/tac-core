@@ -1,6 +1,6 @@
 <?php
 
-declare(strict_types=1);
+declare(strict_types = 1);
 
 namespace App\Tests\Presentation\API\Unit;
 
@@ -44,7 +44,7 @@ JSON;
         $this->assertEvent([
             ['glossary.created', self::GLOSSARY_NAME_EVENT_BODY],
             ['glossary.created', self::GLOSSARY_ALIAS_EVENT_BODY],
-            ['unit.created', self::UNIT_EVENT_BODY]
+            ['unit.created', self::UNIT_EVENT_BODY],
         ]);
 
         $response = $this->sendJson('POST', '/api/units', [
@@ -53,8 +53,8 @@ JSON;
                 'suggestions' => [
                     100,
                     250,
-                    500
-                ]
+                    500,
+                ],
             ]
         );
 

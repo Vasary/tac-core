@@ -1,6 +1,6 @@
 <?php
 
-declare(strict_types=1);
+declare(strict_types = 1);
 
 namespace App\Application\AttributeValue\Business\Creator\TypeCreator;
 
@@ -27,9 +27,9 @@ final class BooleanCreator implements AttributeCreatorInterface
 
     public function create(
         AttributeValueTransfer $transfer,
-        Attribute              $attribute,
-        User                   $creator,
-        ?Id                    $parentId = null,
+        Attribute $attribute,
+        User $creator,
+        ?Id $parentId = null,
     ): AttributeValue {
         return $this->attributeValueRepository->create(
             $attribute,

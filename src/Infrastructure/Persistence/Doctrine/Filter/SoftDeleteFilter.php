@@ -1,6 +1,6 @@
 <?php
 
-declare(strict_types=1);
+declare(strict_types = 1);
 
 namespace App\Infrastructure\Persistence\Doctrine\Filter;
 
@@ -19,7 +19,7 @@ final class SoftDeleteFilter extends SQLFilter
     /**
      * @throws Exception
      */
-    public function addFilterConstraint(ClassMetadata $targetEntity, $targetTableAlias): string
+    public function addFilterConstraint(ClassMetadata $targetEntity, mixed $targetTableAlias): string
     {
         if (!$targetEntity->hasField(self::COLUMN_NAME)) {
             return '';

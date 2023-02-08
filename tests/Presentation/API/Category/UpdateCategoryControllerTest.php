@@ -1,6 +1,6 @@
 <?php
 
-declare(strict_types=1);
+declare(strict_types = 1);
 
 namespace App\Tests\Presentation\API\Category;
 
@@ -34,7 +34,7 @@ final class UpdateCategoryControllerTest extends AbstractWebTestCase
 
         $response = $this->sendJson('PUT', '/api/category', [
             'id' => (string) $category->getId(),
-            'name' => 'new name'
+            'name' => 'new name',
         ]);
 
         $responseContent = (string)$response->getContent();
@@ -68,7 +68,7 @@ final class UpdateCategoryControllerTest extends AbstractWebTestCase
 
         $this->browser->jsonRequest('PUT', '/api/category', [
             'id' => $this->faker->uuidv4(),
-            'name' => 'new name'
+            'name' => 'new name',
         ]);
 
         $responseContent = (string)$this->browser->getResponse()->getContent();

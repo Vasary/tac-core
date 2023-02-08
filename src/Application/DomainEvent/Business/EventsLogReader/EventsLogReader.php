@@ -1,6 +1,6 @@
 <?php
 
-declare(strict_types=1);
+declare(strict_types = 1);
 
 namespace App\Application\DomainEvent\Business\EventsLogReader;
 
@@ -8,6 +8,9 @@ use RuntimeException;
 
 final class EventsLogReader implements EventsLogReaderInterface
 {
+    /**
+     * @var resource
+     */
     protected $filePointer;
 
     protected ?Log $currentElement;
@@ -18,7 +21,12 @@ final class EventsLogReader implements EventsLogReaderInterface
     {
         $this->rowCounter = 0;
         $this->currentElement = null;
-        $this->filePointer = fopen($this->filePath, 'rb');
+
+        if (false === $resource = fopen($this->filePath, 'rb')) {
+            throw new RuntimeException('Can\'t open file by path ' . $this->filePath);
+        }
+
+        $this->filePointer = $resource;
     }
 
     public function valid(): bool

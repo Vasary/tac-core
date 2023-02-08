@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types = 1);
+
 namespace App\Infrastructure\Test\Stub;
 
 use App\Application\Shared\Contract\TransactionServiceInterface;

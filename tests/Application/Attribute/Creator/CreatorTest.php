@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types = 1);
+
 namespace App\Tests\Application\Attribute\Creator;
 
 use App\Application\AttributeValue\Business\Creator\AttributeValueCreator;
@@ -42,7 +44,7 @@ final class CreatorTest extends AbstractUnitTestCase
 
         $attributeTransfer = AttributeValueTransfer::fromArray([
             'id' => $this->faker->uuidv4(),
-            'value' => 'John'
+            'value' => 'John',
         ]);
 
         $attributeCreator->create($attributeTransfer)->current();
@@ -55,22 +57,22 @@ final class CreatorTest extends AbstractUnitTestCase
             [
                 new FloatType(),
                 '1.00',
-                FloatCreator::class
+                FloatCreator::class,
             ],
             [
                 new IntegerType(),
                 '2',
-                IntegerCreator::class
+                IntegerCreator::class,
             ],
             [
                 new BooleanType(),
                 'true',
-                BooleanCreator::class
+                BooleanCreator::class,
             ],
             [
                 new StringType(),
                 'John',
-                StringCreator::class
+                StringCreator::class,
             ],
         ];
     }
@@ -123,7 +125,7 @@ final class CreatorTest extends AbstractUnitTestCase
 
         $attributeTransfer = AttributeValueTransfer::fromArray([
             'id' => '888c23c6-06fe-4a95-a66c-f292da2f7607',
-            'value' => $expectedValue
+            'value' => $expectedValue,
         ]);
 
         $list = $attributeCreator->create($attributeTransfer);

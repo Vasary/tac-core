@@ -1,6 +1,6 @@
 <?php
 
-declare(strict_types=1);
+declare(strict_types = 1);
 
 namespace App\Tests\Presentation\API\Unit;
 
@@ -61,8 +61,8 @@ JSON;
                     100,
                     250,
                     500,
-                    600
-                ]
+                    600,
+                ],
             ]
         );
 
@@ -107,8 +107,8 @@ JSON;
                     100,
                     250,
                     500,
-                    600
-                ]
+                    600,
+                ],
             ]
         );
 

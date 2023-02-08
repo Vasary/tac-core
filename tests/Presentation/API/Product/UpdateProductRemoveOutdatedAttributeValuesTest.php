@@ -1,6 +1,6 @@
 <?php
 
-declare(strict_types=1);
+declare(strict_types = 1);
 
 namespace App\Tests\Presentation\API\Product;
 
@@ -17,10 +17,6 @@ use App\Infrastructure\Test\Context\Model\UserContext;
 final class UpdateProductRemoveOutdatedAttributeValuesTest extends AbstractWebTestCase
 {
     use AssertAttributeTrait, AssertEventTrait;
-
-    protected static array $ids = [
-        '8a730673-0740-46d2-956e-505908ff140e',
-    ];
 
     private const PRODUCT_EVENT_0 = <<<JSON
 {"product":{"id":"1884fcbf-6ade-49a4-b91a-505290ec1e77","name":"name","description":"description","creator":"foo@bar.com","attributes":[{"id":"80df2e33-6bad-4f91-9208-e938b543e31c","attribute":{"id":"8f91fbc8-292c-4594-9ed2-d67f769976c7","code":"name","type":"string","name":"name","description":"description","value":"A mock value"},"parent":"","creator":"foo@bar.com","createdAt":"2022-01-01T00:00:00+00:00","updatedAt":"2022-09-01T00:00:00+00:00","deletedAt":null},{"id":"8a730673-0740-46d2-956e-505908ff140e","attribute":{"id":"4e897f97-dc43-4de3-bb16-358943bac606","code":"surname","type":"string","name":"name","description":"description","value":"Doe"},"parent":"","creator":"foo@bar.com","createdAt":"2022-09-01T00:00:00+00:00","updatedAt":"2022-09-01T00:00:00+00:00","deletedAt":null}],"category":"6b58caa4-0571-44db-988a-8a75f86b2520","units":[],"createdAt":"2022-01-01T00:00:00+00:00","updatedAt":"2022-09-01T00:00:00+00:00","deletedAt":null}}
@@ -50,6 +46,10 @@ JSON;
 {"attributeValue":{"id":"8a730673-0740-46d2-956e-505908ff140e","attribute":{"id":"4e897f97-dc43-4de3-bb16-358943bac606","code":"surname","type":"string","name":"name","description":"description","value":"Doe"},"parent":"","creator":"foo@bar.com","createdAt":"2022-09-01T00:00:00+00:00","updatedAt":"2022-09-01T00:00:00+00:00","deletedAt":null}}
 JSON;
 
+    protected static array $ids = [
+        '8a730673-0740-46d2-956e-505908ff140e',
+    ];
+
     public function testShouldSuccessfullyUpdateProductAttributesList(): void
     {
         $this->freezeTime();
@@ -61,7 +61,7 @@ JSON;
             ['attribute.value.updated', self::ATTRIBUTE_VALUE_EVENT_1],
             ['attribute.value.updated', self::ATTRIBUTE_VALUE_EVENT_2],
             ['attribute.value.removed', self::ATTRIBUTE_VALUE_REMOVED_0],
-            ['attribute.value.created', self::ATTRIBUTE_VALUE_CREATED]
+            ['attribute.value.created', self::ATTRIBUTE_VALUE_CREATED],
         ]);
 
         $category = CategoryContext::create()();
@@ -114,12 +114,12 @@ JSON;
                 'attributes' => [
                     [
                         'id' => '8f91fbc8-292c-4594-9ed2-d67f769976c7',
-                        'value' => 'A mock value'
+                        'value' => 'A mock value',
                     ],
                     [
                         'id' => '4e897f97-dc43-4de3-bb16-358943bac606',
-                        'value' => 'Doe'
-                    ]
+                        'value' => 'Doe',
+                    ],
                 ],
                 'units' => [],
             ]

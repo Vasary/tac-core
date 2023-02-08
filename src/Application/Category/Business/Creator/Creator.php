@@ -1,6 +1,6 @@
 <?php
 
-declare(strict_types=1);
+declare(strict_types = 1);
 
 namespace App\Application\Category\Business\Creator;
 
@@ -14,9 +14,9 @@ use Doctrine\ORM\EntityManagerInterface;
 final class Creator implements CreatorInterface
 {
     public function __construct(
-        private readonly CategoryRepositoryInterface   $repository,
-        private readonly EntityManagerInterface        $entityManager,
-        private readonly SecurityInterface             $security,
+        private readonly CategoryRepositoryInterface $repository,
+        private readonly EntityManagerInterface $entityManager,
+        private readonly SecurityInterface $security,
     ) {
     }
 

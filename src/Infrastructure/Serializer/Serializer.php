@@ -1,6 +1,6 @@
 <?php
 
-declare(strict_types=1);
+declare(strict_types = 1);
 
 namespace App\Infrastructure\Serializer;
 
@@ -22,11 +22,6 @@ final class Serializer implements SerializerInterface
     private static ?SerializerInterface $instance = null;
     private SymfonySerializerInterface $serializer;
 
-    private function __construct()
-    {
-        $this->serializer = new SymfonySerializer($this->getNormalizers());
-    }
-
     public static function create(): self
     {
         if (null === self::$instance) {
@@ -34,6 +29,11 @@ final class Serializer implements SerializerInterface
         }
 
         return self::$instance;
+    }
+
+    private function __construct()
+    {
+        $this->serializer = new SymfonySerializer($this->getNormalizers());
     }
 
     /**

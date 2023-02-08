@@ -18,10 +18,28 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v3
 
-      - uses: actions/upload-artifact@master
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
         with:
-          name: source
-          path: .
+          php-version: '8.2.1'
+          extensions: uopz redis pdo pdo_sqlite sockets intl
+
+      - name: Install Dependencies
+        run: composer install --no-ansi --no-interaction --no-suggest --no-progress --prefer-dist
+
+      - name: Packing
+        run: |
+          rm -Rf ./.github ./build ./pages ./resource/* ./var/* renovate.json .dockerignore .git .gitignore README.md
+          cd ../
+          tar -czvf artifact.tar.gz ./tac-core
+          mv artifact.tar.gz ./tac-core
+
+      - name: Uploading package
+        uses: actions/upload-artifact@master
+        with:
+          name: artifact
+          path: artifact.tar.gz
+          retention-days: 1
 
   validate:
     needs: [artifact]
@@ -31,11 +49,17 @@ jobs:
     steps:
       - uses: actions/download-artifact@master
         with:
-          name: source
+          name: artifact
           path: .
+
+      - name: Extracting package
+        run: |
+          tar xvfz artifact.tar.gz -C ../
+          rm artifact.tar.gz
 
       - name: Validate composer.lock
         run: composer validate --no-check-all --no-check-publish
+
   security:
     needs: [artifact]
     runs-on: ubuntu-latest
@@ -44,18 +68,50 @@ jobs:
     steps:
       - uses: actions/download-artifact@master
         with:
-          name: source
+          name: artifact
           path: .
+
+      - name: Extracting package
+        run: |
+          tar xvfz artifact.tar.gz -C ../
+          rm artifact.tar.gz
 
       - name: PHP Security Checker
         uses: StephaneBour/actions-php-security-checker@1.2
         with:
           composer-lock: './composer.lock'
-  tests:
+
+  cs:
+    name: code standard
     needs: [artifact]
     runs-on: ubuntu-latest
     strategy:
-      fail-fast: false
+      fail-fast: true
+    steps:
+      - uses: actions/download-artifact@master
+        with:
+          name: artifact
+          path: .
+
+      - name: Extracting package
+        run: |
+          tar xvfz artifact.tar.gz -C ../
+          rm artifact.tar.gz
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.2.1'
+          extensions: uopz redis pdo pdo_sqlite sockets intl
+
+      - name: Check coding standard compliance
+        run: vendor/bin/phpcs --standard=phpcs.xml
+
+  tests:
+    needs: [artifact, cs, validate, security]
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: true
     steps:
       - name: Setup PHP
         uses: shivammathur/setup-php@v2
@@ -64,11 +120,15 @@ jobs:
           extensions: uopz redis pdo pdo_sqlite sockets intl
           coverage: xdebug
 
-      - name: Checkout
-        uses: actions/checkout@v3
+      - uses: actions/download-artifact@master
+        with:
+          name: artifact
+          path: .
 
-      - name: Install Dependencies (PHP vendors)
-        run: composer install --no-ansi --no-interaction --no-suggest --no-progress --prefer-dist
+      - name: Extracting package
+        run: |
+          tar xvfz artifact.tar.gz -C ../
+          rm artifact.tar.gz
 
       - name: Execute tests via PHPUnit
         run: bin/phpunit
