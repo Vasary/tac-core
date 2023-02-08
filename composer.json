@@ -95,7 +95,7 @@
         "mockery/mockery": "1.5.1",
         "nette/php-generator": "4.0.5",
         "phpunit/phpunit": "9.6.3",
-        "slevomat/coding-standard": "^8.8",
+        "slevomat/coding-standard": "8.8.0",
         "slope-it/clock-mock": "0.3.4",
         "symfony/browser-kit": "6.1.11",
         "symfony/css-selector": "6.1.11",
