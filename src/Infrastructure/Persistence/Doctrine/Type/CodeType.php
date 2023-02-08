@@ -1,6 +1,6 @@
 <?php
 
-declare(strict_types=1);
+declare(strict_types = 1);
 
 namespace App\Infrastructure\Persistence\Doctrine\Type;
 
@@ -22,12 +22,12 @@ final class CodeType extends Type
         return self::NAME;
     }
 
-    public function convertToDatabaseValue($value, AbstractPlatform $platform): string
+    public function convertToDatabaseValue(mixed $value, AbstractPlatform $platform): string
     {
         return (string) $value;
     }
 
-    public function convertToPHPValue($value, AbstractPlatform $platform): Code
+    public function convertToPHPValue(mixed $value, AbstractPlatform $platform): Code
     {
         return new Code($value);
     }

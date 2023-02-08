@@ -1,6 +1,6 @@
 <?php
 
-declare(strict_types=1);
+declare(strict_types = 1);
 
 namespace App\Tests\Presentation\API\Product;
 
@@ -63,8 +63,8 @@ JSON;
                 'description' => (string)$product->getDescription(),
                 'attributes' => [],
                 'units' => [
-                    (string)$unit->getId()
-                ]
+                    (string)$unit->getId(),
+                ],
             ]
         );
 
@@ -123,8 +123,8 @@ JSON;
                 'description' => (string)$product->getDescription(),
                 'attributes' => [],
                 'units' => [
-                    (string)$unit->getId()
-                ]
+                    (string)$unit->getId(),
+                ],
             ]
         );
 
@@ -159,7 +159,7 @@ JSON;
                 'name' => 'hello',
                 'description' => 'description',
                 'attributes' => [],
-                'units' => []
+                'units' => [],
             ]
         );
 

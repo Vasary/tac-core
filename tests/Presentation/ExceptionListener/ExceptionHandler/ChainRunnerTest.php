@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types = 1);
+
 namespace App\Tests\Presentation\ExceptionListener\ExceptionHandler;
 
 use App\Application\Shared\Contract\TranslatorInterface;
@@ -27,7 +29,7 @@ final class ChainRunnerTest extends AbstractUnitTestCase
     public function testShouldSuccessfullyObtainValidationExceptionResponse(): void
     {
         $chainHandler = new ChainRunner([
-            new ValidationExceptionHandler()
+            new ValidationExceptionHandler(),
         ]);
 
         $constraint = Mockery::mock(ConstraintViolation::class);

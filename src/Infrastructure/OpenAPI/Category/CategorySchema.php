@@ -1,13 +1,13 @@
 <?php
 
-declare(strict_types=1);
+declare(strict_types = 1);
 
 namespace App\Infrastructure\OpenAPI\Category;
 
 use App\Infrastructure\Map\ParametersList;
 use OpenApi\Attributes as OA;
 
-class CategorySchema extends OA\Schema
+final class CategorySchema extends OA\Schema
 {
     public function __construct()
     {

@@ -1,6 +1,6 @@
 <?php
 
-declare(strict_types=1);
+declare(strict_types = 1);
 
 namespace App\Tests\Presentation\API\Category;
 
@@ -27,7 +27,7 @@ JSON;
         $category = $categoryContext();
 
         $this->assertEvent([
-            ['category.removed', self::EVENT_BODY]
+            ['category.removed', self::EVENT_BODY],
         ]);
 
         $this->load($category);

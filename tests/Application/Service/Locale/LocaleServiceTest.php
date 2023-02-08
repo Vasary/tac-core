@@ -1,6 +1,6 @@
 <?php
 
-declare(strict_types=1);
+declare(strict_types = 1);
 
 namespace App\Tests\Application\Service\Locale;
 
@@ -10,7 +10,7 @@ use App\Application\Shared\Service\LocaleProvider\LocaleProviderInterface;
 use App\Infrastructure\Test\AbstractUnitTestCase;
 use Mockery;
 
-class LocaleServiceTest extends AbstractUnitTestCase
+final class LocaleServiceTest extends AbstractUnitTestCase
 {
     public function testShouldSuccessfullyRetrieveLocale(): void
     {

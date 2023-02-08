@@ -1,6 +1,6 @@
 <?php
 
-declare(strict_types=1);
+declare(strict_types = 1);
 
 namespace App\Infrastructure\OpenAPI;
 
@@ -8,7 +8,7 @@ use Attribute;
 use OpenApi\Attributes as OA;
 
 #[Attribute(Attribute::IS_REPEATABLE | Attribute::TARGET_CLASS | Attribute::TARGET_METHOD)]
-class Info extends OA\OpenApi
+final class Info extends OA\OpenApi
 {
     public function __construct()
     {
@@ -26,12 +26,12 @@ class Info extends OA\OpenApi
                 new OA\Server(
                     url: 'http://core.dev.tac.com',
                     description: 'Staging server',
-                )
+                ),
             ],
             security: [
                 [
                     'UserId' => [],
-                    'UserGroups' => []
+                    'UserGroups' => [],
                 ],
             ],
             components: new OA\Components(
@@ -47,7 +47,7 @@ class Info extends OA\OpenApi
                         type: 'apiKey',
                         name: 'x-user-roles',
                         in: 'header',
-                    )
+                    ),
                 ]
             ),
         );

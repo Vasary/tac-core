@@ -1,6 +1,6 @@
 <?php
 
-declare(strict_types=1);
+declare(strict_types = 1);
 
 namespace App\Application\Attribute\Business\Updater;
 
@@ -18,9 +18,8 @@ final class Updater implements UpdaterInterface
 {
     public function __construct(
         private readonly AttributeRepositoryInterface $attributeRepository,
-        private readonly EntityManagerInterface       $entityManager
-    )
-    {
+        private readonly EntityManagerInterface $entityManager
+    ) {
     }
 
     public function update(UpdateAttributeTransfer $transfer): Attribute

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types = 1);
+
 namespace App\Tests\Application\Attribute\Business\Updater;
 
 use App\Application\Attribute\Business\Updater\Updater;
@@ -22,7 +24,7 @@ final class UpdaterTest extends AbstractUnitTestCase
                 'name' => 'John',
                 'description' => 'Doe',
                 'code' => 'code',
-                'type' => 'integer'
+                'type' => 'integer',
             ]
         );
 
@@ -49,7 +51,7 @@ final class UpdaterTest extends AbstractUnitTestCase
                 'name' => 'New name',
                 'description' => 'New description',
                 'code' => 'new_code',
-                'type' => 'boolean'
+                'type' => 'boolean',
             ]
         );
 

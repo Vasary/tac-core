@@ -1,13 +1,13 @@
 <?php
 
-declare(strict_types=1);
+declare(strict_types = 1);
 
 namespace App\Infrastructure\OpenAPI\Unit;
 
 use App\Infrastructure\Map\ParametersList;
 use OpenApi\Attributes as OA;
 
-class UnitSchema extends OA\Schema
+final class UnitSchema extends OA\Schema
 {
     public function __construct()
     {

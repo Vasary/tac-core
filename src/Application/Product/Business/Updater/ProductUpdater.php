@@ -1,6 +1,6 @@
 <?php
 
-declare(strict_types=1);
+declare(strict_types = 1);
 
 namespace App\Application\Product\Business\Updater;
 
@@ -18,11 +18,10 @@ final class ProductUpdater implements ProductUpdaterInterface
 {
     public function __construct(
         private readonly ProductRepositoryInterface $repository,
-        private readonly AttributeUpdater           $attributeUpdater,
-        private readonly UnitsUpdater               $unitsUpdater,
-        private readonly EntityManagerInterface     $entityManager,
-    )
-    {
+        private readonly AttributeUpdater $attributeUpdater,
+        private readonly UnitsUpdater $unitsUpdater,
+        private readonly EntityManagerInterface $entityManager,
+    ) {
     }
 
     public function update(UpdateProductTransfer $transfer): Product

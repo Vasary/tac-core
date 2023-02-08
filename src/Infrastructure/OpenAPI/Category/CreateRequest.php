@@ -1,6 +1,6 @@
 <?php
 
-declare(strict_types=1);
+declare(strict_types = 1);
 
 namespace App\Infrastructure\OpenAPI\Category;
 
@@ -9,7 +9,7 @@ use Attribute;
 use OpenApi\Attributes as OA;
 
 #[Attribute(Attribute::IS_REPEATABLE | Attribute::TARGET_CLASS | Attribute::TARGET_METHOD)]
-class CreateRequest extends OA\RequestBody
+final class CreateRequest extends OA\RequestBody
 {
     public function __construct()
     {

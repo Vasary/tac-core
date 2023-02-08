@@ -1,6 +1,6 @@
 <?php
 
-declare(strict_types=1);
+declare(strict_types = 1);
 
 namespace App\Infrastructure\Assert;
 
@@ -13,13 +13,10 @@ final class NotBlank extends Constraint
 {
     public string $requiredMessage = '{{ name }} is required';
     public bool $required = false;
-    public string $name;
-
     #[HasNamedArguments]
-    public function __construct(string $name, bool $mode = false, array $groups = null, mixed $payload = null)
+    public function __construct(public string $name, bool $mode = false, array $groups = null, mixed $payload = null)
     {
         $this->required = $mode;
-        $this->name = $name;
 
         parent::__construct([], $groups, $payload);
     }

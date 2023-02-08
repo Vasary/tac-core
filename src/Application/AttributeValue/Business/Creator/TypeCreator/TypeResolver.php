@@ -1,17 +1,17 @@
 <?php
 
-declare(strict_types=1);
+declare(strict_types = 1);
 
 namespace App\Application\AttributeValue\Business\Creator\TypeCreator;
 
-class TypeResolver
+final class TypeResolver
 {
     public function __construct(
-        private readonly ArrayCreator   $arrayCreator,
+        private readonly ArrayCreator $arrayCreator,
         private readonly BooleanCreator $booleanCreator,
         private readonly IntegerCreator $integerCreator,
-        private readonly StringCreator  $stringCreator,
-        private readonly FloatCreator   $floatCreator
+        private readonly StringCreator $stringCreator,
+        private readonly FloatCreator $floatCreator
     ) {
     }
 

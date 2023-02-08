@@ -1,6 +1,6 @@
 <?php
 
-declare(strict_types=1);
+declare(strict_types = 1);
 
 namespace App\Tests\Presentation\API\Unit;
 
@@ -25,7 +25,7 @@ JSON;
         $unit = UnitContext::create()();
 
         $this->assertEvent([
-            ['unit.removed', self::EVENT_BODY]
+            ['unit.removed', self::EVENT_BODY],
         ]);
 
         $this->load($user, $unit);

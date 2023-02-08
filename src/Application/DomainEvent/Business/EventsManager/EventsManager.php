@@ -1,6 +1,6 @@
 <?php
 
-declare(strict_types=1);
+declare(strict_types = 1);
 
 namespace App\Application\DomainEvent\Business\EventsManager;
 
@@ -12,11 +12,10 @@ use App\Infrastructure\Queue\Message\Message;
 final class EventsManager implements EventsManagerInterface
 {
     public function __construct(
-        private readonly EventPublisherInterface  $eventPublisher,
+        private readonly EventPublisherInterface $eventPublisher,
         private readonly EventsLogReaderInterface $reader,
         private readonly EventsLogWriterInterface $logWriter,
-    )
-    {
+    ) {
     }
 
     public function replay(): void

@@ -1,6 +1,6 @@
 <?php
 
-declare(strict_types=1);
+declare(strict_types = 1);
 
 namespace App\Infrastructure\Persistence\Doctrine\Type;
 
@@ -25,12 +25,12 @@ final class ValueType extends BlobType
     /**
      * @param Value $value
      */
-    public function convertToDatabaseValue($value, AbstractPlatform $platform): ?string
+    public function convertToDatabaseValue(mixed $value, AbstractPlatform $platform): ?string
     {
         return $value->getValue();
     }
 
-    public function convertToPHPValue($value, AbstractPlatform $platform): Value
+    public function convertToPHPValue(mixed $value, AbstractPlatform $platform): Value
     {
         return new Value($value);
     }

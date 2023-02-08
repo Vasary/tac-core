@@ -1,6 +1,6 @@
 <?php
 
-declare(strict_types=1);
+declare(strict_types = 1);
 
 namespace App\Domain\Factory\UUID;
 
@@ -12,7 +12,7 @@ final class IdFactory implements IdFactoryInterface
 {
     public function __construct(
         private readonly GeneratorInterface $generator,
-        private readonly BuilderInterface   $builder,
+        private readonly BuilderInterface $builder,
     ) {
     }
 

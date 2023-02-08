@@ -1,6 +1,6 @@
 <?php
 
-declare(strict_types=1);
+declare(strict_types = 1);
 
 namespace App\Infrastructure\Assert;
 
@@ -14,15 +14,12 @@ final class Units extends Constraint
     public string $requiredMessage = 'Units list is required';
     public string $emptyMessage = 'Units list is empty';
     public bool $required;
-    public bool $validateId;
-
     #[HasNamedArguments]
-    public function __construct(bool $mode = false, bool $validateId = false, array $groups = null, mixed $payload = null)
+    public function __construct(bool $mode = false, public bool $validateId = false, array $groups = null, mixed $payload = null)
     {
         parent::__construct([], $groups, $payload);
 
         $this->required = $mode;
-        $this->validateId = $validateId;
     }
 
     public function validatedBy(): string

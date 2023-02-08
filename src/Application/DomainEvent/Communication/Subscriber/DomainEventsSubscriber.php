@@ -1,6 +1,6 @@
 <?php
 
-declare(strict_types=1);
+declare(strict_types = 1);
 
 namespace App\Application\DomainEvent\Communication\Subscriber;
 
@@ -14,10 +14,9 @@ use Symfony\Component\HttpKernel\KernelEvents;
 final class DomainEventsSubscriber implements EventSubscriberInterface
 {
     public function __construct(
-        private readonly EventStore               $eventStore,
-        private readonly EventsManagerInterface   $eventsManager,
-    )
-    {
+        private readonly EventStore $eventStore,
+        private readonly EventsManagerInterface $eventsManager,
+    ) {
     }
 
     public static function getSubscribedEvents(): array

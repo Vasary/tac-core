@@ -1,6 +1,6 @@
 <?php
 
-declare(strict_types=1);
+declare(strict_types = 1);
 
 namespace App\Tests\Presentation\API\Attributes;
 
@@ -22,7 +22,7 @@ JSON;
     public function testShouldSuccessfullyRemoveExistedAttribute(): void
     {
         $this->assertEvent([
-            ['attribute.removed', self::EVENT]
+            ['attribute.removed', self::EVENT],
         ]);
 
         $user = UserContext::create()();

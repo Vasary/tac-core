@@ -1,6 +1,6 @@
 <?php
 
-declare(strict_types=1);
+declare(strict_types = 1);
 
 namespace App\Application\Product\Business\Creator;
 
@@ -22,12 +22,12 @@ use Doctrine\ORM\EntityManagerInterface;
 final class Creator implements CreatorInterface
 {
     public function __construct(
-        private readonly Security                                     $security,
-        private readonly ProductRepositoryInterface                   $productRepository,
+        private readonly Security $security,
+        private readonly ProductRepositoryInterface $productRepository,
         private readonly ProductToAttributeValueFacadeBridgeInterface $attributeFacadeBridge,
-        private readonly ProductToCategoryFacadeBridgeInterface       $categoryFacadeBridge,
-        private readonly ProductToUnitFacadeBridgeInterface           $unitFacadeBridge,
-        private readonly EntityManagerInterface        $entityManager,
+        private readonly ProductToCategoryFacadeBridgeInterface $categoryFacadeBridge,
+        private readonly ProductToUnitFacadeBridgeInterface $unitFacadeBridge,
+        private readonly EntityManagerInterface $entityManager,
     ) {
     }
 

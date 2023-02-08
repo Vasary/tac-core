@@ -1,6 +1,6 @@
 <?php
 
-declare(strict_types=1);
+declare(strict_types = 1);
 
 namespace App\Tests\Presentation\API\Product;
 
@@ -30,7 +30,7 @@ JSON;
         $this->freezeTime();
 
         $this->assertEvent([
-            ['attribute.value.updated', self::ATTRIBUTE_VALUE_UPDATE_EVENT]
+            ['attribute.value.updated', self::ATTRIBUTE_VALUE_UPDATE_EVENT],
         ]);
 
         $user = UserContext::create()();
@@ -108,7 +108,7 @@ JSON;
                         [
                             'id' => 'fee8f295-7b19-4d94-8245-1690ab054ad7',
                             'value' => 'true',
-                        ]
+                        ],
                     ],
                 ],
                 [

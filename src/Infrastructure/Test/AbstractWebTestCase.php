@@ -1,6 +1,6 @@
 <?php
 
-declare(strict_types=1);
+declare(strict_types = 1);
 
 namespace App\Infrastructure\Test;
 
@@ -24,10 +24,10 @@ abstract class AbstractWebTestCase extends WebTestCase
 {
     use CleanModelContextTrait, RegisterGlossaryTrait;
 
-    protected ?KernelBrowser $browser;
-    protected ?Generator $faker = null;
     protected static array $ids = [];
     protected static string $locale = 'en';
+    protected ?KernelBrowser $browser;
+    protected ?Generator $faker = null;
 
     public function load(object ...$models): void
     {
@@ -51,7 +51,7 @@ abstract class AbstractWebTestCase extends WebTestCase
     {
         $server = [
             'HTTP_X_USER_EMAIL' => 'foo@bar.com',
-            'HTTP_X_USER_ROLES' => 'core'
+            'HTTP_X_USER_ROLES' => 'core',
         ];
 
         $this->browser->jsonRequest($method, $url, $body, server: $server);
@@ -63,7 +63,7 @@ abstract class AbstractWebTestCase extends WebTestCase
     {
         $server = [
             'HTTP_X_USER_EMAIL' => 'foo@bar.com',
-            'HTTP_X_USER_ROLES' => 'core'
+            'HTTP_X_USER_ROLES' => 'core',
         ];
 
         $this->browser->jsonRequest($method, $url, server: $server);

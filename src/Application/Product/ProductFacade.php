@@ -1,6 +1,6 @@
 <?php
 
-declare(strict_types=1);
+declare(strict_types = 1);
 
 namespace App\Application\Product;
 
@@ -18,9 +18,9 @@ use Generator;
 final class ProductFacade implements ProductFacadeInterface
 {
     public function __construct(
-        private readonly CreatorInterface              $creator,
-        private readonly ProductUpdaterInterface       $updater,
-        private readonly FinderInterface               $finder,
+        private readonly CreatorInterface $creator,
+        private readonly ProductUpdaterInterface $updater,
+        private readonly FinderInterface $finder,
     ) {
     }
 

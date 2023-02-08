@@ -1,6 +1,6 @@
 <?php
 
-declare(strict_types=1);
+declare(strict_types = 1);
 
 namespace App\Infrastructure\Persistence\Doctrine\Type;
 
@@ -43,7 +43,7 @@ final class SuggestionsType extends JsonType
     /**
      * @param Suggestions $value
      */
-    public function convertToDatabaseValue($value, AbstractPlatform $platform): string
+    public function convertToDatabaseValue(mixed $value, AbstractPlatform $platform): string
     {
         if (!($value instanceof Suggestions)) {
             throw ConversionException::conversionFailedSerialization($value, 'json', 'Invalid value type');

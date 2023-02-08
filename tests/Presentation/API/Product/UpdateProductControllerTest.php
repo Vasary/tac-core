@@ -1,6 +1,6 @@
 <?php
 
-declare(strict_types=1);
+declare(strict_types = 1);
 
 namespace App\Tests\Presentation\API\Product;
 
@@ -34,7 +34,7 @@ final class UpdateProductControllerTest extends AbstractWebTestCase
                 'name' => (string)$product->getName(),
                 'description' => (string)$product->getDescription(),
                 'attributes' => [],
-                'units' => []
+                'units' => [],
             ]
         );
 

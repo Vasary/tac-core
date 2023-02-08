@@ -1,6 +1,6 @@
 <?php
 
-declare(strict_types=1);
+declare(strict_types = 1);
 
 namespace App\Application\Product\Business\Updater\Component;
 
@@ -18,10 +18,9 @@ use Doctrine\ORM\EntityManagerInterface;
 final class AttributeUpdater
 {
     public function __construct(
-        private readonly EntityManagerInterface                       $entityManager,
+        private readonly EntityManagerInterface $entityManager,
         private readonly ProductToAttributeValueFacadeBridgeInterface $attributeFacadeBridge,
-    )
-    {
+    ) {
     }
 
     public function updateAttributes(Product $product, UpdateProductTransfer $transfer): void
