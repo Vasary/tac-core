@@ -33,4 +33,9 @@ final class AttributeValueFacade implements AttributeValueFacadeInterface
     {
         return $this->finder->findByProductIdAndAttributeId($productId, $attributeId);
     }
+
+    public function getTotal(): int
+    {
+        return $this->finder->getTotal();
+    }
 }

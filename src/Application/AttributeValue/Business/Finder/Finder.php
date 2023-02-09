@@ -25,4 +25,9 @@ final class Finder implements FinderInterface
     {
         return $this->repository->findByProductIdAndAttributeId($productId, $attributeId);
     }
+
+    public function getTotal(): int
+    {
+        return $this->repository->getTotal();
+    }
 }

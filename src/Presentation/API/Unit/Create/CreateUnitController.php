@@ -25,7 +25,7 @@ final class CreateUnitController extends AbstractController
     {
     }
 
-    #[Post('/api/units')]
+    #[Post('/api/units', 'Units')]
     #[CreateRequest]
     #[CreateResponse]
     #[AccessDeniedResponse]

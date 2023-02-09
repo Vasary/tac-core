@@ -25,4 +25,6 @@ interface AttributeValueRepositoryInterface
     public function get(Id $id): ?AttributeValue;
 
     public function findByProductIdAndAttributeId(Id $productId, Id $attributeId): ?AttributeValue;
+
+    public function getTotal(): int;
 }

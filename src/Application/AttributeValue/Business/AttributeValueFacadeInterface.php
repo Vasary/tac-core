@@ -16,4 +16,6 @@ interface AttributeValueFacadeInterface
     public function list(int $page, int $pageSize): Generator;
 
     public function findByProductAndAttribute(Id $productId, Id $attributeId): ?AttributeValue;
+
+    public function getTotal(): int;
 }

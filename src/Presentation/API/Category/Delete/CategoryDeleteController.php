@@ -24,7 +24,7 @@ final class CategoryDeleteController extends AbstractController
     ) {
     }
 
-    #[Delete('/api/category/{id}')]
+    #[Delete('/api/category/{id}', 'Category')]
     #[RequestWithId]
     #[SuccessfullyDeletedResponse]
     #[AccessDeniedResponse]

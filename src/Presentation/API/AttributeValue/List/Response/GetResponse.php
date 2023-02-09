@@ -11,18 +11,16 @@ use Generator;
 
 final class GetResponse extends JsonResponse
 {
-    public function __construct(Generator $attributes)
+    public function __construct(Generator $attributes, int $total)
     {
         parent::__construct(
-            array_map(
-                fn (AttributeValue $attribute) => $this->build($attribute),
-                iterator_to_array($attributes)
-            ),
+            [
+                'total' => $total,
+                'items' => array_map(
+                    fn(AttributeValue $attribute) => Serializer::create()->toArray($attribute),
+                    iterator_to_array($attributes)
+                ),
+            ]
         );
-    }
-
-    private function build(AttributeValue $attribute): array
-    {
-        return Serializer::create()->toArray($attribute);
     }
 }

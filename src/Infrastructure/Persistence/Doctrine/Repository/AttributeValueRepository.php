@@ -76,4 +76,13 @@ final class AttributeValueRepository implements AttributeValueRepositoryInterfac
 
         return $query->getOneOrNullResult(AbstractQuery::HYDRATE_OBJECT);
     }
+
+    public function getTotal(): int
+    {
+        return $this->objectRepository
+            ->createQueryBuilder('av')
+            ->select('count(av.id)')
+            ->getQuery()
+            ->getSingleScalarResult();
+    }
 }

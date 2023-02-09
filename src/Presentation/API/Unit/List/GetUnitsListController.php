@@ -21,7 +21,7 @@ final class GetUnitsListController extends AbstractController
     {
     }
 
-    #[Get('/api/units')]
+    #[Get('/api/units', 'Units')]
     #[OAGetUnitsResponse]
     #[AccessDeniedResponse]
     public function __invoke(UnitsListRequest $request): JsonResponse
