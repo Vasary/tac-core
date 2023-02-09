@@ -21,7 +21,7 @@ final class CategoriesListController extends AbstractController
     {
     }
 
-    #[Get('/api/category')]
+    #[Get('/api/category', 'Category')]
     #[OAGetCategoriesResponse]
     #[AccessDeniedResponse]
     public function __invoke(CategoryListRequest $request): JsonResponse

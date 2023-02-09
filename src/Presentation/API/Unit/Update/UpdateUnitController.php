@@ -23,7 +23,7 @@ final class UpdateUnitController extends AbstractController
     {
     }
 
-    #[Put('/api/units')]
+    #[Put('/api/units', 'Units')]
     #[UpdateRequest]
     #[UpdateResponse]
     #[AccessDeniedResponse]

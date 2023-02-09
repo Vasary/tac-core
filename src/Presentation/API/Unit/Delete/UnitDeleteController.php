@@ -24,7 +24,7 @@ final class UnitDeleteController extends AbstractController
     ) {
     }
 
-    #[Delete('/api/units/{id}')]
+    #[Delete('/api/units/{id}', 'Units')]
     #[RequestWithId]
     #[SuccessfullyDeletedResponse]
     #[AccessDeniedResponse]

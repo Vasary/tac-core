@@ -23,7 +23,7 @@ final class CategoryCreateController extends AbstractController
     {
     }
 
-    #[Post('/api/category')]
+    #[Post('/api/category', 'Category')]
     #[CreateRequest]
     #[CreateResponse]
     #[AccessDeniedResponse]

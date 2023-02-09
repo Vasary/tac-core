@@ -24,7 +24,7 @@ final class UpdateCategoryController extends AbstractController
     {
     }
 
-    #[Put('/api/category')]
+    #[Put('/api/category', 'Category')]
     #[UpdateRequest]
     #[UpdateResponse]
     #[AccessDeniedResponse]

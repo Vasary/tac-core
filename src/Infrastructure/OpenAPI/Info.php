@@ -30,24 +30,12 @@ final class Info extends OA\OpenApi
             ],
             security: [
                 [
-                    'UserId' => [],
-                    'UserGroups' => [],
+                    'OAuth2' => ['openid', 'admin:org'],
                 ],
             ],
             components: new OA\Components(
                 securitySchemes: [
-                    new OA\SecurityScheme(
-                        securityScheme: 'UserId',
-                        type: 'apiKey',
-                        name: 'x-user-email',
-                        in: 'header',
-                    ),
-                    new OA\SecurityScheme(
-                        securityScheme: 'UserGroups',
-                        type: 'apiKey',
-                        name: 'x-user-roles',
-                        in: 'header',
-                    ),
+                    new Security(),
                 ]
             ),
         );

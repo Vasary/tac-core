@@ -24,7 +24,7 @@ final class CategoryGetController extends AbstractController
     ) {
     }
 
-    #[Get('/api/category/{id}')]
+    #[Get('/api/category/{id}', 'Category')]
     #[RequestWithId]
     #[OAGetCategoryResponse]
     #[AccessDeniedResponse]

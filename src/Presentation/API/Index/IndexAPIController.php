@@ -7,6 +7,7 @@ namespace App\Presentation\API\Index;
 use App\Infrastructure\Annotation\Route;
 use App\Infrastructure\Controller\AbstractController;
 use App\Infrastructure\OpenAPI\Info;
+use App\Infrastructure\OpenAPI\Security;
 use App\Presentation\API\Index\Response\IndexAPIResponse;
 
 #[Info]

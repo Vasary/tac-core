@@ -24,7 +24,7 @@ final class GetUnitController extends AbstractController
     ) {
     }
 
-    #[Get('/api/units/{id}')]
+    #[Get('/api/units/{id}', 'Units')]
     #[RequestWithId]
     #[OAGetUnitResponse]
     #[AccessDeniedResponse]

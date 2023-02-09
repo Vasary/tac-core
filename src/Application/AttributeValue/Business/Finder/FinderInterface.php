@@ -13,4 +13,6 @@ interface FinderInterface
     public function list(int $page, int $pageSize): Generator;
 
     public function findByProductIdAndAttributeId(Id $productId, Id $attributeId): ?AttributeValue;
+
+    public function getTotal(): int;
 }
