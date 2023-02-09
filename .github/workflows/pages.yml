@@ -21,6 +21,26 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v3
 
+      - name: Get swagger latest tag
+        run: |
+          VERSION=$(curl -sL https://api.github.com/repos/swagger-api/swagger-ui/tags |jq -r ".[].name" | head -n 1)
+          echo "VERSION=$VERSION" >> $GITHUB_ENV
+
+      - name: Download
+        run: curl https://github.com/swagger-api/swagger-ui/archive/refs/tags/${{ env.VERSION }}.zip -L -o swagger.zip
+
+      - name: Create directories
+        run: mkdir swagger-tmp
+
+      - name: Unzip
+        run: unzip swagger.zip -d swagger-tmp
+
+      - name: Move dir
+        run: cd swagger-tmp && cd $(ls -d */|head -n 1) && mv dist ../../pages && cd ../../
+
+      - name: Fix config file
+        run: sed -i -- "s,https://petstore.swagger.io/v2/swagger.json,swagger.yml,g" pages/swagger-initializer.js
+
       - name: Setup Pages
         uses: actions/configure-pages@v3
 
