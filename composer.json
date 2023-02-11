@@ -96,7 +96,7 @@
         "nette/php-generator": "4.0.5",
         "phpunit/phpunit": "9.6.3",
         "slevomat/coding-standard": "8.8.0",
-        "slope-it/clock-mock": "0.3.4",
+        "slope-it/clock-mock": "0.3.5",
         "symfony/browser-kit": "6.1.11",
         "symfony/css-selector": "6.1.11",
         "symfony/phpunit-bridge": "6.2.5",
