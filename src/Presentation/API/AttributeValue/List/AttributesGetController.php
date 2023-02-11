@@ -30,7 +30,7 @@ final class AttributesGetController extends AbstractController
     {
         return new GetResponse(
             $this->facade->list($request->page, $request->size),
-            $this->facade->getTotalCount()
+            $this->facade->getTotal()
         );
     }
 }

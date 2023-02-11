@@ -45,8 +45,9 @@ final class GetAttributeValuesControllerTest extends AbstractWebTestCase
         $this->assertResponseStatusCodeSame(200);
         $this->assertJson($responseContent);
         $this->assertDatabaseCount(AttributeValue::class, 2);
-        $this->assertCount(1, $content);
-
-        $this->assertAttributeValue($content[0]);
+        $this->assertArrayHasKey('items', $content);
+        $this->assertArrayHasKey('total', $content);
+        $this->assertCount(1, $content['items']);
+        $this->assertAttributeValue($content['items'][0]);
     }
 }
