@@ -35,6 +35,7 @@ ENV MQ_VHOST=""
 WORKDIR /app
 
 COPY --from=builder /app/config /app/config
+COPY --from=builder /app/.env /app/.env
 COPY --from=builder /app/public /app/public
 COPY --from=builder /app/src /app/src
 COPY --from=builder /app/vendor /app/vendor
