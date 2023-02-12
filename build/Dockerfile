@@ -42,7 +42,7 @@ COPY --from=builder /app/src /app/src
 COPY --from=builder /app/vendor /app/vendor
 COPY --from=builder /app/composer.json /app/composer.json
 COPY --from=builder /app/build/config.json /docker-entrypoint.d/.unit.conf.json
-COPY ./bootstrap.sh /bootstrap.sh
+COPY build/bootstrap.sh /bootstrap.sh
 
 RUN mkdir -p /app/var && \
     mkdir -p /app/resource && \
