@@ -34,6 +34,7 @@ ENV MQ_VHOST=""
 
 WORKDIR /app
 
+COPY --from=builder /app/bin /app/bin
 COPY --from=builder /app/config /app/config
 COPY --from=builder /app/.env /app/.env
 COPY --from=builder /app/public /app/public
@@ -41,8 +42,10 @@ COPY --from=builder /app/src /app/src
 COPY --from=builder /app/vendor /app/vendor
 COPY --from=builder /app/composer.json /app/composer.json
 COPY --from=builder /app/build/config.json /docker-entrypoint.d/.unit.conf.json
+COPY ./bootstrap.sh /bootstrap.sh
 
-RUN mkdir -p /app/{var,resource} && \
+RUN mkdir -p /app/var && \
+    mkdir -p /app/resource && \
     chown www-data:www-data -R /app && \
     apt update && \
     apt install libicu-dev sqlite3 libsqlite3-dev --no-install-recommends --no-install-suggests -y && \
@@ -54,6 +57,6 @@ RUN mkdir -p /app/{var,resource} && \
     docker-php-ext-install pdo pdo_sqlite sockets intl && \
     docker-php-ext-enable redis intl
 
-CMD ["unitd","--no-daemon","--control","unix:/var/run/control.unit.sock"]
+CMD ["/bootstrap.sh"]
 
 EXPOSE 80
