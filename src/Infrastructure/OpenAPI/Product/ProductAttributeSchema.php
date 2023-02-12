@@ -1,6 +1,6 @@
 <?php
 
-declare(strict_types=1);
+declare(strict_types = 1);
 
 namespace App\Infrastructure\OpenAPI\Product;
 
@@ -32,7 +32,7 @@ final class ProductAttributeSchema extends OA\Schema
                     type: 'string',
                     example: '305b2ffe-2084-43c8-b265-086ea7b944d7',
                     nullable: true
-                )
+                ),
             ]
         );
     }
