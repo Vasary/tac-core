@@ -2,7 +2,7 @@
 
 # Clear cache
 
-/app/bin cache:warmup
+/app/bin/console cache:warmup
 chown www-data:www-data -R /app/var
 chmod 777 -R /app/var
 
