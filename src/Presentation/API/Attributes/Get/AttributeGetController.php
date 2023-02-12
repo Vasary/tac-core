@@ -7,6 +7,10 @@ namespace App\Presentation\API\Attributes\Get;
 use App\Application\Attribute\Business\AttributeFacadeInterface;
 use App\Infrastructure\Annotation\Route;
 use App\Infrastructure\Controller\AbstractController;
+use App\Infrastructure\OpenAPI\AccessDeniedResponse;
+use App\Infrastructure\OpenAPI\Get;
+use App\Infrastructure\OpenAPI\RequestWithId;
+use App\Infrastructure\OpenAPI\Attribute\GetAttributeResponse as OAGetAttributeResponse;
 use App\Infrastructure\Response\JsonResponse;
 use App\Presentation\API\Attributes\Get\Request\AttributeGetRequest;
 use App\Presentation\API\Attributes\Get\Response\GetResponse;
@@ -20,6 +24,10 @@ final class AttributeGetController extends AbstractController
     ) {
     }
 
+    #[Get('/api/attributes/{id}', 'Attributes')]
+    #[RequestWithId]
+    #[OAGetAttributeResponse]
+    #[AccessDeniedResponse]
     public function __invoke(AttributeGetRequest $request): JsonResponse
     {
         return new GetResponse($this->attributeFacade->getById(GetAttributeTransfer::fromArray($request->toArray())));

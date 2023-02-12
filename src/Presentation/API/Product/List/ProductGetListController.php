@@ -7,6 +7,9 @@ namespace App\Presentation\API\Product\List;
 use App\Application\Product\ProductFacadeInterface;
 use App\Infrastructure\Annotation\Route;
 use App\Infrastructure\Controller\AbstractController;
+use App\Infrastructure\OpenAPI\AccessDeniedResponse;
+use App\Infrastructure\OpenAPI\Get;
+use App\Infrastructure\OpenAPI\Product\GetProductsResponse as OAGetProductsResponse;
 use App\Infrastructure\Response\JsonResponse;
 use App\Presentation\API\Product\List\Request\ProductListRequest;
 use App\Presentation\API\Product\List\Response\ListResponse;
@@ -18,6 +21,9 @@ final class ProductGetListController extends AbstractController
     {
     }
 
+    #[Get('/api/products', 'Products')]
+    #[OAGetProductsResponse]
+    #[AccessDeniedResponse]
     public function __invoke(ProductListRequest $request): JsonResponse
     {
         return new ListResponse(

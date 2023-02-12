@@ -2,12 +2,12 @@
 
 declare(strict_types = 1);
 
-namespace App\Infrastructure\OpenAPI\AttributeValue;
+namespace App\Infrastructure\OpenAPI\Attribute;
 
 use App\Infrastructure\Map\ParametersList;
 use OpenApi\Attributes as OA;
 
-final class AttributeValueSchema extends OA\Schema
+final class AttributeSchema extends OA\Schema
 {
     public function __construct()
     {
@@ -15,44 +15,55 @@ final class AttributeValueSchema extends OA\Schema
             properties: [
                 new OA\Property(
                     property: ParametersList::ID,
-                    description: 'Unique unit id',
+                    description: 'Unique attribute id',
                     type: 'string',
                     example: '147e4f94-315a-46df-a3d5-b9f3bfff3177',
                 ),
                 new OA\Property(
-                    property: ParametersList::ATTRIBUTE,
-                    ref: '#/components/schemas/Attribute',
-                    description: 'Attribute data',
-                    type: 'object',
+                    property: ParametersList::NAME,
+                    description: 'Attribute name',
+                    type: 'string',
+                    example: 'Name'
                 ),
                 new OA\Property(
-                    property: ParametersList::PARENT,
-                    description: 'Parameter parent id',
+                    property: ParametersList::CODE,
+                    description: 'Unique attribute code',
                     type: 'string',
-                    example: 'cbff345a-b4e0-4f6d-800f-48012ae803bd',
-                    nullable: true,
+                    example: 'name'
+                ),
+                new OA\Property(
+                    property: ParametersList::DESCRIPTION,
+                    description: 'Attribute description',
+                    type: 'string',
+                    example: 'This attribute describes product name'
+                ),
+                new OA\Property(
+                    property: ParametersList::TYPE,
+                    description: 'Attribute type',
+                    type: 'string',
+                    example: 'Attribute data type'
                 ),
                 new OA\Property(
                     property: ParametersList::CREATOR,
-                    description: 'Person Id who creates unit',
+                    description: 'Person Id who creates attribute',
                     type: 'string',
                     example: 'foo@bar.com'
                 ),
                 new OA\Property(
                     property: ParametersList::CREATED_AT,
-                    description: 'Unit was created at',
+                    description: 'Attribute was created at',
                     type: 'string',
                     example: '2021-01-03T02:30:00+01:00',
                 ),
                 new OA\Property(
                     property: ParametersList::UPDATED_AT,
-                    description: 'Unit was updated at',
+                    description: 'Attribute was updated at',
                     type: 'string',
                     example: '2021-01-03T02:30:00+01:00',
                 ),
                 new OA\Property(
                     property: ParametersList::DELETED_AT,
-                    description: 'Unit was deleted at',
+                    description: 'Attribute was deleted at',
                     type: 'string',
                     example: '2021-01-03T02:30:00+01:00',
                 ),

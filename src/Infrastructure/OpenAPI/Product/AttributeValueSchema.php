@@ -2,7 +2,7 @@
 
 declare(strict_types = 1);
 
-namespace App\Infrastructure\OpenAPI\AttributeValue;
+namespace App\Infrastructure\OpenAPI\Product;
 
 use App\Infrastructure\Map\ParametersList;
 use OpenApi\Attributes as OA;

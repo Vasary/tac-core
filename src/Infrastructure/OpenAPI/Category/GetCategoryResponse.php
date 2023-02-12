@@ -14,7 +14,7 @@ final class GetCategoryResponse extends OA\Response
     {
         parent::__construct(
             response: 200,
-            description: 'Get category by ID response',
+            description: 'Get category by id response',
             content: new OA\MediaType(
                 mediaType: 'application/json',
                 schema: new CategorySchema()

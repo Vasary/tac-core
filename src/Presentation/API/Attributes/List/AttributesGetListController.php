@@ -7,6 +7,9 @@ namespace App\Presentation\API\Attributes\List;
 use App\Application\Attribute\Business\AttributeFacadeInterface;
 use App\Infrastructure\Annotation\Route;
 use App\Infrastructure\Controller\AbstractController;
+use App\Infrastructure\OpenAPI\AccessDeniedResponse;
+use App\Infrastructure\OpenAPI\Attribute\GetAttributeResponse as OAGetAttributesResponse;
+use App\Infrastructure\OpenAPI\Get;
 use App\Infrastructure\Response\JsonResponse;
 use App\Presentation\API\Attributes\List\Request\AttributesListRequest;
 use App\Presentation\API\Attributes\List\Response\AttributesListResponse;
@@ -18,6 +21,9 @@ final class AttributesGetListController extends AbstractController
     {
     }
 
+    #[Get('/api/attributes', 'Attributes')]
+    #[OAGetAttributesResponse]
+    #[AccessDeniedResponse]
     public function __invoke(AttributesListRequest $request): JsonResponse
     {
         return new AttributesListResponse(

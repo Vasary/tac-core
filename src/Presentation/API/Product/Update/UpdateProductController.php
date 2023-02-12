@@ -7,6 +7,10 @@ namespace App\Presentation\API\Product\Update;
 use App\Application\Product\ProductFacadeInterface;
 use App\Infrastructure\Annotation\Route;
 use App\Infrastructure\Controller\AbstractController;
+use App\Infrastructure\OpenAPI\AccessDeniedResponse;
+use App\Infrastructure\OpenAPI\Product\UpdateRequest;
+use App\Infrastructure\OpenAPI\Product\UpdateResponse as OAUpdateResponse;
+use App\Infrastructure\OpenAPI\Put;
 use App\Infrastructure\Response\JsonResponse;
 use App\Presentation\API\Product\Update\Request\UpdateProductRequest;
 use App\Presentation\API\Product\Update\Response\UpdateProductResponse;
@@ -19,6 +23,10 @@ final class UpdateProductController extends AbstractController
     {
     }
 
+    #[Put('/api/products', 'Products')]
+    #[UpdateRequest]
+    #[OAUpdateResponse]
+    #[AccessDeniedResponse]
     public function __invoke(UpdateProductRequest $request): JsonResponse
     {
         return new UpdateProductResponse($this->facade->update(UpdateProductTransfer::fromArray($request->toArray())));

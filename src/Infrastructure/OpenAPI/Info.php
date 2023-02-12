@@ -14,7 +14,7 @@ final class Info extends OA\OpenApi
     {
         parent::__construct(
             info: new OA\Info(
-                version: '0.0.1',
+                version: '0.1.0',
                 description: 'Management API for TAC project',
                 title: 'Core management api',
                 contact: new OA\Contact(

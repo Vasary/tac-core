@@ -7,6 +7,10 @@ namespace App\Presentation\API\Attributes\Update;
 use App\Application\Attribute\Business\AttributeFacadeInterface;
 use App\Infrastructure\Annotation\Route;
 use App\Infrastructure\Controller\AbstractController;
+use App\Infrastructure\OpenAPI\AccessDeniedResponse;
+use App\Infrastructure\OpenAPI\Put;
+use App\Infrastructure\OpenAPI\Attribute\UpdateRequest;
+use App\Infrastructure\OpenAPI\Attribute\UpdateResponse;
 use App\Infrastructure\Response\JsonResponse;
 use App\Presentation\API\Attributes\Update\Request\UpdateAttributesRequest;
 use App\Presentation\API\Attributes\Update\Response\UpdateAttributesResponse;
@@ -19,6 +23,10 @@ final class AttributesUpdateController extends AbstractController
     {
     }
 
+    #[Put('/api/attributes', 'Attributes')]
+    #[UpdateRequest]
+    #[UpdateResponse]
+    #[AccessDeniedResponse]
     public function __invoke(UpdateAttributesRequest $request): JsonResponse
     {
         return new UpdateAttributesResponse(

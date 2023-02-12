@@ -7,6 +7,10 @@ namespace App\Presentation\API\Attributes\Delete;
 use App\Application\Attribute\Business\AttributeFacadeInterface;
 use App\Infrastructure\Annotation\Route;
 use App\Infrastructure\Controller\AbstractController;
+use App\Infrastructure\OpenAPI\AccessDeniedResponse;
+use App\Infrastructure\OpenAPI\Delete;
+use App\Infrastructure\OpenAPI\RequestWithId;
+use App\Infrastructure\OpenAPI\SuccessfullyDeletedResponse;
 use App\Infrastructure\Response\JsonResponse;
 use App\Presentation\API\Attributes\Delete\Request\AttributeDeleteRequest;
 use App\Presentation\API\Attributes\Delete\Response\AttributeDeleteResponse;
@@ -20,6 +24,10 @@ final class AttributeDeleteController extends AbstractController
     ) {
     }
 
+    #[Delete('/api/attributes/{id}', 'Attributes')]
+    #[RequestWithId]
+    #[SuccessfullyDeletedResponse]
+    #[AccessDeniedResponse]
     public function __invoke(AttributeDeleteRequest $request): JsonResponse
     {
         $this->attributeFacade->delete(DeleteAttributeTransfer::fromArray($request->toArray()));
