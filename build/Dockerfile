@@ -55,7 +55,8 @@ RUN mkdir -p /app/var && \
     pecl install redis && \
     docker-php-ext-configure intl && \
     docker-php-ext-install pdo pdo_sqlite sockets intl && \
-    docker-php-ext-enable redis intl
+    docker-php-ext-enable redis intl && \
+    chmod 0777 /bootstrap.sh
 
 CMD ["/bootstrap.sh"]
 

@@ -3,6 +3,8 @@
 # Clear cache
 
 /app/bin cache:warmup
+chown www-data:www-data -R /app/var
+chmod 777 -R /app/var
 
 # Start nginx unit
 
