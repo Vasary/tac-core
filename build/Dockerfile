@@ -42,7 +42,6 @@ COPY --from=builder /app/src /app/src
 COPY --from=builder /app/vendor /app/vendor
 COPY --from=builder /app/composer.json /app/composer.json
 COPY --from=builder /app/build/config.json /docker-entrypoint.d/.unit.conf.json
-COPY build/bootstrap.sh /bootstrap.sh
 
 RUN mkdir -p /app/var && \
     mkdir -p /app/resource && \
@@ -55,9 +54,8 @@ RUN mkdir -p /app/var && \
     pecl install redis && \
     docker-php-ext-configure intl && \
     docker-php-ext-install pdo pdo_sqlite sockets intl && \
-    docker-php-ext-enable redis intl && \
-    chmod 0777 /bootstrap.sh
+    docker-php-ext-enable redis intl
 
-CMD ["/bootstrap.sh"]
+CMD ["unitd", "--no-daemon", "--control", "unix:/var/run/control.unit.sock"]
 
 EXPOSE 80
