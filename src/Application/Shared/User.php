@@ -24,7 +24,7 @@ final class User implements UserInterface
 
     public function getUserIdentifier(): string
     {
-        return $this->domainUser->getEmail();
+        return $this->domainUser->getSsoId();
     }
 
     public function getDomainUser(): DomainUser

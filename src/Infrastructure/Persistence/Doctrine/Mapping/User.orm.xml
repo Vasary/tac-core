@@ -4,7 +4,7 @@
                    https://raw.github.com/doctrine/doctrine2/master/doctrine-mapping.xsd">
     <entity name="App\Domain\Model\User" table="users">
         <id name="id" type="id" />
-        <field name="email" unique="true"/>
+        <field name="ssoId" unique="true"/>
         <field name="createdAt" type="datetimetz_immutable"/>
         <field name="updatedAt" type="datetimetz_immutable"/>
         <field name="deletedAt" type="datetimetz_immutable" nullable="true"/>

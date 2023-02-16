@@ -28,7 +28,7 @@ final class AttributeValueNormalizer implements NormalizerInterface
                     ParametersList::VALUE => $this->castType($object->getValue(), $object->getAttribute()),
                 ],
                 ParametersList::PARENT => (string) $object->getParent(),
-                ParametersList::CREATOR => $object->getCreator()->getEmail(),
+                ParametersList::CREATOR => $object->getCreator()->getSsoId(),
                 ParametersList::CREATED_AT => $object->getCreatedAt()->format(DATE_ATOM),
                 ParametersList::UPDATED_AT => $object->getUpdatedAt()->format(DATE_ATOM),
                 ParametersList::DELETED_AT => $object->getDeletedAt()?->format(DATE_ATOM),

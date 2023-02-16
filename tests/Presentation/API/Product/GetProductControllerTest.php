@@ -106,7 +106,7 @@ final class GetProductControllerTest extends AbstractWebTestCase
         $this->assertEquals((string)$attribute->getName(), $decodedContent['attributes'][0]['attribute']['name']);
         $this->assertEquals((string)$attribute->getDescription(), $decodedContent['attributes'][0]['attribute']['description']);
         $this->assertNull($decodedContent['attributes'][0]['attribute']['value']);
-        $this->assertEquals($user->getEmail(), $decodedContent['attributes'][0]['creator']);
+        $this->assertEquals($user->getSsoId(), $decodedContent['attributes'][0]['creator']);
         $this->assertEquals('2022-01-01T00:00:00+00:00', $decodedContent['attributes'][0]['createdAt']);
         $this->assertEquals('2022-01-01T00:00:00+00:00', $decodedContent['attributes'][0]['updatedAt']);
         $this->assertNull($decodedContent['attributes'][0]['deletedAt']);
