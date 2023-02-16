@@ -38,7 +38,8 @@
             "symfony/flex": true,
             "symfony/runtime": true,
             "composer-unused/composer-unused-plugin": true,
-            "dealerdirect/phpcodesniffer-composer-installer": true
+            "dealerdirect/phpcodesniffer-composer-installer": true,
+            "php-http/discovery": true
         },
         "optimize-autoloader": true,
         "preferred-install": {
