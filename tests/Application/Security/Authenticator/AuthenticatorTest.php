@@ -23,8 +23,8 @@ final class AuthenticatorTest extends AbstractUnitTestCase
 
         $repository = Mockery::mock(UserRepositoryInterface::class);
         $repository
-            ->shouldReceive('findByEmail')
-            ->with($user->getEmail())
+            ->shouldReceive('findBySsoId')
+            ->with($user->getSsoId())
             ->andReturn($user)
         ;
 
@@ -54,8 +54,8 @@ final class AuthenticatorTest extends AbstractUnitTestCase
 
         $repository = Mockery::mock(UserRepositoryInterface::class);
         $repository
-            ->shouldReceive('findByEmail')
-            ->with($user->getEmail())
+            ->shouldReceive('findBySsoId')
+            ->with($user->getSsoId())
             ->andReturn(null)
         ;
 

@@ -10,5 +10,5 @@ interface UserRepositoryInterface
 {
     public function create(string $email): User;
 
-    public function findByEmail(string $email): ?User;
+    public function findBySsoId(string $email): ?User;
 }

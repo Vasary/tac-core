@@ -27,7 +27,7 @@ final class UnitNormalizer implements NormalizerInterface, NormalizerAwareInterf
                     fn(Suggestion $suggestion) => $suggestion->getValue(),
                     $object->getSuggestions()->getSuggestions()
                 ),
-                ParametersList::CREATOR => $object->getCreator()->getEmail(),
+                ParametersList::CREATOR => $object->getCreator()->getSsoId(),
                 ParametersList::CREATED_AT => $object->getCreatedAt()->format(\DATE_ATOM),
                 ParametersList::UPDATED_AT => $object->getUpdatedAt()->format(\DATE_ATOM),
                 ParametersList::DELETED_AT => $object->getDeletedAt()?->format(\DATE_ATOM),

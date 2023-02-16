@@ -20,7 +20,7 @@ final class AttributeNormalizer implements NormalizerInterface
                 ParametersList::NAME => (string)$object->getName(),
                 ParametersList::TYPE => (string)$object->getType(),
                 ParametersList::DESCRIPTION => (string)$object->getDescription(),
-                ParametersList::CREATOR => $object->getCreator()->getEmail(),
+                ParametersList::CREATOR => $object->getCreator()->getSsoId(),
                 ParametersList::CREATED_AT => $object->getCreatedAt()->format(\DATE_ATOM),
                 ParametersList::UPDATED_AT => $object->getUpdatedAt()->format(\DATE_ATOM),
                 ParametersList::DELETED_AT => $object->getDeletedAt()?->format(\DATE_ATOM),

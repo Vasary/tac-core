@@ -4,8 +4,11 @@ declare(strict_types = 1);
 
 namespace App\Application\Security\Authenticator;
 
+use App\Application\Security\TokenExtractor\TokenExtractor;
 use App\Application\Shared\User as SymfonyUser;
 use App\Domain\Repository\UserRepositoryInterface;
+use Auth0\SDK\Auth0;
+use Auth0\SDK\Exception\InvalidTokenException;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
@@ -19,35 +22,33 @@ use Symfony\Component\Security\Http\Authenticator\Token\PostAuthenticationToken;
 
 final class Authenticator extends AbstractAuthenticator
 {
-    private const X_USER_IDENTIFIER_HEADER = 'x-user-email';
-    private const X_USER_ROLES_HEADER = 'x-user-roles';
+    private const AUTHORIZATION_HEADER = 'Authorization';
 
     public function __construct(
-        private readonly UserRepositoryInterface $repository
+        private readonly UserRepositoryInterface $repository,
+        private readonly TokenExtractor $tokenExtractor,
+        private readonly Auth0 $authService,
     ) {
     }
 
     public function supports(Request $request): ?bool
     {
-        return $request->headers->has(self::X_USER_IDENTIFIER_HEADER)
-            && $request->headers->has(self::X_USER_ROLES_HEADER);
+        return $request->headers->has(self::AUTHORIZATION_HEADER);
     }
 
     public function authenticate(Request $request): Passport
     {
-        $userEmail = $request->headers->get(self::X_USER_IDENTIFIER_HEADER);
-        $userRoles = $request->headers->get(self::X_USER_ROLES_HEADER, 'core');
+        $token = $this->tokenExtractor->extract($request->headers->get(self::AUTHORIZATION_HEADER));
 
-        if (empty($userEmail) || empty($userRoles)) {
-            throw new CustomUserMessageAuthenticationException();
+        try {
+            $idToken = $this->authService->decode($token);
+        } catch (InvalidTokenException) {
+            throw new CustomUserMessageAuthenticationException('Invalid token');
         }
 
-        $roles = array_map(
-            fn (string $roleName) => sprintf('ROLE_%s', mb_strtoupper($roleName)),
-            array_filter(explode(',', $userRoles))
-        );
+        $roles = ['core'];
 
-        $userBadge = new UserBadge($userEmail, fn (string $identifier) => $this->loadUser($identifier, $roles));
+        $userBadge = new UserBadge($idToken->getSubject(), fn (string $identifier) => $this->loadUser($identifier, $roles));
 
         $passport = new SelfValidatingPassport($userBadge);
         $passport->setAttribute('roles', $roles);
@@ -77,7 +78,7 @@ final class Authenticator extends AbstractAuthenticator
 
     private function loadUser(string $identifier, array $roles): SymfonyUser
     {
-        if (null === $user = $this->repository->findByEmail($identifier)) {
+        if (null === $user = $this->repository->findBySsoId($identifier)) {
             $user = $this->repository->create($identifier);
         }
 

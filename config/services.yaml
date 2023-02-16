@@ -1,4 +1,11 @@
 parameters:
+    sso:
+        domain: tac01-dev.eu.auth0.com
+        clientId: 'HIAKhfJop34mFVsBAu1Adl5OWnUKzTCA'
+        clientSecret: 'zc5bMdW1YgLQnynlRMDtHUMjgVE9BEGrzsXUrCqslEax49_HDulMnZCS2ZUuVWjW'
+        cookieSecret: 'wQz7jYeu4ewP7uHp'
+        audience:
+            - 'https://tac01-dev.eu.auth0.com/api/v2/'
 
 services:
     _defaults:
@@ -69,3 +76,7 @@ services:
 
     App\Application\DomainEvent\Business\EventsLogReader\EventsLogReader:
         arguments: ['%kernel.project_dir%/resource/events.log']
+
+    Auth0\SDK\Auth0:
+        arguments:
+            $configuration: '%sso%'

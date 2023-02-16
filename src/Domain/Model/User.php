@@ -17,7 +17,7 @@ class User implements RaiseEventsInterface
     private ?DateTimeImmutable $deletedAt;
     private readonly DateTimeImmutable $createdAt;
 
-    public function __construct(private readonly string $email)
+    public function __construct(private readonly string $ssoId)
     {
         $this->id = Id::create();
         $this->createdAt = new DateTimeImmutable();
@@ -27,8 +27,8 @@ class User implements RaiseEventsInterface
         $this->raise(new UserCreated(clone $this));
     }
 
-    public function getEmail(): string
+    public function getSsoId(): string
     {
-        return $this->email;
+        return $this->ssoId;
     }
 }
