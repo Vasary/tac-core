@@ -5,10 +5,6 @@ on:
       - feature/*
       - renovate/*
 
-concurrency:
-  group: test-and-check
-  cancel-in-progress: true
-
 jobs:
   artifact:
     runs-on: ubuntu-latest
