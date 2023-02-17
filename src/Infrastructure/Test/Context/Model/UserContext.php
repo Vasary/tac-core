@@ -20,7 +20,7 @@ final class UserContext implements ModelContextInterface
     use TimestampTrait;
 
     public string $id = '6b58caa4-0571-44db-988a-8a75f86b2520';
-    public string $email = 'foo@bar.com';
+    public string $ssoId = 'mock|10101011';
 
     public function __invoke(bool $theOnlyOne = true): User
     {
@@ -29,7 +29,7 @@ final class UserContext implements ModelContextInterface
 
         $this
             ->setProperty($model, 'id', Id::fromString($this->id))
-            ->setProperty($model, 'email', $this->email)
+            ->setProperty($model, 'ssoId', $this->ssoId)
             ->setTimestamps($model);
 
         return $theOnlyOne ? $this->obtainInstance($model) : $model;

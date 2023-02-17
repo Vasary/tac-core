@@ -23,7 +23,7 @@ JSON;
 JSON;
 
     private const UNIT_EVENT_BODY = <<<JSON
-{"unit":{"id":"6fde348e-cd2d-427e-ad4f-7faf8a4dd7e3","name":"Kilograms","alias":"kg","suggestions":[100,250,500],"creator":"foo@bar.com","createdAt":"1986-06-05T00:00:00+00:00","updatedAt":"1986-06-05T00:00:00+00:00","deletedAt":null}}
+{"unit":{"id":"6fde348e-cd2d-427e-ad4f-7faf8a4dd7e3","name":"Kilograms","alias":"kg","suggestions":[100,250,500],"creator":"mock|10101011","createdAt":"1986-06-05T00:00:00+00:00","updatedAt":"1986-06-05T00:00:00+00:00","deletedAt":null}}
 JSON;
 
 
@@ -35,19 +35,20 @@ JSON;
 
     public function testShouldSuccessfullyCreateNewUnit(): void
     {
-        $user = UserContext::create()();
-
-        $this->load($user);
-
-        $this->freezeTime('1986-06-05');
-
-        $this->assertEvent([
+        $this->expectEvents([
             ['glossary.created', self::GLOSSARY_NAME_EVENT_BODY],
             ['glossary.created', self::GLOSSARY_ALIAS_EVENT_BODY],
             ['unit.created', self::UNIT_EVENT_BODY],
         ]);
 
-        $response = $this->sendJson('POST', '/api/units', [
+        $user = UserContext::create()();
+
+        $this->freezeTime('1986-06-05');
+
+        $this->load($user);
+        $this->withUser($user);
+
+        $response = $this->sendRequest('POST', '/api/units', [
                 'name' => 'Kilograms',
                 'alias' => 'kg',
                 'suggestions' => [
@@ -55,7 +56,7 @@ JSON;
                     250,
                     500,
                 ],
-            ]
+            ],
         );
 
         $responseContent = (string)$response->getContent();

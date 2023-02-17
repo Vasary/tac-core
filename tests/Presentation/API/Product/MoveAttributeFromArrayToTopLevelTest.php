@@ -22,14 +22,14 @@ final class MoveAttributeFromArrayToTopLevelTest extends AbstractWebTestCase
     use AssertAttributeTrait, AssertEventTrait;
 
     private const ATTRIBUTE_VALUE_UPDATE_EVENT = <<<JSON
-{"attributeValue":{"id":"74bd275f-b4df-439a-a1f5-c15113a7f724","attribute":{"id":"6323609e-d9da-4d4d-bde0-d101edb0d51b","code":"wireless","type":"boolean","name":"name","description":"description","value":true},"parent":"","creator":"foo@bar.com","createdAt":"2022-01-01T00:00:00+00:00","updatedAt":"2022-09-01T00:00:00+00:00","deletedAt":null}}
+{"attributeValue":{"id":"74bd275f-b4df-439a-a1f5-c15113a7f724","attribute":{"id":"6323609e-d9da-4d4d-bde0-d101edb0d51b","code":"wireless","type":"boolean","name":"name","description":"description","value":true},"parent":"","creator":"mock|10101011","createdAt":"2022-01-01T00:00:00+00:00","updatedAt":"2022-09-01T00:00:00+00:00","deletedAt":null}}
 JSON;
 
     public function testShouldSuccessfullyModifyProductAttributeAndMoveItNoTopLevelFromArray(): void
     {
         $this->freezeTime();
 
-        $this->assertEvent([
+        $this->expectEvents([
             ['attribute.value.updated', self::ATTRIBUTE_VALUE_UPDATE_EVENT],
         ]);
 
@@ -95,7 +95,9 @@ JSON;
             $arrayAttributeValue,
         );
 
-        $response = $this->sendJson('PUT', '/api/products', [
+        $this->withUser($user);
+
+        $response = $this->sendRequest('PUT', '/api/products', [
             'id' => (string)$product->getId(),
             'name' => $product->getName()->value(),
             'description' => $product->getDescription()->value(),

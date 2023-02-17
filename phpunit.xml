@@ -5,6 +5,7 @@
          bootstrap="tests/bootstrap.php"
          stopOnFailure="true"
          stopOnError="true"
+         colors="true"
 >
     <php>
         <ini name="memory_limit" value="1024M"/>

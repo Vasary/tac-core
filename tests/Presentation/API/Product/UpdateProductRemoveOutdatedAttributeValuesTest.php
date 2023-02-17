@@ -19,31 +19,31 @@ final class UpdateProductRemoveOutdatedAttributeValuesTest extends AbstractWebTe
     use AssertAttributeTrait, AssertEventTrait;
 
     private const PRODUCT_EVENT_0 = <<<JSON
-{"product":{"id":"1884fcbf-6ade-49a4-b91a-505290ec1e77","name":"name","description":"description","creator":"foo@bar.com","attributes":[{"id":"80df2e33-6bad-4f91-9208-e938b543e31c","attribute":{"id":"8f91fbc8-292c-4594-9ed2-d67f769976c7","code":"name","type":"string","name":"name","description":"description","value":"A mock value"},"parent":"","creator":"foo@bar.com","createdAt":"2022-01-01T00:00:00+00:00","updatedAt":"2022-09-01T00:00:00+00:00","deletedAt":null},{"id":"8a730673-0740-46d2-956e-505908ff140e","attribute":{"id":"4e897f97-dc43-4de3-bb16-358943bac606","code":"surname","type":"string","name":"name","description":"description","value":"Doe"},"parent":"","creator":"foo@bar.com","createdAt":"2022-09-01T00:00:00+00:00","updatedAt":"2022-09-01T00:00:00+00:00","deletedAt":null}],"category":"6b58caa4-0571-44db-988a-8a75f86b2520","units":[],"createdAt":"2022-01-01T00:00:00+00:00","updatedAt":"2022-09-01T00:00:00+00:00","deletedAt":null}}
+{"product":{"id":"1884fcbf-6ade-49a4-b91a-505290ec1e77","name":"name","description":"description","creator":"mock|10101011","attributes":[{"id":"80df2e33-6bad-4f91-9208-e938b543e31c","attribute":{"id":"8f91fbc8-292c-4594-9ed2-d67f769976c7","code":"name","type":"string","name":"name","description":"description","value":"A mock value"},"parent":"","creator":"mock|10101011","createdAt":"2022-01-01T00:00:00+00:00","updatedAt":"2022-09-01T00:00:00+00:00","deletedAt":null},{"id":"8a730673-0740-46d2-956e-505908ff140e","attribute":{"id":"4e897f97-dc43-4de3-bb16-358943bac606","code":"surname","type":"string","name":"name","description":"description","value":"Doe"},"parent":"","creator":"mock|10101011","createdAt":"2022-09-01T00:00:00+00:00","updatedAt":"2022-09-01T00:00:00+00:00","deletedAt":null}],"category":"6b58caa4-0571-44db-988a-8a75f86b2520","units":[],"createdAt":"2022-01-01T00:00:00+00:00","updatedAt":"2022-09-01T00:00:00+00:00","deletedAt":null}}
 JSON;
 
     private const PRODUCT_EVENT_1 = <<<JSON
-{"product":{"id":"1884fcbf-6ade-49a4-b91a-505290ec1e77","name":"name","description":"description","creator":"foo@bar.com","attributes":[{"id":"80df2e33-6bad-4f91-9208-e938b543e31c","attribute":{"id":"8f91fbc8-292c-4594-9ed2-d67f769976c7","code":"name","type":"string","name":"name","description":"description","value":"A mock value"},"parent":"","creator":"foo@bar.com","createdAt":"2022-01-01T00:00:00+00:00","updatedAt":"2022-09-01T00:00:00+00:00","deletedAt":null},{"id":"8a730673-0740-46d2-956e-505908ff140e","attribute":{"id":"4e897f97-dc43-4de3-bb16-358943bac606","code":"surname","type":"string","name":"name","description":"description","value":"Doe"},"parent":"","creator":"foo@bar.com","createdAt":"2022-09-01T00:00:00+00:00","updatedAt":"2022-09-01T00:00:00+00:00","deletedAt":null}],"category":"6b58caa4-0571-44db-988a-8a75f86b2520","units":[],"createdAt":"2022-01-01T00:00:00+00:00","updatedAt":"2022-09-01T00:00:00+00:00","deletedAt":null}}
+{"product":{"id":"1884fcbf-6ade-49a4-b91a-505290ec1e77","name":"name","description":"description","creator":"mock|10101011","attributes":[{"id":"80df2e33-6bad-4f91-9208-e938b543e31c","attribute":{"id":"8f91fbc8-292c-4594-9ed2-d67f769976c7","code":"name","type":"string","name":"name","description":"description","value":"A mock value"},"parent":"","creator":"mock|10101011","createdAt":"2022-01-01T00:00:00+00:00","updatedAt":"2022-09-01T00:00:00+00:00","deletedAt":null},{"id":"8a730673-0740-46d2-956e-505908ff140e","attribute":{"id":"4e897f97-dc43-4de3-bb16-358943bac606","code":"surname","type":"string","name":"name","description":"description","value":"Doe"},"parent":"","creator":"mock|10101011","createdAt":"2022-09-01T00:00:00+00:00","updatedAt":"2022-09-01T00:00:00+00:00","deletedAt":null}],"category":"6b58caa4-0571-44db-988a-8a75f86b2520","units":[],"createdAt":"2022-01-01T00:00:00+00:00","updatedAt":"2022-09-01T00:00:00+00:00","deletedAt":null}}
 JSON;
 
     private const ATTRIBUTE_VALUE_EVENT_0 = <<<JSON
-{"attributeValue":{"id":"80df2e33-6bad-4f91-9208-e938b543e31c","attribute":{"id":"8f91fbc8-292c-4594-9ed2-d67f769976c7","code":"name","type":"string","name":"name","description":"description","value":"A mock value"},"parent":"","creator":"foo@bar.com","createdAt":"2022-01-01T00:00:00+00:00","updatedAt":"2022-09-01T00:00:00+00:00","deletedAt":null}}
+{"attributeValue":{"id":"80df2e33-6bad-4f91-9208-e938b543e31c","attribute":{"id":"8f91fbc8-292c-4594-9ed2-d67f769976c7","code":"name","type":"string","name":"name","description":"description","value":"A mock value"},"parent":"","creator":"mock|10101011","createdAt":"2022-01-01T00:00:00+00:00","updatedAt":"2022-09-01T00:00:00+00:00","deletedAt":null}}
 JSON;
 
     private const ATTRIBUTE_VALUE_EVENT_1 = <<<JSON
-{"attributeValue":{"id":"80df2e33-6bad-4f91-9208-e938b543e31c","attribute":{"id":"8f91fbc8-292c-4594-9ed2-d67f769976c7","code":"name","type":"string","name":"name","description":"description","value":"A mock value"},"parent":"","creator":"foo@bar.com","createdAt":"2022-01-01T00:00:00+00:00","updatedAt":"2022-09-01T00:00:00+00:00","deletedAt":null}}
+{"attributeValue":{"id":"80df2e33-6bad-4f91-9208-e938b543e31c","attribute":{"id":"8f91fbc8-292c-4594-9ed2-d67f769976c7","code":"name","type":"string","name":"name","description":"description","value":"A mock value"},"parent":"","creator":"mock|10101011","createdAt":"2022-01-01T00:00:00+00:00","updatedAt":"2022-09-01T00:00:00+00:00","deletedAt":null}}
 JSON;
 
     private const ATTRIBUTE_VALUE_EVENT_2 = <<<JSON
-{"attributeValue":{"id":"8a730673-0740-46d2-956e-505908ff140e","attribute":{"id":"4e897f97-dc43-4de3-bb16-358943bac606","code":"surname","type":"string","name":"name","description":"description","value":"Doe"},"parent":"","creator":"foo@bar.com","createdAt":"2022-09-01T00:00:00+00:00","updatedAt":"2022-09-01T00:00:00+00:00","deletedAt":null}}
+{"attributeValue":{"id":"8a730673-0740-46d2-956e-505908ff140e","attribute":{"id":"4e897f97-dc43-4de3-bb16-358943bac606","code":"surname","type":"string","name":"name","description":"description","value":"Doe"},"parent":"","creator":"mock|10101011","createdAt":"2022-09-01T00:00:00+00:00","updatedAt":"2022-09-01T00:00:00+00:00","deletedAt":null}}
 JSON;
 
     private const ATTRIBUTE_VALUE_REMOVED_0 = <<<JSON
-{"attributeValue":{"id":"a21c4e4d-fd4f-458b-9dde-8e6eba30db79","attribute":{"id":"208f51b8-fdcc-4611-bb44-8c0975bdbf80","code":"family","type":"string","name":"name","description":"description","value":null},"parent":"","creator":"foo@bar.com","createdAt":"2022-01-01T00:00:00+00:00","updatedAt":"2022-01-01T00:00:00+00:00","deletedAt":null}}
+{"attributeValue":{"id":"a21c4e4d-fd4f-458b-9dde-8e6eba30db79","attribute":{"id":"208f51b8-fdcc-4611-bb44-8c0975bdbf80","code":"family","type":"string","name":"name","description":"description","value":null},"parent":"","creator":"mock|10101011","createdAt":"2022-01-01T00:00:00+00:00","updatedAt":"2022-01-01T00:00:00+00:00","deletedAt":null}}
 JSON;
 
     private const ATTRIBUTE_VALUE_CREATED = <<<JSON
-{"attributeValue":{"id":"8a730673-0740-46d2-956e-505908ff140e","attribute":{"id":"4e897f97-dc43-4de3-bb16-358943bac606","code":"surname","type":"string","name":"name","description":"description","value":"Doe"},"parent":"","creator":"foo@bar.com","createdAt":"2022-09-01T00:00:00+00:00","updatedAt":"2022-09-01T00:00:00+00:00","deletedAt":null}}
+{"attributeValue":{"id":"8a730673-0740-46d2-956e-505908ff140e","attribute":{"id":"4e897f97-dc43-4de3-bb16-358943bac606","code":"surname","type":"string","name":"name","description":"description","value":"Doe"},"parent":"","creator":"mock|10101011","createdAt":"2022-09-01T00:00:00+00:00","updatedAt":"2022-09-01T00:00:00+00:00","deletedAt":null}}
 JSON;
 
     protected static array $ids = [
@@ -54,7 +54,7 @@ JSON;
     {
         $this->freezeTime();
 
-        $this->assertEvent([
+        $this->expectEvents([
             ['product.updated', self::PRODUCT_EVENT_0],
             ['product.updated', self::PRODUCT_EVENT_1],
             ['attribute.value.updated', self::ATTRIBUTE_VALUE_EVENT_0],
@@ -107,7 +107,8 @@ JSON;
             $thirdAttributeValue,
         );
 
-        $response = $this->sendJson('PUT', '/api/products', [
+        $this->withUser($user);
+        $response = $this->sendRequest('PUT', '/api/products', [
                 'id' => (string)$product->getId(),
                 'name' => $product->getName()->value(),
                 'description' => $product->getDescription()->value(),

@@ -10,7 +10,7 @@
         <field name="deletedAt" type="datetimetz_immutable" nullable="true"/>
 
         <unique-constraints>
-            <unique-constraint columns="email"/>
+            <unique-constraint columns="sso_id"/>
         </unique-constraints>
     </entity>
 </doctrine-mapping>

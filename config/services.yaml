@@ -1,11 +1,11 @@
 parameters:
     sso:
-        domain: tac01-dev.eu.auth0.com
-        clientId: 'HIAKhfJop34mFVsBAu1Adl5OWnUKzTCA'
-        clientSecret: 'zc5bMdW1YgLQnynlRMDtHUMjgVE9BEGrzsXUrCqslEax49_HDulMnZCS2ZUuVWjW'
-        cookieSecret: 'wQz7jYeu4ewP7uHp'
+        domain: '%env(SSO_DOMAIN)%'
+        clientId: '%env(SSO_CLIENT_ID)%'
+        clientSecret: '%env(SSO_COOKIE_SECRET)%'
+        cookieSecret: '%env(SSO_COOKIE_SECRET)%'
         audience:
-            - 'https://tac01-dev.eu.auth0.com/api/v2/'
+            - '%env(SSO_AUDIENCE)%'
 
 services:
     _defaults:

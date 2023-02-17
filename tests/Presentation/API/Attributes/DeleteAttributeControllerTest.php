@@ -16,27 +16,27 @@ final class DeleteAttributeControllerTest extends AbstractWebTestCase
     use AssertEventTrait;
 
     private const EVENT = <<<JSON
-{"attribute":{"id":"888c23c6-06fe-4a95-a66c-f292da2f7607","code":"name","name":"name","type":"string","description":"description","creator":"foo@bar.com","createdAt":"2022-01-01T00:00:00+00:00","updatedAt":"2022-01-01T00:00:00+00:00","deletedAt":null}}
+{"attribute":{"id":"888c23c6-06fe-4a95-a66c-f292da2f7607","code":"name","name":"name","type":"string","description":"description","creator":"mock|10101011","createdAt":"2022-01-01T00:00:00+00:00","updatedAt":"2022-01-01T00:00:00+00:00","deletedAt":null}}
 JSON;
 
     public function testShouldSuccessfullyRemoveExistedAttribute(): void
     {
-        $this->assertEvent([
+        $this->expectEvents([
             ['attribute.removed', self::EVENT],
         ]);
 
         $user = UserContext::create()();
-        $this->withUser($user);
 
         $attributeContext = AttributeContext::create();
         $attributeContext->user = $user;
         $attribute = $attributeContext();
 
-        $this->load($attribute);
+        $this->load($attribute, $user);
+        $this->withUser($user);
 
-        $this->browser->request('DELETE', '/api/attributes/' . $attribute->getId());
+        $response = $this->sendRequest('DELETE', '/api/attributes/' . $attribute->getId());
 
-        $responseContent = (string)$this->browser->getResponse()->getContent();
+        $responseContent = (string)$response->getContent();
 
         $this->assertResponseStatusCodeSame(200);
         $this->assertJson($responseContent);
@@ -52,13 +52,16 @@ JSON;
 
     public function testShouldGetNotFoundError(): void
     {
-        $this->assertEvent();
+        $this->expectEvents();
 
-        $this->withUser(UserContext::create()());
+        $user = UserContext::create()();
 
-        $this->browser->request('DELETE', '/api/attributes/' . $this->faker->uuidv4());
+        $this->load($user);
+        $this->withUser($user);
 
-        $responseContent = (string)$this->browser->getResponse()->getContent();
+        $response = $this->sendRequest('DELETE', '/api/attributes/' . $this->faker->uuidv4());
+
+        $responseContent = (string)$response->getContent();
         $decodedContent = Json::decode($responseContent);
 
         $this->assertResponseStatusCodeSame(404);

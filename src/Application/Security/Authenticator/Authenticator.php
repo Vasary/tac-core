@@ -46,9 +46,9 @@ final class Authenticator extends AbstractAuthenticator
             throw new CustomUserMessageAuthenticationException('Invalid token');
         }
 
-        $roles = ['core'];
+        $roles = ['ROLE_CORE'];
 
-        $userBadge = new UserBadge($idToken->getSubject(), fn (string $identifier) => $this->loadUser($identifier, $roles));
+        $userBadge = new UserBadge($idToken->getSubject(), fn (string $id) => $this->loadUser($id, $roles));
 
         $passport = new SelfValidatingPassport($userBadge);
         $passport->setAttribute('roles', $roles);

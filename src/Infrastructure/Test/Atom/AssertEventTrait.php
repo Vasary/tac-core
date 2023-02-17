@@ -1,6 +1,6 @@
 <?php
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace App\Infrastructure\Test\Atom;
 
@@ -9,7 +9,35 @@ use Mockery;
 
 trait AssertEventTrait
 {
-    public function assertEvent(array $argumentsSet = []): void
+    public function expectEvents(array $argumentsSet = []): void
+    {
+        uopz_allow_exit(true);
+        $channel = $this->createChannel();
+
+        foreach ($argumentsSet as $set) {
+            $channel
+                ->shouldReceive('publish')
+                ->withArgs(function (string $body, string $routingKey) use ($set) {
+                    [$expectedRoutingKey, $expectedBody] = $set;
+
+                    return $expectedRoutingKey === $routingKey && $expectedBody === $body;
+                })
+                ->andReturnNull()
+            ;
+        }
+
+        self::getContainer()->set(ChannelInterface::class, $channel);
+    }
+
+    public function expectNoEvents(): void
+    {
+        $channel = $this->createChannel();
+        $channel->shouldNotReceive('publish');
+
+        self::getContainer()->set(ChannelInterface::class, $channel);
+    }
+
+    private function createChannel(): ChannelInterface & Mockery\LegacyMockInterface
     {
         $channel = Mockery::mock(ChannelInterface::class);
 
@@ -17,16 +45,6 @@ trait AssertEventTrait
             ->shouldReceive('isOpen')
             ->andReturn(true);
 
-        if (0 === count($argumentsSet)) {
-            $channel->shouldNotReceive('publish');
-        } else {
-            foreach ($argumentsSet as $set) {
-                $channel
-                    ->shouldReceive('publish')
-                    ->with($set[1], $set[0]);
-            }
-        }
-
-        self::getContainer()->set(ChannelInterface::class, $channel);
+        return $channel;
     }
 }

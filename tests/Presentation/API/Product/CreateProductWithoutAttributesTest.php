@@ -23,7 +23,7 @@ JSON;
 JSON;
 
     private const PRODUCT = <<<JSON
-{"product":{"id":"b5bd3baf-c77e-45e6-93b4-93a642b015de","name":"Monitor","description":"There is a simple nice monitor","creator":"foo@bar.com","attributes":[],"category":"6b58caa4-0571-44db-988a-8a75f86b2520","units":[],"createdAt":"2022-09-01T00:00:00+00:00","updatedAt":"2022-09-01T00:00:00+00:00","deletedAt":null}}
+{"product":{"id":"b5bd3baf-c77e-45e6-93b4-93a642b015de","name":"Monitor","description":"There is a simple nice monitor","creator":"mock|10101011","attributes":[],"category":"6b58caa4-0571-44db-988a-8a75f86b2520","units":[],"createdAt":"2022-09-01T00:00:00+00:00","updatedAt":"2022-09-01T00:00:00+00:00","deletedAt":null}}
 JSON;
 
     protected static array $ids = [
@@ -36,7 +36,7 @@ JSON;
     {
         $this->freezeTime();
 
-        $this->assertEvent([
+        $this->expectEvents([
             ['glossary.created', self::GLOSSARY_NAME],
             ['glossary.created', self::GLOSSARY_DESCRIPTION],
             ['product.created', self::PRODUCT],
@@ -50,7 +50,8 @@ JSON;
 
         $this->load($user, $category);
 
-        $this->sendJson('POST', '/api/products', [
+        $this->withUser($user);
+        $response = $this->sendRequest('POST', '/api/products', [
             'name' => 'Monitor',
             'description' => 'There is a simple nice monitor',
             'category' => (string)$category->getId(),
@@ -58,7 +59,7 @@ JSON;
             'units' => [],
         ]);
 
-        $responseContent = (string)$this->browser->getResponse()->getContent();
+        $responseContent = (string)$response->getContent();
 
         self::assertResponseStatusCodeSame(201);
         $this->assertJson($responseContent);
@@ -71,7 +72,7 @@ JSON;
         $this->assertCount(0, $content['attributes']);
         $this->assertIsArray($content['units']);
         $this->assertCount(0, $content['units']);
-        $this->assertEquals('foo@bar.com', $content['creator']);
+        $this->assertEquals('mock|10101011', $content['creator']);
         $this->assertArrayHasKey('createdAt', $content);
         $this->assertArrayHasKey('updatedAt', $content);
         $this->assertArrayHasKey('id', $content);
@@ -84,7 +85,7 @@ JSON;
     {
         $this->freezeTime();
 
-        $this->assertEvent([
+        $this->expectEvents([
             ['glossary.created', self::GLOSSARY_NAME],
             ['glossary.created', self::GLOSSARY_DESCRIPTION],
             ['product.created', self::PRODUCT],
@@ -98,13 +99,14 @@ JSON;
 
         $this->load($user, $category);
 
-        $this->sendJson('POST', '/api/products', [
+        $this->withUser($user);
+        $response = $this->sendRequest('POST', '/api/products', [
             'name' => 'Monitor',
             'description' => 'There is a simple nice monitor',
             'category' => (string)$category->getId(),
         ]);
 
-        $responseContent = (string)$this->browser->getResponse()->getContent();
+        $responseContent = (string)$response->getContent();
 
         self::assertResponseStatusCodeSame(201);
         $this->assertJson($responseContent);
@@ -118,7 +120,7 @@ JSON;
         $this->assertCount(0, $content['attributes']);
         $this->assertIsArray($content['units']);
         $this->assertCount(0, $content['units']);
-        $this->assertEquals('foo@bar.com', $content['creator']);
+        $this->assertEquals('mock|10101011', $content['creator']);
         $this->assertArrayHasKey('createdAt', $content);
         $this->assertArrayHasKey('updatedAt', $content);
         $this->assertArrayHasKey('id', $content);

@@ -24,19 +24,22 @@ final class AttributeDuplicationTest extends AbstractWebTestCase
 
     public function testShouldFailByDuplicateAttributeError(): void
     {
-        $this->assertEvent();
+        $this->expectEvents();
 
-        $this->withUser((new UserContext())());
-        $this->load((new AttributeContext())());
+        $user = (new UserContext())();
+        $attribute = (new AttributeContext())();
 
-        $this->browser->jsonRequest('POST', '/api/attributes', [
+        $this->load($attribute, $user);
+        $this->withUser($user);
+
+        $response = $this->sendRequest('POST', '/api/attributes', [
             'code' => 'name',
             'name' => $this->faker->name(),
             'description' => $this->faker->realText(255),
             'type' => 'string',
         ]);
 
-        $responseContent = (string)$this->browser->getResponse()->getContent();
+        $responseContent = (string)$response->getContent();
 
         $this->assertResponseStatusCodeSame(409);
         $this->assertJson($responseContent);

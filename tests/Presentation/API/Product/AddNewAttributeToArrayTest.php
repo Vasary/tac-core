@@ -82,7 +82,9 @@ final class AddNewAttributeToArrayTest extends AbstractWebTestCase
             $arrayAttributeValue,
         );
 
-        $response = $this->sendJson('PUT', '/api/products', [
+        $this->withUser($user);
+
+        $response = $this->sendRequest('PUT', '/api/products', [
             'id' => (string)$product->getId(),
             'name' => $product->getName()->value(),
             'description' => $product->getDescription()->value(),

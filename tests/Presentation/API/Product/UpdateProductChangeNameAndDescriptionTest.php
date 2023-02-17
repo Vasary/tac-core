@@ -25,18 +25,18 @@ JSON;
 JSON;
 
     private const PRODUCT_NAME = <<<JSON
-{"product":{"id":"1884fcbf-6ade-49a4-b91a-505290ec1e77","name":"new name","description":"description","creator":"foo@bar.com","attributes":[],"category":"6b58caa4-0571-44db-988a-8a75f86b2520","units":[],"createdAt":"2022-01-01T00:00:00+00:00","updatedAt":"2022-09-01T00:00:00+00:00","deletedAt":null}}
+{"product":{"id":"1884fcbf-6ade-49a4-b91a-505290ec1e77","name":"new name","description":"description","creator":"mock|10101011","attributes":[],"category":"6b58caa4-0571-44db-988a-8a75f86b2520","units":[],"createdAt":"2022-01-01T00:00:00+00:00","updatedAt":"2022-09-01T00:00:00+00:00","deletedAt":null}}
 JSON;
 
     private const PRODUCT_DESCRIPTION = <<<JSON
-{"product":{"id":"1884fcbf-6ade-49a4-b91a-505290ec1e77","name":"new name","description":"new description","creator":"foo@bar.com","attributes":[],"category":"6b58caa4-0571-44db-988a-8a75f86b2520","units":[],"createdAt":"2022-01-01T00:00:00+00:00","updatedAt":"2022-09-01T00:00:00+00:00","deletedAt":null}}
+{"product":{"id":"1884fcbf-6ade-49a4-b91a-505290ec1e77","name":"new name","description":"new description","creator":"mock|10101011","attributes":[],"category":"6b58caa4-0571-44db-988a-8a75f86b2520","units":[],"createdAt":"2022-01-01T00:00:00+00:00","updatedAt":"2022-09-01T00:00:00+00:00","deletedAt":null}}
 JSON;
 
     public function testShouldSuccessfullyUpdateProductNameAdDescription(): void
     {
         $this->freezeTime();
 
-        $this->assertEvent([
+        $this->expectEvents([
             ['glossary.updated', self::GLOSSARY_0],
             ['glossary.updated', self::GLOSSARY_1],
             ['product.updated', self::PRODUCT_NAME],
@@ -52,10 +52,9 @@ JSON;
         $product = $productContext();
 
         $this->load($user, $category, $product);
-
         $this->withUser($user);
 
-        $this->browser->jsonRequest('PUT', '/api/products', [
+        $response = $this->sendRequest('PUT', '/api/products', [
                 'id' => (string)$product->getId(),
                 'name' => 'new name',
                 'description' => 'new description',
@@ -64,7 +63,7 @@ JSON;
             ]
         );
 
-        $content = (string)$this->browser->getResponse()->getContent();
+        $content = (string)$response->getContent();
 
         self::assertResponseStatusCodeSame(200);
         $this->assertJson($content);

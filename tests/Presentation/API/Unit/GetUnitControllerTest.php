@@ -16,7 +16,7 @@ final class GetUnitControllerTest extends AbstractWebTestCase
 
     public function testShouldSuccessfullyGetUnit(): void
     {
-        $this->assertEvent();
+        $this->expectEvents();
 
         $user = UserContext::create()();
         $unit = UnitContext::create()();
@@ -24,9 +24,9 @@ final class GetUnitControllerTest extends AbstractWebTestCase
         $this->load($user, $unit);
         $this->withUser($user);
 
-        $this->browser->request('GET', '/api/units/' . $unit->getId());
+        $response = $this->sendRequest('GET', '/api/units/' . $unit->getId());
 
-        $responseContent = (string)$this->browser->getResponse()->getContent();
+        $responseContent = (string)$response->getContent();
 
         $decodedContent = json_decode($responseContent, true);
 
@@ -54,12 +54,16 @@ final class GetUnitControllerTest extends AbstractWebTestCase
 
     public function testShouldGetNotFoundError(): void
     {
-        $this->assertEvent();
-        $this->withUser(UserContext::create()());
+        $this->expectEvents();
 
-        $this->browser->request('GET', '/api/units/' . $this->faker->uuidv4());
+        $user = UserContext::create()();
 
-        $responseContent = (string)$this->browser->getResponse()->getContent();
+        $this->load($user);
+        $this->withUser($user);
+
+        $response = $this->sendRequest('GET', '/api/units/' . $this->faker->uuidv4());
+
+        $responseContent = (string)$response->getContent();
 
         self::assertResponseStatusCodeSame(404);
         $this->assertJson($responseContent);

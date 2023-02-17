@@ -17,7 +17,7 @@ final class UpdateProductControllerTest extends AbstractWebTestCase
 
     public function testShouldNotFailWithNoReasonsToUpdateProduct(): void
     {
-        $this->assertEvent([]);
+        $this->expectNoEvents();
 
         $categoryContext = CategoryContext::create();
         $productContext = ProductContext::create();
@@ -29,7 +29,7 @@ final class UpdateProductControllerTest extends AbstractWebTestCase
         $this->load($category, $product);
         $this->withUser($userContext());
 
-        $this->browser->jsonRequest('PUT', '/api/products', [
+        $response = $this->sendRequest('PUT', '/api/products', [
                 'id' => (string)$product->getId(),
                 'name' => (string)$product->getName(),
                 'description' => (string)$product->getDescription(),
@@ -38,7 +38,7 @@ final class UpdateProductControllerTest extends AbstractWebTestCase
             ]
         );
 
-        $responseContent = (string)$this->browser->getResponse()->getContent();
+        $responseContent = (string)$response->getContent();
 
         self::assertResponseStatusCodeSame(200);
         $this->assertJson($responseContent);

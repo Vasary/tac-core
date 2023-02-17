@@ -16,7 +16,7 @@ final class DeleteCategoryControllerTest extends AbstractWebTestCase
     use AssertEventTrait;
 
     private const EVENT_BODY = <<<JSON
-{"category":{"id":"6b58caa4-0571-44db-988a-8a75f86b2520","name":"name","creator":"foo@bar.com","createdAt":"2022-01-01T00:00:00+00:00","updatedAt":"2022-01-01T00:00:00+00:00","deletedAt":null}}
+{"category":{"id":"6b58caa4-0571-44db-988a-8a75f86b2520","name":"name","creator":"mock|10101011","createdAt":"2022-01-01T00:00:00+00:00","updatedAt":"2022-01-01T00:00:00+00:00","deletedAt":null}}
 JSON;
 
     public function testShouldSuccessfullyDeleteCategory(): void
@@ -26,16 +26,15 @@ JSON;
         $categoryContext->user = $user;
         $category = $categoryContext();
 
-        $this->assertEvent([
+        $this->expectEvents([
             ['category.removed', self::EVENT_BODY],
         ]);
 
         $this->load($category);
         $this->withUser($user);
 
-        $this->browser->request('DELETE', '/api/category/' . $category->getId());
-
-        $responseContent = (string)$this->browser->getResponse()->getContent();
+        $response = $this->sendRequest('DELETE', '/api/category/' . $category->getId());
+        $responseContent = (string)$response->getContent();
 
         $this->assertResponseIsSuccessful();
         $this->assertResponseStatusCodeSame(200);
@@ -52,11 +51,14 @@ JSON;
 
     public function testShouldGetNotFoundError(): void
     {
-        $this->assertEvent();
+        $this->expectEvents();
 
-        $this->load(UserContext::create()());
+        $user = UserContext::create()();
 
-        $response = $this->send('DELETE', '/api/category/' . $this->faker->uuidv4());
+        $this->load($user);
+        $this->withUser($user);
+
+        $response = $this->sendRequest('DELETE', '/api/category/' . $this->faker->uuidv4());
 
         $responseContent = (string)$response->getContent();
         $decodedContent = Json::decode($responseContent);
