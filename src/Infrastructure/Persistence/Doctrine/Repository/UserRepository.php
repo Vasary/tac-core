@@ -27,10 +27,10 @@ final class UserRepository implements UserRepositoryInterface
         return $user;
     }
 
-    public function findBySsoId(string $email): ?User
+    public function findBySsoId(string $ssoId): ?User
     {
         return $this->objectRepository->findOneBy([
-            'ssoId' => $email,
+            'ssoId' => $ssoId,
         ]);
     }
 }

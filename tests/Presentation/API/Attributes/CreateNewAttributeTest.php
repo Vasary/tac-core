@@ -23,7 +23,7 @@ JSON;
 JSON;
 
     private const ATTRIBUTE_EVENT = <<<JSON
-{"attribute":{"id":"ea996212-e88c-4323-aeac-a9a008edd515","code":"name","name":"My cool attribute","type":"string","description":"This is my cool description text","creator":"foo@bar.com","createdAt":"2022-09-01T00:00:00+00:00","updatedAt":"2022-09-01T00:00:00+00:00","deletedAt":null}}
+{"attribute":{"id":"ea996212-e88c-4323-aeac-a9a008edd515","code":"name","name":"My cool attribute","type":"string","description":"This is my cool description text","creator":"mock|10101011","createdAt":"2022-09-01T00:00:00+00:00","updatedAt":"2022-09-01T00:00:00+00:00","deletedAt":null}}
 JSON;
 
     protected static array $ids = [
@@ -34,29 +34,32 @@ JSON;
 
     public function testShouldSuccessfullyCreateNewAttribute(): void
     {
-        $this->assertEvent([
+        $this->expectEvents([
             ['glossary.created', self::GLOSSARY_NAME],
             ['glossary.created', self::GLOSSARY_DESCRIPTION],
             ['attribute.created', self::ATTRIBUTE_EVENT],
         ]);
 
-        $this->withUser((new UserContext())());
+        $user = (new UserContext())();
+
+        $this->load($user);
+        $this->withUser($user);
 
         $name = 'My cool attribute';
         $text = 'This is my cool description text';
 
         $this->freezeTime();
 
-        $this->browser->jsonRequest('POST', '/api/attributes', [
+        $response = $this->sendRequest('POST', '/api/attributes', [
             'code' => 'name',
             'name' => $name,
             'description' => $text,
             'type' => 'string',
         ]);
 
-        $responseContent = (string)$this->browser->getResponse()->getContent();
+        $responseContent = (string)$response->getContent();
+        $this->assertEquals(201, $response->getStatusCode());
 
-        $this->assertResponseStatusCodeSame(201);
         $this->assertJson($responseContent);
 
         $decodedContent = json_decode($responseContent, true, 512, \JSON_THROW_ON_ERROR);

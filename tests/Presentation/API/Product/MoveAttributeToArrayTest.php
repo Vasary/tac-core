@@ -23,22 +23,22 @@ final class MoveAttributeToArrayTest extends AbstractWebTestCase
     use AssertAttributeTrait, AssertEventTrait;
 
     private const ATTRIBUTE_VALUE_UPDATE_0 = <<<JSON
-{"attributeValue":{"id":"74bd275f-b4df-439a-a1f5-c15113a7f724","attribute":{"id":"6323609e-d9da-4d4d-bde0-d101edb0d51b","code":"wireless","type":"string","name":"name","description":"description","value":null},"parent":"","creator":"foo@bar.com","createdAt":"2022-01-01T00:00:00+00:00","updatedAt":"2022-09-01T00:00:00+00:00","deletedAt":null}}
+{"attributeValue":{"id":"74bd275f-b4df-439a-a1f5-c15113a7f724","attribute":{"id":"6323609e-d9da-4d4d-bde0-d101edb0d51b","code":"wireless","type":"string","name":"name","description":"description","value":null},"parent":"","creator":"mock|10101011","createdAt":"2022-01-01T00:00:00+00:00","updatedAt":"2022-09-01T00:00:00+00:00","deletedAt":null}}
 JSON;
 
     private const ATTRIBUTE_VALUE_UPDATE_1 = <<<JSON
-{"attributeValue":{"id":"74bd275f-b4df-439a-a1f5-c15113a7f724","attribute":{"id":"6323609e-d9da-4d4d-bde0-d101edb0d51b","code":"wireless","type":"string","name":"name","description":"description","value":null},"parent":"7a5b0941-43b6-41f7-baff-ad39432abb67","creator":"foo@bar.com","createdAt":"2022-01-01T00:00:00+00:00","updatedAt":"2022-09-01T00:00:00+00:00","deletedAt":null}}
+{"attributeValue":{"id":"74bd275f-b4df-439a-a1f5-c15113a7f724","attribute":{"id":"6323609e-d9da-4d4d-bde0-d101edb0d51b","code":"wireless","type":"string","name":"name","description":"description","value":null},"parent":"7a5b0941-43b6-41f7-baff-ad39432abb67","creator":"mock|10101011","createdAt":"2022-01-01T00:00:00+00:00","updatedAt":"2022-09-01T00:00:00+00:00","deletedAt":null}}
 JSON;
 
     private const PRODUCT_UPDATE = <<<JSON
-{"id":"1884fcbf-6ade-49a4-b91a-505290ec1e77","name":"name","description":"description","creator":"foo@bar.com","attributes":[{"id":"5d783188-a635-44ff-a5aa-bb2cb532cfa1","attribute":{"id":"fee8f295-7b19-4d94-8245-1690ab054ad7","code":"port","type":"boolean","name":"name","description":"description","value":true},"parent":"7a5b0941-43b6-41f7-baff-ad39432abb67","creator":"foo@bar.com","createdAt":"2022-01-01T00:00:00+00:00","updatedAt":"2022-01-01T00:00:00+00:00","deletedAt":null},{"id":"74bd275f-b4df-439a-a1f5-c15113a7f724","attribute":{"id":"6323609e-d9da-4d4d-bde0-d101edb0d51b","code":"wireless","type":"string","name":"name","description":"description","value":null},"parent":"7a5b0941-43b6-41f7-baff-ad39432abb67","creator":"foo@bar.com","createdAt":"2022-01-01T00:00:00+00:00","updatedAt":"2022-09-01T00:00:00+00:00","deletedAt":null},{"id":"05a78e56-be86-4c04-b400-999758453ffa","attribute":{"id":"7a5b0941-43b6-41f7-baff-ad39432abb67","code":"connectivity","type":"array","name":"name","description":"description","value":null},"parent":"","creator":"foo@bar.com","createdAt":"2022-01-01T00:00:00+00:00","updatedAt":"2022-01-01T00:00:00+00:00","deletedAt":null}],"category":"6b58caa4-0571-44db-988a-8a75f86b2520","units":[],"createdAt":"2022-01-01T00:00:00+00:00","updatedAt":"2022-01-01T00:00:00+00:00","deletedAt":null}
+{"id":"1884fcbf-6ade-49a4-b91a-505290ec1e77","name":"name","description":"description","creator":"mock|10101011","attributes":[{"id":"5d783188-a635-44ff-a5aa-bb2cb532cfa1","attribute":{"id":"fee8f295-7b19-4d94-8245-1690ab054ad7","code":"port","type":"boolean","name":"name","description":"description","value":true},"parent":"7a5b0941-43b6-41f7-baff-ad39432abb67","creator":"mock|10101011","createdAt":"2022-01-01T00:00:00+00:00","updatedAt":"2022-01-01T00:00:00+00:00","deletedAt":null},{"id":"74bd275f-b4df-439a-a1f5-c15113a7f724","attribute":{"id":"6323609e-d9da-4d4d-bde0-d101edb0d51b","code":"wireless","type":"string","name":"name","description":"description","value":null},"parent":"7a5b0941-43b6-41f7-baff-ad39432abb67","creator":"mock|10101011","createdAt":"2022-01-01T00:00:00+00:00","updatedAt":"2022-09-01T00:00:00+00:00","deletedAt":null},{"id":"05a78e56-be86-4c04-b400-999758453ffa","attribute":{"id":"7a5b0941-43b6-41f7-baff-ad39432abb67","code":"connectivity","type":"array","name":"name","description":"description","value":null},"parent":"","creator":"mock|10101011","createdAt":"2022-01-01T00:00:00+00:00","updatedAt":"2022-01-01T00:00:00+00:00","deletedAt":null}],"category":"6b58caa4-0571-44db-988a-8a75f86b2520","units":[],"createdAt":"2022-01-01T00:00:00+00:00","updatedAt":"2022-01-01T00:00:00+00:00","deletedAt":null}
 JSON;
 
     public function testShouldMoveAttributeToArrayWitNullValue(): void
     {
         $this->freezeTime();
 
-        $this->assertEvent([
+        $this->expectEvents([
             ['attribute.value.updated', self::ATTRIBUTE_VALUE_UPDATE_0],
             ['attribute.value.updated', self::ATTRIBUTE_VALUE_UPDATE_1],
             ['product.update', self::PRODUCT_UPDATE],
@@ -106,7 +106,9 @@ JSON;
             $arrayAttributeValue,
         );
 
-        $response = $this->sendJson('PUT', '/api/products', [
+        $this->withUser($user);
+
+        $response = $this->sendRequest('PUT', '/api/products', [
             'id' => (string)$product->getId(),
             'name' => $product->getName()->value(),
             'description' => $product->getDescription()->value(),

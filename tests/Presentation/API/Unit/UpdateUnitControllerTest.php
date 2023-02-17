@@ -24,15 +24,15 @@ JSON;
 JSON;
 
     private const UNIT_EVENT_UPDATE_NAME = <<<JSON
-{"unit":{"id":"14c374a0-e8a9-448c-93e5-fea748240266","name":"Kilograms","alias":"alias","suggestions":[10,20,50],"creator":"foo@bar.com","createdAt":"2022-01-01T00:00:00+00:00","updatedAt":"2022-10-01T00:00:00+00:00","deletedAt":null}}
+{"unit":{"id":"14c374a0-e8a9-448c-93e5-fea748240266","name":"Kilograms","alias":"alias","suggestions":[10,20,50],"creator":"mock|10101011","createdAt":"2022-01-01T00:00:00+00:00","updatedAt":"2022-10-01T00:00:00+00:00","deletedAt":null}}
 JSON;
 
     private const UNIT_EVENT_UPDATE_ALIAS = <<<JSON
-{"unit":{"id":"14c374a0-e8a9-448c-93e5-fea748240266","name":"Kilograms","alias":"kg","suggestions":[10,20,50],"creator":"foo@bar.com","createdAt":"2022-01-01T00:00:00+00:00","updatedAt":"2022-10-01T00:00:00+00:00","deletedAt":null}}
+{"unit":{"id":"14c374a0-e8a9-448c-93e5-fea748240266","name":"Kilograms","alias":"kg","suggestions":[10,20,50],"creator":"mock|10101011","createdAt":"2022-01-01T00:00:00+00:00","updatedAt":"2022-10-01T00:00:00+00:00","deletedAt":null}}
 JSON;
 
     private const UNIT_EVENT_UPDATE_SUGGESTIONS = <<<JSON
-{"unit":{"id":"14c374a0-e8a9-448c-93e5-fea748240266","name":"Kilograms","alias":"kg","suggestions":[100,250,500,600],"creator":"foo@bar.com","createdAt":"2022-01-01T00:00:00+00:00","updatedAt":"2022-10-01T00:00:00+00:00","deletedAt":null}}
+{"unit":{"id":"14c374a0-e8a9-448c-93e5-fea748240266","name":"Kilograms","alias":"kg","suggestions":[100,250,500,600],"creator":"mock|10101011","createdAt":"2022-01-01T00:00:00+00:00","updatedAt":"2022-10-01T00:00:00+00:00","deletedAt":null}}
 JSON;
 
     public function testShouldSuccessfullyUpdateUnit(): void
@@ -43,7 +43,7 @@ JSON;
         $this->load($user, $unit);
         $this->withUser($user);
 
-        $this->assertEvent([
+        $this->expectEvents([
             ['glossary.updated', self::GLOSSARY_EVENT_NAME_BODY],
             ['glossary.updated', self::GLOSSARY_EVENT_NANE_ALIAS],
             ['unit.updated', self::UNIT_EVENT_UPDATE_NAME],
@@ -53,7 +53,7 @@ JSON;
 
         $this->freezeTime('2022-10-01');
 
-        $this->browser->jsonRequest('PUT', '/api/units', [
+        $response = $this->sendRequest('PUT', '/api/units', [
                 'id' => (string)$unit->getId(),
                 'name' => 'Kilograms',
                 'alias' => 'kg',
@@ -66,7 +66,7 @@ JSON;
             ]
         );
 
-        $responseContent = (string)$this->browser->getResponse()->getContent();
+        $responseContent = (string)$response->getContent();
 
         $decodedContent = json_decode($responseContent, true);
 
@@ -95,11 +95,14 @@ JSON;
 
     public function testShouldGetUnitNotFoundError(): void
     {
-        $this->assertEvent();
+        $this->expectEvents();
 
-        $this->withUser(UserContext::create()());
+        $user = UserContext::create()();
 
-        $this->browser->jsonRequest('PUT', '/api/units', [
+        $this->load($user);
+        $this->withUser($user);
+
+        $response = $this->sendRequest('PUT', '/api/units', [
                 'id' => $this->faker->uuidv4(),
                 'name' => 'Kilograms',
                 'alias' => 'kg',
@@ -112,7 +115,7 @@ JSON;
             ]
         );
 
-        $responseContent = (string)$this->browser->getResponse()->getContent();
+        $responseContent = (string)$response->getContent();
         $decodedContent = Json::decode($responseContent);
 
         self::assertResponseStatusCodeSame(404);

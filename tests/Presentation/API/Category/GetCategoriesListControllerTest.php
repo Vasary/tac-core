@@ -23,9 +23,8 @@ final class GetCategoriesListControllerTest extends AbstractWebTestCase
         $this->load($category);
         $this->withUser($user);
 
-        $this->browser->jsonRequest('GET', '/api/category?size=1&page=1');
-
-        $responseContent = (string)$this->browser->getResponse()->getContent();
+        $response = $this->sendRequest('GET', '/api/category?size=1&page=1');
+        $responseContent = (string)$response->getContent();
 
         $this->assertResponseIsSuccessful();
         $this->assertResponseStatusCodeSame(200);

@@ -17,9 +17,9 @@ final class GetUnitsListControllerTest extends AbstractWebTestCase
         $this->load($user, $this->faker->unit(), $this->faker->unit());
         $this->withUser($user);
 
-        $this->browser->request('GET', '/api/units?page=1&size=1');
+        $response = $this->sendRequest('GET', '/api/units?page=1&size=1');
 
-        $responseContent = (string)$this->browser->getResponse()->getContent();
+        $responseContent = (string)$response->getContent();
 
         self::assertResponseStatusCodeSame(200);
         $this->assertJson($responseContent);

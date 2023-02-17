@@ -17,7 +17,7 @@ final class GetAttributeControllerTest extends AbstractWebTestCase
 
     public function testShouldRetrieveAttribute(): void
     {
-        $this->assertEvent();
+        $this->expectEvents();
         $user = UserContext::create()();
         $this->withUser($user);
 
@@ -25,11 +25,11 @@ final class GetAttributeControllerTest extends AbstractWebTestCase
         $attributeContext->user = $user;
         $attribute = $attributeContext();
 
-        $this->load($attribute);
+        $this->load($attribute, $user);
 
-        $this->browser->jsonRequest('GET', '/api/attributes/' . $attribute->getId());
+        $response = $this->sendRequest('GET', '/api/attributes/' . $attribute->getId());
 
-        $responseContent = (string) $this->browser->getResponse()->getContent();
+        $responseContent = (string) $response->getContent();
 
         $decoded = json_decode($responseContent, true);
 
@@ -40,11 +40,14 @@ final class GetAttributeControllerTest extends AbstractWebTestCase
 
     public function testShouldGetNotFoundError(): void
     {
-        $this->withUser(UserContext::create()());
+        $user = UserContext::create()();
 
-        $this->browser->jsonRequest('GET', '/api/attributes/' . $this->faker->uuidv4());
+        $this->withUser($user);
+        $this->load($user);
 
-        $responseContent = (string) $this->browser->getResponse()->getContent();
+        $response = $this->sendRequest('GET', '/api/attributes/' . $this->faker->uuidv4());
+
+        $responseContent = (string) $response->getContent();
 
         $decodedContent = Json::decode($responseContent);
 

@@ -17,10 +17,14 @@ final class AttributeCreateValidationTest extends AbstractWebTestCase
 
     public function testShouldFailByCodeValidation(): void
     {
-        $this->assertEvent();
-        $this->withUser((new UserContext())());
+        $this->expectEvents();
 
-        $this->browser->jsonRequest('POST', '/api/attributes', [
+        $user = (new UserContext())();
+
+        $this->load($user);
+        $this->withUser($user);
+
+        $response = $this->sendRequest('POST', '/api/attributes', [
             'code' => $this->faker->regexify('/[a-z]{26}'),
             'name' => $this->faker->name(),
             'description' => $this->faker->realText(255),
@@ -28,7 +32,7 @@ final class AttributeCreateValidationTest extends AbstractWebTestCase
         ]);
 
         $this->assertValidationError(
-            $this->browser->getResponse(),
+            $response,
             400,
             'code',
             'Attribute code should be mre then 3 and less then 25 symbols'
@@ -41,10 +45,14 @@ final class AttributeCreateValidationTest extends AbstractWebTestCase
 
     public function testShouldFailByNameValidation(): void
     {
-        $this->assertEvent();
-        $this->withUser((new UserContext())());
+        $this->expectEvents();
 
-        $this->browser->jsonRequest('POST', '/api/attributes', [
+        $user = (new UserContext())();
+
+        $this->load($user);
+        $this->withUser($user);
+
+        $response = $this->sendRequest('POST', '/api/attributes', [
             'code' => 'name',
             'name' => $this->faker->regexify('/[a-zA-Z\s]{51}'),
             'description' => $this->faker->realText(255),
@@ -52,7 +60,7 @@ final class AttributeCreateValidationTest extends AbstractWebTestCase
         ]);
 
         $this->assertValidationError(
-            $this->browser->getResponse(),
+            $response,
             400,
             'name',
             'Attribute name should be mre then 3 and less then 50 symbols'
@@ -65,10 +73,14 @@ final class AttributeCreateValidationTest extends AbstractWebTestCase
 
     public function testShouldFailByDescriptionValidation(): void
     {
-        $this->assertEvent();
-        $this->withUser((new UserContext())());
+        $this->expectEvents();
 
-        $this->browser->jsonRequest('POST', '/api/attributes', [
+        $user = (new UserContext())();
+
+        $this->load($user);
+        $this->withUser($user);
+
+        $response = $this->sendRequest('POST', '/api/attributes', [
             'code' => 'name',
             'name' => $this->faker->name(),
             'description' => $this->faker->regexify('/[a-z]{256}'),
@@ -76,7 +88,7 @@ final class AttributeCreateValidationTest extends AbstractWebTestCase
         ]);
 
         $this->assertValidationError(
-            $this->browser->getResponse(),
+            $response,
             400,
             'description',
             'Attribute description should be mre then 3 and less then 255 symbols'
@@ -89,10 +101,14 @@ final class AttributeCreateValidationTest extends AbstractWebTestCase
 
     public function testShouldFailByTypeValidation(): void
     {
-        $this->assertEvent();
-        $this->withUser((new UserContext())());
+        $this->expectEvents();
 
-        $this->browser->jsonRequest('POST', '/api/attributes', [
+        $user = (new UserContext())();
+
+        $this->load($user);
+        $this->withUser($user);
+
+        $response = $this->sendRequest('POST', '/api/attributes', [
             'code' => 'name',
             'name' => $this->faker->name(),
             'description' => $this->faker->realText(255),
@@ -100,7 +116,7 @@ final class AttributeCreateValidationTest extends AbstractWebTestCase
         ]);
 
         $this->assertValidationError(
-            $this->browser->getResponse(),
+            $response,
             400,
             'type',
             'Attribute type has to be one of the allowed types'

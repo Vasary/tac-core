@@ -18,7 +18,7 @@ final class GetAttributeValuesControllerTest extends AbstractWebTestCase
 
     public function testShouldRetrieveAllAttributeValues(): void
     {
-        $this->assertEvent();
+        $this->expectEvents();
 
         $user = UserContext::create()();
 
@@ -34,11 +34,12 @@ final class GetAttributeValuesControllerTest extends AbstractWebTestCase
         $secondAttributeValueContext->attribute = $attributeTwo;
 
         $this->load($user, $attributeOne, $attributeTwo, $firstAttributeValueContext(), $secondAttributeValueContext());
+
         $this->withUser($user);
 
-        $this->browser->request('GET', '/api/attributes/values?page=1&size=1');
+        $response = $this->sendRequest('GET', '/api/attributes/values?page=1&size=1');
 
-        $responseContent = (string)$this->browser->getResponse()->getContent();
+        $responseContent = (string)$response->getContent();
         $content = Json::decode($responseContent);
 
         $this->assertResponseIsSuccessful();

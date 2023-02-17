@@ -17,7 +17,7 @@ final class DomainEventsCollectorTest extends AbstractUnitTestCase
 {
     public function testShouldSuccessfullyCheckDomainEventsCollector(): void
     {
-        $object = new User('foo@bar.com');
+        $object = new User('mock|10101011');
 
         $eventStore = Mockery::mock(EventStore::class);
         $eventStore

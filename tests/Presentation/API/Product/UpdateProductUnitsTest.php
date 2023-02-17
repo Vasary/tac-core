@@ -19,30 +19,30 @@ final class UpdateProductUnitsTest extends AbstractWebTestCase
     use AssertAttributeTrait, AssertEventTrait;
 
     private const PRODUCT_UPDATE = <<<JSON
-{"product":{"id":"1884fcbf-6ade-49a4-b91a-505290ec1e77","name":"name","description":"description","creator":"foo@bar.com","attributes":[],"category":"6b58caa4-0571-44db-988a-8a75f86b2520","units":["14c374a0-e8a9-448c-93e5-fea748240266"],"createdAt":"2022-01-01T00:00:00+00:00","updatedAt":"2022-09-01T00:00:00+00:00","deletedAt":null}}
+{"product":{"id":"1884fcbf-6ade-49a4-b91a-505290ec1e77","name":"name","description":"description","creator":"mock|10101011","attributes":[],"category":"6b58caa4-0571-44db-988a-8a75f86b2520","units":["14c374a0-e8a9-448c-93e5-fea748240266"],"createdAt":"2022-01-01T00:00:00+00:00","updatedAt":"2022-09-01T00:00:00+00:00","deletedAt":null}}
 JSON;
 
     private const PRODUCT_UPDATE_0 = <<<JSON
-{"product":{"id":"1884fcbf-6ade-49a4-b91a-505290ec1e77","name":"name","description":"description","creator":"foo@bar.com","attributes":[],"category":"6b58caa4-0571-44db-988a-8a75f86b2520","units":["567d6d64-9977-449b-856e-03b08e821a55","e0aa6ce2-7761-4f5f-be20-296d7dcf137f"],"createdAt":"2022-01-01T00:00:00+00:00","updatedAt":"2022-09-01T00:00:00+00:00","deletedAt":null}}
+{"product":{"id":"1884fcbf-6ade-49a4-b91a-505290ec1e77","name":"name","description":"description","creator":"mock|10101011","attributes":[],"category":"6b58caa4-0571-44db-988a-8a75f86b2520","units":["567d6d64-9977-449b-856e-03b08e821a55","e0aa6ce2-7761-4f5f-be20-296d7dcf137f"],"createdAt":"2022-01-01T00:00:00+00:00","updatedAt":"2022-09-01T00:00:00+00:00","deletedAt":null}}
 JSON;
 
     private const PRODUCT_UPDATE_1 = <<<JSON
-{"product":{"id":"1884fcbf-6ade-49a4-b91a-505290ec1e77","name":"name","description":"description","creator":"foo@bar.com","attributes":[],"category":"6b58caa4-0571-44db-988a-8a75f86b2520","units":["e0aa6ce2-7761-4f5f-be20-296d7dcf137f"],"createdAt":"2022-01-01T00:00:00+00:00","updatedAt":"2022-09-01T00:00:00+00:00","deletedAt":null}}
+{"product":{"id":"1884fcbf-6ade-49a4-b91a-505290ec1e77","name":"name","description":"description","creator":"mock|10101011","attributes":[],"category":"6b58caa4-0571-44db-988a-8a75f86b2520","units":["e0aa6ce2-7761-4f5f-be20-296d7dcf137f"],"createdAt":"2022-01-01T00:00:00+00:00","updatedAt":"2022-09-01T00:00:00+00:00","deletedAt":null}}
 JSON;
 
     private const PRODUCT_UPDATE_2 = <<<JSON
-{"product":{"id":"1884fcbf-6ade-49a4-b91a-505290ec1e77","name":"name","description":"description","creator":"foo@bar.com","attributes":[],"category":"6b58caa4-0571-44db-988a-8a75f86b2520","units":[],"createdAt":"2022-01-01T00:00:00+00:00","updatedAt":"2022-09-01T00:00:00+00:00","deletedAt":null}}
+{"product":{"id":"1884fcbf-6ade-49a4-b91a-505290ec1e77","name":"name","description":"description","creator":"mock|10101011","attributes":[],"category":"6b58caa4-0571-44db-988a-8a75f86b2520","units":[],"createdAt":"2022-01-01T00:00:00+00:00","updatedAt":"2022-09-01T00:00:00+00:00","deletedAt":null}}
 JSON;
 
     private const PRODUCT_UPDATE_3 = <<<JSON
-{"product":{"id":"1884fcbf-6ade-49a4-b91a-505290ec1e77","name":"name","description":"description","creator":"foo@bar.com","attributes":[],"category":"6b58caa4-0571-44db-988a-8a75f86b2520","units":["14c374a0-e8a9-448c-93e5-fea748240266"],"createdAt":"2022-01-01T00:00:00+00:00","updatedAt":"2022-09-01T00:00:00+00:00","deletedAt":null}}
+{"product":{"id":"1884fcbf-6ade-49a4-b91a-505290ec1e77","name":"name","description":"description","creator":"mock|10101011","attributes":[],"category":"6b58caa4-0571-44db-988a-8a75f86b2520","units":["14c374a0-e8a9-448c-93e5-fea748240266"],"createdAt":"2022-01-01T00:00:00+00:00","updatedAt":"2022-09-01T00:00:00+00:00","deletedAt":null}}
 JSON;
 
     public function testShouldSuccessfullyUpdateProductUnits(): void
     {
         $this->freezeTime();
 
-        $this->assertEvent([
+        $this->expectEvents([
             ['product.updated', self::PRODUCT_UPDATE],
         ]);
 
@@ -57,7 +57,7 @@ JSON;
         $this->load($user, $category, $product, $unit);
         $this->withUser($user);
 
-        $this->browser->jsonRequest('PUT', '/api/products', [
+        $response = $this->sendRequest('PUT', '/api/products', [
                 'id' => (string)$product->getId(),
                 'name' => (string)$product->getName(),
                 'description' => (string)$product->getDescription(),
@@ -68,7 +68,7 @@ JSON;
             ]
         );
 
-        $content = (string)$this->browser->getResponse()->getContent();
+        $content = (string)$response->getContent();
 
         self::assertResponseStatusCodeSame(200);
         $this->assertJson($content);
@@ -86,7 +86,7 @@ JSON;
     {
         $this->freezeTime();
 
-        $this->assertEvent([
+        $this->expectEvents([
             ['product.updated', self::PRODUCT_UPDATE_0],
             ['product.updated', self::PRODUCT_UPDATE_1],
             ['product.updated', self::PRODUCT_UPDATE_2],
@@ -117,7 +117,7 @@ JSON;
 
         $this->assertDatabaseCount( Unit::class, 4);
 
-        $this->browser->jsonRequest('PUT', '/api/products', [
+        $response = $this->sendRequest('PUT', '/api/products', [
                 'id' => (string)$product->getId(),
                 'name' => (string)$product->getName(),
                 'description' => (string)$product->getDescription(),
@@ -128,7 +128,7 @@ JSON;
             ]
         );
 
-        $content = (string)$this->browser->getResponse()->getContent();
+        $content = (string)$response->getContent();
 
         self::assertResponseStatusCodeSame(200);
         $this->assertJson($content);
@@ -147,14 +147,14 @@ JSON;
     {
         $this->freezeTime();
 
-        $this->assertEvent([]);
+        $this->expectNoEvents();
 
         $user = UserContext::create()();
 
         $this->load($user);
         $this->withUser($user);
 
-        $this->browser->jsonRequest('PUT', '/api/products', [
+        $response = $this->sendRequest('PUT', '/api/products', [
                 'id' => $this->faker->uuidv4(),
                 'name' => 'hello',
                 'description' => 'description',
@@ -163,7 +163,7 @@ JSON;
             ]
         );
 
-        $response = (string)$this->browser->getResponse()->getContent();
+        $response = (string)$response->getContent();
 
         self::assertResponseStatusCodeSame(404);
         $this->assertJson($response);

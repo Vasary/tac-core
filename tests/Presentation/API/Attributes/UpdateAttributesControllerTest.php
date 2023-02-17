@@ -24,24 +24,24 @@ JSON;
 JSON;
 
     private const EVENT_NAME = <<<JSON
-{"attribute":{"id":"888c23c6-06fe-4a95-a66c-f292da2f7607","code":"name","name":"Hello world","type":"integer","description":"description","creator":"foo@bar.com","createdAt":"2022-01-01T00:00:00+00:00","updatedAt":"2022-10-01T00:00:00+00:00","deletedAt":null}}
+{"attribute":{"id":"888c23c6-06fe-4a95-a66c-f292da2f7607","code":"name","name":"Hello world","type":"integer","description":"description","creator":"mock|10101011","createdAt":"2022-01-01T00:00:00+00:00","updatedAt":"2022-10-01T00:00:00+00:00","deletedAt":null}}
 JSON;
 
     private const EVENT_DESCRIPTION = <<<JSON
-{"attribute":{"id":"888c23c6-06fe-4a95-a66c-f292da2f7607","code":"name","name":"Hello world","type":"integer","description":"my description","creator":"foo@bar.com","createdAt":"2022-01-01T00:00:00+00:00","updatedAt":"2022-10-01T00:00:00+00:00","deletedAt":null}}
+{"attribute":{"id":"888c23c6-06fe-4a95-a66c-f292da2f7607","code":"name","name":"Hello world","type":"integer","description":"my description","creator":"mock|10101011","createdAt":"2022-01-01T00:00:00+00:00","updatedAt":"2022-10-01T00:00:00+00:00","deletedAt":null}}
 JSON;
 
     private const EVENT_CODE = <<<JSON
-{"attribute":{"id":"888c23c6-06fe-4a95-a66c-f292da2f7607","code":"name","name":"Hello world","type":"integer","description":"my description","creator":"foo@bar.com","createdAt":"2022-01-01T00:00:00+00:00","updatedAt":"2022-10-01T00:00:00+00:00","deletedAt":null}}
+{"attribute":{"id":"888c23c6-06fe-4a95-a66c-f292da2f7607","code":"name","name":"Hello world","type":"integer","description":"my description","creator":"mock|10101011","createdAt":"2022-01-01T00:00:00+00:00","updatedAt":"2022-10-01T00:00:00+00:00","deletedAt":null}}
 JSON;
 
     private const EVENT_TYPE = <<<JSON
-{"attribute":{"id":"888c23c6-06fe-4a95-a66c-f292da2f7607","code":"name","name":"Hello world","type":"string","description":"my description","creator":"foo@bar.com","createdAt":"2022-01-01T00:00:00+00:00","updatedAt":"2022-10-01T00:00:00+00:00","deletedAt":null}}
+{"attribute":{"id":"888c23c6-06fe-4a95-a66c-f292da2f7607","code":"name","name":"Hello world","type":"string","description":"my description","creator":"mock|10101011","createdAt":"2022-01-01T00:00:00+00:00","updatedAt":"2022-10-01T00:00:00+00:00","deletedAt":null}}
 JSON;
 
     public function testShouldSuccessfullyUpdateAttribute(): void
     {
-        $this->assertEvent([
+        $this->expectEvents([
             ['glossary.updated', self::EVENT_GLOSSARY_NAME],
             ['glossary.updated', self::EVENT_GLOSSARY_DESCRIPTION],
             ['attribute.updated', self::EVENT_NAME],
@@ -49,6 +49,8 @@ JSON;
             ['attribute.updated', self::EVENT_CODE],
             ['attribute.updated', self::EVENT_TYPE],
         ]);
+
+        $user = (new UserContext())();
 
         $attributeContext = AttributeContext::create();
         $attributeContext->code = 'name';
@@ -59,9 +61,9 @@ JSON;
         $this->freezeTime('2022-10-01');
 
         $this->load($attribute);
-        $this->withUser((new UserContext())());
+        $this->withUser($user);
 
-        $this->browser->jsonRequest('PUT', '/api/attributes', [
+        $response = $this->sendRequest('PUT', '/api/attributes', [
             'id' => (string)$attribute->getId(),
             'name' => 'Hello world',
             'description' => 'my description',
@@ -69,7 +71,7 @@ JSON;
             'type' => 'string',
         ]);
 
-        $responseContent = (string)$this->browser->getResponse()->getContent();
+        $responseContent = (string)$response->getContent();
 
         $this->assertResponseStatusCodeSame(200);
         $this->assertJson($responseContent);
@@ -91,11 +93,13 @@ JSON;
 
     public function testShouldGetNotFoundError(): void
     {
-        $this->assertEvent();
+        $this->expectEvents();
 
-        $this->withUser(UserContext::create()());
+        $user = UserContext::create()();
+        $this->withUser($user);
+        $this->load($user);
 
-        $this->browser->jsonRequest('PUT', '/api/attributes', [
+        $response = $this->sendRequest('PUT', '/api/attributes', [
             'id' => $this->faker->uuidv4(),
             'name' => 'Hello world',
             'description' => 'my description',
@@ -103,7 +107,7 @@ JSON;
             'type' => 'string',
         ]);
 
-        $responseContent = (string)$this->browser->getResponse()->getContent();
+        $responseContent = (string)$response->getContent();
         $decodedContent = Json::decode($responseContent);
 
         $this->assertResponseStatusCodeSame(404);

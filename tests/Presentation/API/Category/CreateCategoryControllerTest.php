@@ -18,7 +18,7 @@ final class CreateCategoryControllerTest extends AbstractWebTestCase
 JSON;
 
     private const CATEGORY_EVENT = <<<JSON
-{"category":{"id":"b9c0fa48-fd52-4923-b21c-802912da773e","name":"green","creator":"foo@bar.com","createdAt":"1986-06-05T00:00:00+00:00","updatedAt":"1986-06-05T00:00:00+00:00","deletedAt":null}}
+{"category":{"id":"b9c0fa48-fd52-4923-b21c-802912da773e","name":"green","creator":"mock|10101011","createdAt":"1986-06-05T00:00:00+00:00","updatedAt":"1986-06-05T00:00:00+00:00","deletedAt":null}}
 JSON;
 
     protected static array $ids = [
@@ -29,18 +29,22 @@ JSON;
     public function testShouldSuccessfullyCreateNewCategory(): void
     {
         $this->freezeTime('1986-06-05');
-        $this->withUser((new UserContext())());
 
-        $this->assertEvent([
+        $user = (new UserContext())();
+
+        $this->withUser($user);
+        $this->load($user);
+
+        $this->expectEvents([
             ['glossary.created', self::GLOSSARY_EVENT],
             ['category.created', self::CATEGORY_EVENT],
         ]);
 
-        $this->browser->jsonRequest('POST', '/api/category', [
+        $response = $this->sendRequest('POST', '/api/category', [
             'name' => 'green',
         ]);
 
-        $responseContent = (string)$this->browser->getResponse()->getContent();
+        $responseContent = (string)$response->getContent();
 
         $this->assertResponseIsSuccessful();
         $this->assertResponseStatusCodeSame(201);
@@ -49,7 +53,7 @@ JSON;
         $decodedContent = json_decode($responseContent, true);
 
         $this->assertEquals('green', $decodedContent['name']);
-        $this->assertEquals('foo@bar.com', $decodedContent['creator']);
+        $this->assertEquals('mock|10101011', $decodedContent['creator']);
         $this->assertArrayHasKey('id', $decodedContent);
         $this->assertArrayHasKey('name', $decodedContent);
         $this->assertArrayHasKey('creator', $decodedContent);

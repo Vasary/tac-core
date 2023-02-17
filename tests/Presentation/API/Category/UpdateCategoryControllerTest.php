@@ -25,14 +25,15 @@ final class UpdateCategoryControllerTest extends AbstractWebTestCase
         $categoryContext->user = $user;
         $category = $categoryContext();
 
-        $this->assertEvent([
+        $this->expectEvents([
             ['glossary.updated', '{"glossary":{"objectId":"6b58caa4-0571-44db-988a-8a75f86b2520","field":"name","value":"new name","locale":"en"}}'],
-            ['category.updated', '{"category":{"id":"6b58caa4-0571-44db-988a-8a75f86b2520","name":"new name","creator":"foo@bar.com","createdAt":"2022-01-01T00:00:00+00:00","updatedAt":"2022-10-01T00:00:00+00:00","deletedAt":null}}'],
+            ['category.updated', '{"category":{"id":"6b58caa4-0571-44db-988a-8a75f86b2520","name":"new name","creator":"mock|10101011","createdAt":"2022-01-01T00:00:00+00:00","updatedAt":"2022-10-01T00:00:00+00:00","deletedAt":null}}'],
         ]);
 
-        $this->load($category);
+        $this->load($category, $user);
 
-        $response = $this->sendJson('PUT', '/api/category', [
+        $this->withUser($user);
+        $response = $this->sendRequest('PUT', '/api/category', [
             'id' => (string) $category->getId(),
             'name' => 'new name',
         ]);
@@ -62,16 +63,19 @@ final class UpdateCategoryControllerTest extends AbstractWebTestCase
 
     public function testShouldGetNotFoundError(): void
     {
-        $this->assertEvent();
+        $this->expectEvents();
 
-        $this->withUser(UserContext::create()());
+        $user = UserContext::create()();
 
-        $this->browser->jsonRequest('PUT', '/api/category', [
+        $this->withUser($user);
+        $this->load($user);
+
+        $response = $this->sendRequest('PUT', '/api/category', [
             'id' => $this->faker->uuidv4(),
             'name' => 'new name',
         ]);
 
-        $responseContent = (string)$this->browser->getResponse()->getContent();
+        $responseContent = (string)$response->getContent();
         $decodedContent = Json::decode($responseContent);
 
         $this->assertResponseStatusCodeSame(404);

@@ -20,12 +20,15 @@ final class GetProductControllerTest extends AbstractWebTestCase
 
     public function testShouldSuccessfullyRetrieveProduct(): void
     {
-        $this->assertEvent([]);
+        $this->expectNoEvents();
 
+        $user = UserContext::create()();
         $product = ProductContext::create()();
-        $this->load(CategoryContext::create()(), $product);
 
-        $response = $this->send('GET', '/api/products/' . $product->getId());
+        $this->load(CategoryContext::create()(), $product, $user);
+
+        $this->withUser($user);
+        $response = $this->sendRequest('GET', '/api/products/' . $product->getId());
 
         $responseContent = $response->getContent();
 
@@ -55,7 +58,7 @@ final class GetProductControllerTest extends AbstractWebTestCase
 
     public function testShouldSuccessfullyRetrieveProductWithAttributes(): void
     {
-        $this->assertEvent([]);
+        $this->expectNoEvents();
 
         $attributeContext = AttributeContext::create();
         $categoryContext = CategoryContext::create();
@@ -74,7 +77,8 @@ final class GetProductControllerTest extends AbstractWebTestCase
 
         $this->load($attribute, $category, $product, $user, $attributeValue);
 
-        $response = $this->send('GET', '/api/products/' . $product->getId());
+        $this->withUser($user);
+        $response = $this->sendRequest('GET', '/api/products/' . $product->getId());
 
         $responseContent = $response->getContent();
 
@@ -114,7 +118,7 @@ final class GetProductControllerTest extends AbstractWebTestCase
 
     public function testShouldSuccessfullyRetrieveProductWithMoreThenOneAttribute(): void
     {
-        $this->assertEvent([]);
+        $this->expectNoEvents();
 
         $category = CategoryContext::create()();
         $productContext = ProductContext::create();
@@ -147,7 +151,8 @@ final class GetProductControllerTest extends AbstractWebTestCase
 
         $this->load($category, $user, $product, $firstAttribute, $secondAttribute, $firstAttributeValue, $secondAttributeValue);
 
-        $response = $this->send('GET', '/api/products/' . $product->getId());
+        $this->withUser($user);
+        $response = $this->sendRequest('GET', '/api/products/' . $product->getId());
 
         $responseContent = $response->getContent();
 
@@ -171,11 +176,14 @@ final class GetProductControllerTest extends AbstractWebTestCase
 
     public function testShouldGetNotFoundError(): void
     {
-        $this->assertEvent([]);
+        $this->expectNoEvents();
 
-        $this->load(UserContext::create()());
+        $user = UserContext::create()();
 
-        $response = $this->send('GET', '/api/products/' . $this->faker->uuidv4());
+        $this->load($user);
+
+        $this->withUser($user);
+        $response = $this->sendRequest('GET', '/api/products/' . $this->faker->uuidv4());
 
         $responseContent = $response->getContent();
         $decodedContent = Json::decode($responseContent);

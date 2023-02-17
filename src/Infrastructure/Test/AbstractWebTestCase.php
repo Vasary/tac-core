@@ -4,7 +4,6 @@ declare(strict_types = 1);
 
 namespace App\Infrastructure\Test;
 
-use App\Application\Shared\User as ApplicationUser;
 use App\Domain\Model\User as DomainUser;
 use App\Domain\ValueObject\Id;
 use App\Domain\ValueObject\Locale;
@@ -12,12 +11,15 @@ use App\Domain\ValueObject\Uuid;
 use App\Infrastructure\Test\Atom\RegisterGlossaryTrait;
 use App\Infrastructure\Test\Faker\Factory;
 use App\Infrastructure\Test\Stub\IdFactoryStub;
+use Auth0\SDK\Auth0;
+use Auth0\SDK\Contract\TokenInterface;
 use Doctrine\ORM\EntityManagerInterface;
 use Faker\Generator;
 use Mockery;
 use SlopeIt\ClockMock\ClockMock;
 use Symfony\Bundle\FrameworkBundle\KernelBrowser;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 abstract class AbstractWebTestCase extends WebTestCase
@@ -26,8 +28,8 @@ abstract class AbstractWebTestCase extends WebTestCase
 
     protected static array $ids = [];
     protected static string $locale = 'en';
-    protected ?KernelBrowser $browser;
     protected ?Generator $faker = null;
+    private ?KernelBrowser $browser;
 
     public function load(object ...$models): void
     {
@@ -47,26 +49,15 @@ abstract class AbstractWebTestCase extends WebTestCase
         $entityManager->clear();
     }
 
-    protected function sendJson(string $method, string $url, array $body): Response
+    protected function sendRequest(string $method, string $url, array $body = []): Response
     {
-        $server = [
-            'HTTP_X_USER_EMAIL' => 'foo@bar.com',
-            'HTTP_X_USER_ROLES' => 'core',
-        ];
+        $requestHeaders = ['HTTP_AUTHORIZATION' => 'Bearer MTExMTExMTExMTEx'];
 
-        $this->browser->jsonRequest($method, $url, $body, server: $server);
-
-        return $this->browser->getResponse();
-    }
-
-    protected function send(string $method, string $url): Response
-    {
-        $server = [
-            'HTTP_X_USER_EMAIL' => 'foo@bar.com',
-            'HTTP_X_USER_ROLES' => 'core',
-        ];
-
-        $this->browser->jsonRequest($method, $url, server: $server);
+        if (in_array($method, [Request::METHOD_POST, Request::METHOD_PUT])) {
+            $this->browser->jsonRequest($method, $url, $body, server: $requestHeaders);
+        } else {
+            $this->browser->request($method, $url, server: $requestHeaders);
+        }
 
         return $this->browser->getResponse();
     }
@@ -76,9 +67,23 @@ abstract class AbstractWebTestCase extends WebTestCase
         ClockMock::freeze(new \DateTimeImmutable($time));
     }
 
-    protected function withUser(DomainUser $user, array $roles = ['ROLE_CORE']): void
+    protected function withUser(DomainUser $user): void
     {
-        $this->browser->loginUser(new ApplicationUser($user, $roles));
+        $idToken = Mockery::mock(TokenInterface::class);
+        $idToken
+            ->shouldReceive('getSubject')
+            ->once()
+            ->andReturn($user->getSsoId())
+        ;
+
+        $auth0Mock = Mockery::mock(Auth0::class);
+        $auth0Mock
+            ->shouldReceive('decode')
+            ->once()
+            ->andReturn($idToken)
+        ;
+
+        self::getContainer()->set(Auth0::class, $auth0Mock);
     }
 
     protected function setUp(): void

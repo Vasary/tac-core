@@ -12,3 +12,5 @@ services:
 
   App\Application\Shared\Contract\TransactionServiceInterface: '@App\Infrastructure\Test\Stub\TransactionalServiceStub'
 
+  Auth0\SDK\Auth0:
+    public: true

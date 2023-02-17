@@ -1,12 +1,12 @@
 <?php
 
-declare(strict_types=1);
+declare(strict_types = 1);
 
 namespace App\Application\Security\TokenExtractor;
 
 use InvalidArgumentException;
 
-class TokenExtractor
+final class TokenExtractor
 {
     /**
      * @var string

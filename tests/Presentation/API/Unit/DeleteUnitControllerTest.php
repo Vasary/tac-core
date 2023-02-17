@@ -16,7 +16,7 @@ final class DeleteUnitControllerTest extends AbstractWebTestCase
     use AssertEventTrait;
 
     private const EVENT_BODY = <<<JSON
-{"unit":{"id":"14c374a0-e8a9-448c-93e5-fea748240266","name":"name","alias":"alias","suggestions":[10,20,50],"creator":"foo@bar.com","createdAt":"2022-01-01T00:00:00+00:00","updatedAt":"2022-01-01T00:00:00+00:00","deletedAt":null}}
+{"unit":{"id":"14c374a0-e8a9-448c-93e5-fea748240266","name":"name","alias":"alias","suggestions":[10,20,50],"creator":"mock|10101011","createdAt":"2022-01-01T00:00:00+00:00","updatedAt":"2022-01-01T00:00:00+00:00","deletedAt":null}}
 JSON;
 
     public function testShouldSuccessfullyDeleteUnit(): void
@@ -24,16 +24,15 @@ JSON;
         $user = UserContext::create()();
         $unit = UnitContext::create()();
 
-        $this->assertEvent([
+        $this->expectEvents([
             ['unit.removed', self::EVENT_BODY],
         ]);
 
         $this->load($user, $unit);
         $this->withUser($user);
 
-        $this->browser->request('DELETE', '/api/units/' . $unit->getId());
-
-        $responseContent = (string)$this->browser->getResponse()->getContent();
+        $response = $this->sendRequest('DELETE', '/api/units/' . $unit->getId());
+        $responseContent = (string)$response->getContent();
 
         $decodedContent = json_decode($responseContent, true);
 
@@ -47,13 +46,16 @@ JSON;
 
     public function testShouldGetUnitNotFoundError(): void
     {
-        $this->assertEvent();
+        $this->expectEvents();
 
-        $this->withUser(UserContext::create()());
+        $user = UserContext::create()();
 
-        $this->browser->request('DELETE', '/api/units/' . $this->faker->uuidv4());
+        $this->withUser($user);
+        $this->load($user);
 
-        $responseContent = (string)$this->browser->getResponse()->getContent();
+        $response = $this->sendRequest('DELETE', '/api/units/' . $this->faker->uuidv4());
+
+        $responseContent = (string)$response->getContent();
 
         self::assertResponseStatusCodeSame(404);
         $this->assertJson($responseContent);

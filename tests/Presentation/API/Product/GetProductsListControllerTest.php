@@ -20,7 +20,7 @@ final class GetProductsListControllerTest extends AbstractWebTestCase
 
     public function testShouldSuccessfullyRetrieveProductsList(): void
     {
-        $this->assertEvent([]);
+        $this->expectNoEvents();
 
         $user = UserContext::create()();
         $category = CategoryContext::create()();
@@ -28,9 +28,8 @@ final class GetProductsListControllerTest extends AbstractWebTestCase
         $this->load($category, $user, $this->generateRandomProduct($user));
         $this->withUser($user);
 
-        $this->browser->jsonRequest('GET', '/api/products?size=1&page=1');
-
-        $responseContent = (string)$this->browser->getResponse()->getContent();
+        $response = $this->sendRequest('GET', '/api/products?size=1&page=1');
+        $responseContent = (string)$response->getContent();
 
         self::assertResponseStatusCodeSame(200);
         $this->assertJson($responseContent);
@@ -39,7 +38,7 @@ final class GetProductsListControllerTest extends AbstractWebTestCase
 
     public function testShouldSuccessfullyRetrieveProductsListWithTwoProducts(): void
     {
-        $this->assertEvent([]);
+        $this->expectNoEvents();
 
         $user = UserContext::create()();
         $category = CategoryContext::create()();
@@ -52,7 +51,8 @@ final class GetProductsListControllerTest extends AbstractWebTestCase
             $this->generateRandomProduct($user),
         );
 
-        $response = $this->send('GET', '/api/products?size=2&page=1');
+        $this->withUser($user);
+        $response = $this->sendRequest('GET', '/api/products?size=2&page=1');
 
         $responseContent = (string)$response->getContent();
 

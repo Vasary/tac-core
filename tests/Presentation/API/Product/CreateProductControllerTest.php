@@ -38,7 +38,7 @@ final class CreateProductControllerTest extends AbstractWebTestCase
     public function testShouldSuccessfullyCreateProductWithAttributes(): void
     {
         $this->freezeTime();
-        $this->assertEvent([
+        $this->expectEvents([
             ['attribute.value.created', CreateProductObject::ATTRIBUTE_VALUE_CREATED_0],
             ['attribute.value.updated', CreateProductObject::ATTRIBUTE_VALUE_UPDATED_0],
 
@@ -130,8 +130,10 @@ final class CreateProductControllerTest extends AbstractWebTestCase
         $secondUnitContext->alias = new I18N('L');
         $unitTwo = $secondUnitContext();
 
+        $user = UserContext::create()();
+
         $this->load(
-            UserContext::create()(),
+            $user,
             $attributeColorContext(),
             $attributeManufacturerContext(),
             $attributeDviContext(),
@@ -146,7 +148,9 @@ final class CreateProductControllerTest extends AbstractWebTestCase
             $unitTwo,
         );
 
-        $this->sendJson('POST', '/api/products', [
+        $this->withUser($user);
+
+        $response = $this->sendRequest('POST', '/api/products', [
             'name' => 'Monitor',
             'description' => 'There is a simple nice monitor',
             'category' => (string)$category->getId(),
@@ -195,7 +199,7 @@ final class CreateProductControllerTest extends AbstractWebTestCase
             ],
         ]);
 
-        $responseContent = (string)$this->browser->getResponse()->getContent();
+        $responseContent = (string)$response->getContent();
 
         self::assertResponseStatusCodeSame(201);
         $this->assertJson($responseContent);

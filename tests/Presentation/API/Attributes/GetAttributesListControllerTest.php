@@ -15,19 +15,23 @@ final class GetAttributesListControllerTest extends AbstractWebTestCase
 
     public function testShouldSuccessfullyRetrieveAttributesList(): void
     {
-        $this->assertEvent();
+        $this->expectEvents();
+
+        $user = (new UserContext())();
 
         $this->load(
             $this->faker->attribute(),
             $this->faker->attribute(),
             $this->faker->attribute(),
+            $user,
         );
 
-        $this->withUser((new UserContext())());
 
-        $this->browser->jsonRequest('GET', '/api/attributes?page=1&size=2');
+        $this->withUser($user);
 
-        $responseContent = (string) $this->browser->getResponse()->getContent();
+        $response = $this->sendRequest('GET', '/api/attributes?page=1&size=2');
+
+        $responseContent = (string) $response->getContent();
 
         $this->assertResponseStatusCodeSame(200);
         $this->assertJson($responseContent);

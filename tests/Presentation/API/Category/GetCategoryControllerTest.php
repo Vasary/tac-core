@@ -17,7 +17,7 @@ final class GetCategoryControllerTest extends AbstractWebTestCase
 
     public function testShouldRetrieveCategory(): void
     {
-        $this->assertEvent();
+        $this->expectEvents();
         $user = UserContext::create()();
         $categoryContext = CategoryContext::create();
         $categoryContext->user = $user;
@@ -27,9 +27,8 @@ final class GetCategoryControllerTest extends AbstractWebTestCase
         $this->load($category);
         $this->withUser($user);
 
-        $this->browser->request('GET', '/api/category/' . $category->getId());
-
-        $responseContent = (string)$this->browser->getResponse()->getContent();
+        $response = $this->sendRequest('GET', '/api/category/' . $category->getId());
+        $responseContent = (string)$response->getContent();
 
         $this->assertResponseIsSuccessful();
         $this->assertResponseStatusCodeSame(200);
@@ -38,7 +37,7 @@ final class GetCategoryControllerTest extends AbstractWebTestCase
         $decodedContent = json_decode($responseContent, true);
 
         $this->assertEquals('6b58caa4-0571-44db-988a-8a75f86b2520', $decodedContent['id']);
-        $this->assertEquals('foo@bar.com', $decodedContent['creator']);
+        $this->assertEquals('mock|10101011', $decodedContent['creator']);
         $this->assertArrayHasKey('id', $decodedContent);
         $this->assertArrayHasKey('name', $decodedContent);
         $this->assertArrayHasKey('creator', $decodedContent);
@@ -50,12 +49,16 @@ final class GetCategoryControllerTest extends AbstractWebTestCase
 
     public function testShouldGetNotFoundError(): void
     {
-        $this->assertEvent();
-        $this->withUser(UserContext::create()());
+        $this->expectEvents();
 
-        $this->browser->request('GET', '/api/category/' . $this->faker->uuidv4());
+        $user = UserContext::create()();
 
-        $responseContent = (string)$this->browser->getResponse()->getContent();
+        $this->withUser($user);
+        $this->load($user);
+
+        $response = $this->sendRequest('GET', '/api/category/' . $this->faker->uuidv4());
+
+        $responseContent = (string)$response->getContent();
         $decodedContent = Json::decode($responseContent);
 
         $this->assertResponseStatusCodeSame(404);
