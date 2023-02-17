@@ -14,19 +14,17 @@ final class Security extends OA\SecurityScheme
             securityScheme: 'OAuth2',
             type: 'oauth2',
             description: 'This API uses OAuth 2 with the implicit grant flow',
+            bearerFormat: 'JWT',
             flows: [
                 new OA\Flow(
-                    authorizationUrl: 'https://tac01-dev.eu.auth0.com/authorize',
-                    tokenUrl: 'https://tac01-dev.eu.auth0.com/userinfo',
-                    flow: 'authorizationCode',
+                    authorizationUrl: 'https://tac01-dev.eu.auth0.com/authorize?audience=https://tac01-dev.eu.auth0.com/api/v2/',
+                    tokenUrl: 'https://tac01-dev.eu.auth0.com/oauth/token',
+                    flow: 'pkce',
                     scopes: [
-                        'openid' => 'Grants access to user_id',
-                        'admin:org' => 'Fully manage organization, teams, and memberships.',
+                        'openid' => 'Grants access to OpenId',
                     ]
                 ),
             ],
         );
     }
 }
-
-// https://tac01-dev.eu.auth0.com?audience=https://tac01-dev.eu.auth0.com/api/v2/

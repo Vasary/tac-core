@@ -30,7 +30,7 @@ final class Info extends OA\OpenApi
             ],
             security: [
                 [
-                    'OAuth2' => ['openid', 'admin:org'],
+                    'OAuth2' => ['openid'],
                 ],
             ],
             components: new OA\Components(
