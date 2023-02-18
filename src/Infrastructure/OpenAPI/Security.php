@@ -19,7 +19,7 @@ final class Security extends OA\SecurityScheme
                 new OA\Flow(
                     authorizationUrl: 'https://tac01-dev.eu.auth0.com/authorize?audience=https://tac01-dev.eu.auth0.com/api/v2/',
                     tokenUrl: 'https://tac01-dev.eu.auth0.com/oauth/token',
-                    flow: 'pkce',
+                    flow: 'authorizationCode',
                     scopes: [
                         'openid' => 'Grants access to OpenId',
                     ]
