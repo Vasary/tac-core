@@ -20,4 +20,6 @@ interface ProductRepositoryInterface
     public function list(int $page, int $size): Generator;
 
     public function totalCount(): int;
+
+    public function delete(Product $product): void;
 }

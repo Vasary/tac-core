@@ -11,6 +11,7 @@ use App\Domain\Repository\ProductRepositoryInterface;
 use App\Domain\ValueObject\I18N;
 use App\Domain\ValueObject\Id;
 use App\Shared\Exception\ProductNotFound;
+use App\Shared\Transfer\DeleteProductTransfer;
 use App\Shared\Transfer\UpdateProductTransfer;
 use Doctrine\ORM\EntityManagerInterface;
 
@@ -44,5 +45,14 @@ final class ProductUpdater implements ProductUpdaterInterface
         $this->entityManager->persist($product);
 
         return $product;
+    }
+
+    public function delete(DeleteProductTransfer $transfer): void
+    {
+        if (null === $product = $this->repository->findById(Id::fromString($transfer->getId()))) {
+            throw new ProductNotFound();
+        }
+
+        $this->repository->delete($product);
     }
 }

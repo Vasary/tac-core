@@ -18,7 +18,7 @@ final class ProductRepository implements ProductRepositoryInterface
 {
     private ObjectRepository $objectRepository;
 
-    public function __construct(EntityManagerInterface $entityManager)
+    public function __construct(private EntityManagerInterface $entityManager)
     {
         $this->objectRepository = $entityManager->getRepository(Product::class);
     }
@@ -57,5 +57,10 @@ final class ProductRepository implements ProductRepositoryInterface
             ->select('count(p.id)')
             ->getQuery()
             ->getSingleScalarResult();
+    }
+
+    public function delete(Product $product): void
+    {
+        $this->entityManager->remove($product);
     }
 }

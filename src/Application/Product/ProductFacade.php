@@ -10,6 +10,7 @@ use App\Application\Product\Finder\FinderInterface;
 use App\Application\Shared\Service\Transactional\TransactionalServiceInterface;
 use App\Domain\Model\Product;
 use App\Shared\Transfer\CreateProductTransfer;
+use App\Shared\Transfer\DeleteProductTransfer;
 use App\Shared\Transfer\GetProductTransfer;
 use App\Shared\Transfer\UpdateProductTransfer;
 use Doctrine\ORM\EntityManagerInterface;
@@ -47,5 +48,10 @@ final class ProductFacade implements ProductFacadeInterface
     public function getTotalCount(): int
     {
         return $this->finder->getTotalCount();
+    }
+
+    public function delete(DeleteProductTransfer $transfer): void
+    {
+        $this->updater->delete($transfer);
     }
 }
