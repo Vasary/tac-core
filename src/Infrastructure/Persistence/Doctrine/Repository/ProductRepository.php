@@ -35,9 +35,9 @@ final class ProductRepository implements ProductRepositoryInterface
     }
 
     public function create(
-        I18N     $name,
-        I18N     $description,
-        User     $creator,
+        I18N $name,
+        I18N $description,
+        User $creator,
         Category $category,
     ): Product {
         return new Product($name, $description, $creator, $category);

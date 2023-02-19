@@ -36,9 +36,7 @@ final class SoftDeleteFilter extends SQLFilter
     protected function getEntityManager(): EntityManagerInterface
     {
         if (null === $this->entityManager) {
-            $getEntityManager = Closure::bind(function (): EntityManagerInterface {
-                return $this->em;
-            }, $this, parent::class);
+            $getEntityManager = Closure::bind(fn (): EntityManagerInterface => $this->em, $this, parent::class);
 
             $this->entityManager = $getEntityManager();
         }

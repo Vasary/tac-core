@@ -25,7 +25,9 @@ final class ProductNormalizer implements NormalizerInterface, NormalizerAwareInt
                 ParametersList::NAME => (string)$object->getName(),
                 ParametersList::DESCRIPTION => (string)$object->getDescription(),
                 ParametersList::CREATOR => $object->getCreator()->getSsoId(),
-                ParametersList::ATTRIBUTES => $this->normalizer->normalize(array_values($object->getAttributes()->toArray())),
+                ParametersList::ATTRIBUTES => $this->normalizer->normalize(
+                    array_values($object->getAttributes()->toArray())
+                ),
                 ParametersList::CATEGORY => (string)$object->getCategory()->getId(),
                 ParametersList::UNITS => array_values(array_map(
                     fn(Unit $unit) => (string)$unit->getId(),

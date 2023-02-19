@@ -25,11 +25,11 @@ final class AttributeRepository implements AttributeRepositoryInterface
     }
 
     public function create(
-        string       $code,
+        string $code,
         I18N $name,
         I18N $description,
         AbstractType $type,
-        User         $creator
+        User $creator
     ): Attribute {
         return new Attribute(
             $code,

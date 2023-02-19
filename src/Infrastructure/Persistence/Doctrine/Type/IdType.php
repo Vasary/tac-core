@@ -38,7 +38,11 @@ final class IdType extends Type
         }
 
         if (!\is_string($value)) {
-            throw ConversionException::conversionFailedInvalidType($value, $this->getName(), ['null', 'string', AbstractUid::class]);
+            throw ConversionException::conversionFailedInvalidType(
+                $value,
+                $this->getName(),
+                ['null', 'string', AbstractUid::class]
+            );
         }
 
         try {
@@ -51,7 +55,9 @@ final class IdType extends Type
     public function convertToDatabaseValue(mixed $value, AbstractPlatform $platform): ?string
     {
         try {
-            return null !== $value ? (string)$value : null;
+            return null !== $value
+                ? (string)$value
+                : null;
         } catch (\InvalidArgumentException) {
             throw ConversionException::conversionFailed($value, $this->getName());
         }

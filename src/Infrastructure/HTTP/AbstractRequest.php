@@ -21,7 +21,7 @@ abstract class AbstractRequest
     ];
 
     public function __construct(
-        protected ValidatorInterface         $validator,
+        protected ValidatorInterface $validator,
         private readonly SymfonyRequestStack $request,
     ) {
         $this->populate();
