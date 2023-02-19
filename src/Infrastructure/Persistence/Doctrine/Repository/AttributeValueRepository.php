@@ -25,10 +25,10 @@ final class AttributeValueRepository implements AttributeValueRepositoryInterfac
 
     public function create(
         ?Attribute $attribute,
-        string     $type,
-        ?string    $value,
-        User       $creator,
-        ?Id        $parentId
+        string $type,
+        ?string $value,
+        User $creator,
+        ?Id $parentId
     ): AttributeValue
     {
         return new AttributeValue(

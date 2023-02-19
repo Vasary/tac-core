@@ -17,9 +17,9 @@ class Glossary implements RaiseEventsInterface
 
     public function __construct(
         private readonly string $field,
-        private ?string         $value,
+        private ?string $value,
         private readonly Locale $locale,
-        private readonly Id     $parentId,
+        private readonly Id $parentId,
     ) {
         $this->id = Id::create();
         $this->raise(new GlossaryCreated(clone $this));

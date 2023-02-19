@@ -44,7 +44,7 @@ final class DomainEventsSubscriber implements EventSubscriberInterface
 
     private function getRoutingKey(object $event): string
     {
-        $class = explode('\\', get_class($event));
+        $class = explode('\\', $event::class);
         end($class);
 
         return strtolower(preg_replace('/(?<!^)[A-Z]/', '.$0', current($class)));

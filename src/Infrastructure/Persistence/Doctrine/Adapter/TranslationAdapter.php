@@ -14,7 +14,7 @@ use ReflectionProperty;
 final class TranslationAdapter
 {
     public function __construct(
-        private readonly LocaleProvider    $localeProvider,
+        private readonly LocaleProvider $localeProvider,
         private readonly TranslationLoader $loader,
     ) {
     }

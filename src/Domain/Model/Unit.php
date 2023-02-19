@@ -22,9 +22,9 @@ class Unit implements RaiseEventsInterface
     private readonly DateTimeImmutable $createdAt;
 
     public function __construct(
-        protected I18N          $name,
-        protected I18N          $alias,
-        private Suggestions   $suggestions,
+        protected I18N $name,
+        protected I18N $alias,
+        private Suggestions $suggestions,
         private readonly User $creator,
     ) {
         $this->id = Id::create();

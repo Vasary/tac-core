@@ -17,13 +17,13 @@ final class TokenExtractor
     {
         $authorizationTokenParts = explode(' ', $authorizationToken);
 
-        if (count($authorizationTokenParts) !== 2) {
+        if (2 !== count($authorizationTokenParts)) {
             throw new InvalidArgumentException('Invalid token format');
         }
 
         [$type, $token] = $authorizationTokenParts;
 
-        if ($type !== self::ALLOWED_TOKEN_TYPE) {
+        if (self::ALLOWED_TOKEN_TYPE !== $type) {
             throw new InvalidArgumentException('Invalid token type');
         }
 

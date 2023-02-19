@@ -16,10 +16,10 @@ interface AttributeValueRepositoryInterface
 
     public function create(
         ?Attribute $attribute,
-        string     $type,
-        ?string    $value,
-        User       $creator,
-        ?Id        $parentId
+        string $type,
+        ?string $value,
+        User $creator,
+        ?Id $parentId
     ): AttributeValue;
 
     public function get(Id $id): ?AttributeValue;

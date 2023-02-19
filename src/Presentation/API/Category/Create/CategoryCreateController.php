@@ -29,6 +29,8 @@ final class CategoryCreateController extends AbstractController
     #[AccessDeniedResponse]
     public function __invoke(CategoryCreateRequest $request): JsonResponse
     {
-        return new CategoryCreateResponse($this->facade->create(CategoryCreateTransfer::fromArray($request->toArray())));
+        return new CategoryCreateResponse(
+            $this->facade->create(CategoryCreateTransfer::fromArray($request->toArray()))
+        );
     }
 }

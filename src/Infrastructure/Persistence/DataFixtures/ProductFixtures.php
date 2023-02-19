@@ -37,8 +37,22 @@ final class ProductFixtures extends Fixture implements DependentFixtureInterface
         $consistsAttributeValue = new AttributeValue($attributeConsists, new Value(null), $user);
 
         $product->addAttribute($consistsAttributeValue);
-        $product->addAttribute(new AttributeValue($attributeSugar, new Value('true'), $user, $consistsAttributeValue->getAttribute()->getId()));
-        $product->addAttribute(new AttributeValue($attributeFats, new Value('true'), $user, $consistsAttributeValue->getAttribute()->getId()));
+        $product->addAttribute(
+            new AttributeValue(
+                $attributeSugar,
+                new Value('true'),
+                $user,
+                $consistsAttributeValue->getAttribute()->getId()
+            )
+        );
+        $product->addAttribute(
+            new AttributeValue(
+                $attributeFats,
+                new Value('true'),
+                $user,
+                $consistsAttributeValue->getAttribute()->getId()
+            )
+        );
         $product->addAttribute(new AttributeValue($attributeManufacturer, new Value('Danone'), $user));
         $product->addAttribute(new AttributeValue($attributeWeight, new Value('200'), $user));
         $product->addAttribute(new AttributeValue($attributeColor, new Value('#FFFFFF'), $user));

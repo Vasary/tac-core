@@ -13,6 +13,8 @@ abstract class AbstractType implements Stringable
 
     public function __toString(): string
     {
-        return empty($this->name) ? throw new DomainException('Type must have a name') : $this->name;
+        return empty($this->name)
+            ? throw new DomainException('Type must have a name')
+            : $this->name;
     }
 }
