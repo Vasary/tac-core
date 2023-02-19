@@ -7,7 +7,7 @@ TAC Inventory management service which allows to create and modify products, uni
 ## Swagger
 Follow this link to find API specifications
 
-- https://vasary.github.io/tac-core
+  - https://vasary.github.io/tac-core
 
 ## Install
 To run service locally clone [sdk](https://vasary.github.io/tac-sdk) and run `./start`
