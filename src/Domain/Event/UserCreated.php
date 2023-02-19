@@ -8,9 +8,7 @@ use App\Domain\Model\User;
 
 final class UserCreated implements EventInterface
 {
-    public function __construct(
-        private readonly User $user
-    ) {
+    public function __construct(private readonly User $user) {
     }
 
     public function getUser(): User

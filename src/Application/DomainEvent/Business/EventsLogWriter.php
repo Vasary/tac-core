@@ -6,9 +6,7 @@ namespace App\Application\DomainEvent\Business;
 
 final class EventsLogWriter implements EventsLogWriterInterface
 {
-    public function __construct(
-        private readonly string $filePath
-    ) {
+    public function __construct(private readonly string $filePath) {
     }
 
     public function write(string $event, string $destinationStamp): void

@@ -21,9 +21,9 @@ final class ProductGetListController extends AbstractController
     {
     }
 
+    #[AccessDeniedResponse]
     #[Get('/api/products', 'Products')]
     #[OAGetProductsResponse]
-    #[AccessDeniedResponse]
     public function __invoke(ProductListRequest $request): JsonResponse
     {
         return new ListResponse(

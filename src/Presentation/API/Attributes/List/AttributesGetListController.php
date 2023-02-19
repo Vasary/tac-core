@@ -21,9 +21,9 @@ final class AttributesGetListController extends AbstractController
     {
     }
 
+    #[AccessDeniedResponse]
     #[Get('/api/attributes', 'Attributes')]
     #[OAGetAttributesResponse]
-    #[AccessDeniedResponse]
     public function __invoke(AttributesListRequest $request): JsonResponse
     {
         return new AttributesListResponse(

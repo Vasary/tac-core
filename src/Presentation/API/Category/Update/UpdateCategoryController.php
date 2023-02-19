@@ -24,10 +24,10 @@ final class UpdateCategoryController extends AbstractController
     {
     }
 
+    #[AccessDeniedResponse]
     #[Put('/api/category', 'Category')]
     #[UpdateRequest]
     #[UpdateResponse]
-    #[AccessDeniedResponse]
     public function __invoke(UpdateCategoryRequest $request): JsonResponse
     {
         return new UpdateCategoryResponse(

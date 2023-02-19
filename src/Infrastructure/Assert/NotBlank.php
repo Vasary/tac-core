@@ -13,6 +13,7 @@ final class NotBlank extends Constraint
 {
     public string $requiredMessage = '{{ name }} is required';
     public bool $required = false;
+
     #[HasNamedArguments]
     public function __construct(public string $name, bool $mode = false, array $groups = null, mixed $payload = null)
     {

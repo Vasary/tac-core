@@ -23,10 +23,10 @@ final class ProductGetController extends AbstractController
     {
     }
 
-    #[Get('/api/products/{id}', 'Products')]
-    #[RequestWithId]
-    #[OAGetProductResponse]
     #[AccessDeniedResponse]
+    #[Get('/api/products/{id}', 'Products')]
+    #[OAGetProductResponse]
+    #[RequestWithId]
     public function __invoke(ProductGetRequest $request): JsonResponse
     {
         return new GetResponse(

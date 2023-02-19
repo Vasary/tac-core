@@ -8,9 +8,7 @@ use App\Domain\Model\Attribute;
 
 final class AttributeCreated implements EventInterface
 {
-    public function __construct(
-        private readonly Attribute $attribute
-    ) {
+    public function __construct(private readonly Attribute $attribute) {
     }
 
     public function getAttribute(): Attribute

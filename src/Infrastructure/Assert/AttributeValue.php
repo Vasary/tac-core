@@ -15,6 +15,7 @@ final class AttributeValue extends Constraint
     public string $lengthLess = 'Value should be more then 3 symbols';
     public string $lengthGreatThen = 'Value should be less then 255 symbols';
     public bool $required;
+
     #[HasNamedArguments]
     public function __construct(bool $mode = false, public bool $validateId = true, array $groups = null, mixed $payload = null)
     {

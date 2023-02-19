@@ -6,9 +6,7 @@ namespace App\Domain\ValueObject;
 
 final class I18N
 {
-    public function __construct(
-        private readonly ?string $value
-    ) {
+    public function __construct(private readonly ?string $value) {
     }
 
     public function value(): ?string
@@ -18,6 +16,6 @@ final class I18N
 
     public function __toString(): string
     {
-        return (string)$this->value;
+        return (string) $this->value;
     }
 }

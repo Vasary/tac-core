@@ -20,10 +20,7 @@ abstract class AbstractRequest
         'translator',
     ];
 
-    public function __construct(
-        protected ValidatorInterface $validator,
-        private readonly SymfonyRequestStack $request,
-    ) {
+    public function __construct(protected ValidatorInterface $validator, private readonly SymfonyRequestStack $request,) {
         $this->populate();
 
         if ($this->autoValidateRequest()) {

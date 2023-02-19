@@ -15,8 +15,8 @@ final class CategoryNormalizer implements NormalizerInterface
         /* @var Category $object */
         return
             [
-                ParametersList::ID => (string)$object->getId(),
-                ParametersList::NAME => (string)$object->getName(),
+                ParametersList::ID => (string) $object->getId(),
+                ParametersList::NAME => (string) $object->getName(),
                 ParametersList::CREATOR => $object->getCreator()->getSsoId(),
                 ParametersList::CREATED_AT => $object->getCreatedAt()->format(\DATE_ATOM),
                 ParametersList::UPDATED_AT => $object->getUpdatedAt()->format(\DATE_ATOM),

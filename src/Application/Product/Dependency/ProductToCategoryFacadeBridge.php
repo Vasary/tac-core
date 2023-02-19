@@ -10,9 +10,7 @@ use App\Shared\Transfer\GetCategoryTransfer;
 
 final class ProductToCategoryFacadeBridge implements ProductToCategoryFacadeBridgeInterface
 {
-    public function __construct(
-        private readonly CategoryFacadeInterface $categoryFacade
-    ) {
+    public function __construct(private readonly CategoryFacadeInterface $categoryFacade) {
     }
 
     public function getById(string $id): Category

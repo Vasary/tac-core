@@ -20,9 +20,9 @@ final class UnitNormalizer implements NormalizerInterface, NormalizerAwareInterf
         /* @var Unit $object */
         return
             [
-                ParametersList::ID => (string)$object->getId(),
-                ParametersList::NAME => (string)$object->getName(),
-                ParametersList::ALIAS => (string)$object->getAlias(),
+                ParametersList::ID => (string) $object->getId(),
+                ParametersList::NAME => (string) $object->getName(),
+                ParametersList::ALIAS => (string) $object->getAlias(),
                 ParametersList::SUGGESTIONS => array_map(
                     fn(Suggestion $suggestion) => $suggestion->getValue(),
                     $object->getSuggestions()->getSuggestions()

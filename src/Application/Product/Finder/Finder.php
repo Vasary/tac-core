@@ -12,9 +12,7 @@ use Generator;
 
 final class Finder implements FinderInterface
 {
-    public function __construct(
-        private readonly ProductRepositoryInterface $productRepository,
-    ) {
+    public function __construct(private readonly ProductRepositoryInterface $productRepository,) {
     }
 
     public function getList(int $page, int $size): Generator

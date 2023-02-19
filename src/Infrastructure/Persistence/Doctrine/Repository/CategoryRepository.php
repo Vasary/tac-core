@@ -45,7 +45,7 @@ final class CategoryRepository implements CategoryRepositoryInterface
             ->objectRepository
             ->createQueryBuilder('c')
             ->where('c.id = :id')
-            ->setParameter('id', (string)$id)
+            ->setParameter('id', (string) $id)
             ->getQuery()
             ->getOneOrNullResult();
     }

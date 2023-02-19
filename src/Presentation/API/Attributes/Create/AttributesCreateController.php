@@ -19,15 +19,13 @@ use App\Shared\Transfer\AttributeCreateTransfer;
 #[Route('/attributes', methods: 'POST')]
 final class AttributesCreateController extends AbstractController
 {
-    public function __construct(
-        private readonly AttributeFacadeInterface $attributeFacade,
-    ) {
+    public function __construct(private readonly AttributeFacadeInterface $attributeFacade,) {
     }
 
-    #[Post('/api/attributes', 'Attributes')]
+    #[AccessDeniedResponse]
     #[CreateRequest]
     #[OACreateResponse]
-    #[AccessDeniedResponse]
+    #[Post('/api/attributes', 'Attributes')]
     public function __invoke(AttributeCreateRequest $request): JsonResponse
     {
         $attributeTransfer = AttributeCreateTransfer::fromArray($request->toArray());

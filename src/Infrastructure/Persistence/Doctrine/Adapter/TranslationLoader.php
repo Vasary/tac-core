@@ -12,9 +12,7 @@ use ReflectionProperty;
 
 final class TranslationLoader
 {
-    public function __construct(
-        private readonly LocaleProvider $localeProvider,
-    ) {
+    public function __construct(private readonly LocaleProvider $localeProvider,) {
     }
 
     public function findExistedTranslation(ReflectionProperty $property, object $object, EntityManagerInterface $manager): ?Glossary

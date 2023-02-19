@@ -16,13 +16,7 @@ interface AttributeRepositoryInterface
 {
     public function findByCode(Code $code): ?Attribute;
 
-    public function create(
-        string $code,
-        I18N $name,
-        I18N $description,
-        AbstractType $type,
-        User $creator
-    ): Attribute;
+    public function create(string $code, I18N $name, I18N $description, AbstractType $type, User $creator): Attribute;
 
     public function list(int $page, int $size): Generator;
 

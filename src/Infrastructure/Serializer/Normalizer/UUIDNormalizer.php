@@ -15,7 +15,7 @@ final class UUIDNormalizer implements NormalizerInterface, NormalizerAwareInterf
 
     public function normalize(mixed $object, string $format = null, array $context = []): string
     {
-        return (string)$object;
+        return (string) $object;
     }
 
     public function supportsNormalization(mixed $data, string $format = null, array $context = []): bool

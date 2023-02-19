@@ -19,16 +19,14 @@ use App\Shared\Transfer\CreateProductTransfer;
 #[Route('/products', methods: 'POST')]
 final class CreateProductController extends AbstractController
 {
-    public function __construct(
-        private readonly ProductFacadeInterface $productFace,
-    )
+    public function __construct(private readonly ProductFacadeInterface $productFace,)
     {
     }
 
-    #[Post('/api/products', 'Products')]
+    #[AccessDeniedResponse]
     #[CreateRequest]
     #[OACreateResponse]
-    #[AccessDeniedResponse]
+    #[Post('/api/products', 'Products')]
     public function __invoke(ProductCreateRequest $request): JsonResponse
     {
         return new CreateResponse($this->productFace->create(CreateProductTransfer::fromArray($request->toArray())));

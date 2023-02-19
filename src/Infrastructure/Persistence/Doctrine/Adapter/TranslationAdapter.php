@@ -48,7 +48,7 @@ final class TranslationAdapter
         /** @var I18N $i18n */
         $i18n = $object->{$method}();
 
-        if ((string)$translation !== $i18n->value()) {
+        if ((string) $translation !== $i18n->value()) {
             $translation->setValue($i18n->value());
 
             $manager->getUnitOfWork()->persist($translation);

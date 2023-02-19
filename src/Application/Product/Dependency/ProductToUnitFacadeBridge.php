@@ -10,9 +10,7 @@ use App\Shared\Transfer\GetUnitTransfer;
 
 final class ProductToUnitFacadeBridge implements ProductToUnitFacadeBridgeInterface
 {
-    public function __construct(
-        private readonly UnitFacadeInterface $unitFacade
-    ) {
+    public function __construct(private readonly UnitFacadeInterface $unitFacade) {
     }
 
     public function getById(string $id): Unit

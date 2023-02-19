@@ -15,9 +15,7 @@ final class IntegerCreator implements AttributeCreatorInterface
 {
     private const TYPE_NAME = 'integer';
 
-    public function __construct(
-        private readonly AttributeValueRepositoryInterface $attributeValueRepository
-    ) {
+    public function __construct(private readonly AttributeValueRepositoryInterface $attributeValueRepository) {
     }
 
     public function create(

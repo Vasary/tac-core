@@ -12,9 +12,7 @@ use Generator;
 
 final class ProductToAttributeValueFacadeBridge implements ProductToAttributeValueFacadeBridgeInterface
 {
-    public function __construct(
-        private readonly AttributeValueFacadeInterface $facade
-    ) {
+    public function __construct(private readonly AttributeValueFacadeInterface $facade) {
     }
 
     public function create(AttributeValueTransfer $transfer): Generator

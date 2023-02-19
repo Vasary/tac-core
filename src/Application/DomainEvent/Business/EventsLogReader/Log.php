@@ -6,10 +6,7 @@ namespace App\Application\DomainEvent\Business\EventsLogReader;
 
 final class Log
 {
-    public function __construct(
-        private readonly string $destinationStamp,
-        private readonly string $event,
-    ) {
+    public function __construct(private readonly string $destinationStamp, private readonly string $event,) {
     }
 
     public function destinationStamp(): string

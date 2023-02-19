@@ -19,15 +19,13 @@ use App\Shared\Transfer\GetAttributeTransfer;
 #[Route('/attributes/{id}', methods: 'GET')]
 final class AttributeGetController extends AbstractController
 {
-    public function __construct(
-        private readonly AttributeFacadeInterface $attributeFacade,
-    ) {
+    public function __construct(private readonly AttributeFacadeInterface $attributeFacade,) {
     }
 
-    #[Get('/api/attributes/{id}', 'Attributes')]
-    #[RequestWithId]
-    #[OAGetAttributeResponse]
     #[AccessDeniedResponse]
+    #[Get('/api/attributes/{id}', 'Attributes')]
+    #[OAGetAttributeResponse]
+    #[RequestWithId]
     public function __invoke(AttributeGetRequest $request): JsonResponse
     {
         return new GetResponse($this->attributeFacade->getById(GetAttributeTransfer::fromArray($request->toArray())));

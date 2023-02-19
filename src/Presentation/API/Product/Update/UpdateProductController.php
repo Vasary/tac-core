@@ -23,10 +23,10 @@ final class UpdateProductController extends AbstractController
     {
     }
 
+    #[AccessDeniedResponse]
+    #[OAUpdateResponse]
     #[Put('/api/products', 'Products')]
     #[UpdateRequest]
-    #[OAUpdateResponse]
-    #[AccessDeniedResponse]
     public function __invoke(UpdateProductRequest $request): JsonResponse
     {
         return new UpdateProductResponse($this->facade->update(UpdateProductTransfer::fromArray($request->toArray())));

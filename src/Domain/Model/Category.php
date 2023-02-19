@@ -23,10 +23,7 @@ class Category implements RaiseEventsInterface
     private readonly DateTimeImmutable $createdAt;
     private Collection $products;
 
-    public function __construct(
-        protected I18N $name,
-        private readonly User $creator,
-    ) {
+    public function __construct(protected I18N $name, private readonly User $creator,) {
         $this->id = Id::create();
         $this->createdAt = new DateTimeImmutable();
         $this->updatedAt = new DateTimeImmutable();

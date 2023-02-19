@@ -46,7 +46,7 @@ final class UnitRepository implements UnitRepositoryInterface
             ->objectRepository
             ->createQueryBuilder('u')
             ->andWhere('u.id = :id')
-            ->setParameter('id', (string)$id)
+            ->setParameter('id', (string) $id)
             ->getQuery()
             ->getOneOrNullResult();
     }

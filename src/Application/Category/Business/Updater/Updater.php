@@ -13,9 +13,7 @@ use App\Shared\Transfer\UpdateCategoryTransfer;
 
 final class Updater implements UpdaterInterface
 {
-    public function __construct(
-        private readonly CategoryRepositoryInterface $repository,
-    ) {
+    public function __construct(private readonly CategoryRepositoryInterface $repository,) {
     }
 
     public function delete(string $id): void

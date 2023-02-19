@@ -42,7 +42,7 @@ final class AttributeValueCreator implements AttributeValueCreatorInterface
     ): AttributeValue {
         return $this
             ->typeResolver
-            ->resolve((string)$attribute->getType())
+            ->resolve((string) $attribute->getType())
             ->create($transfer, $attribute, $this->security->getDomainUser(), $parent);
     }
 }

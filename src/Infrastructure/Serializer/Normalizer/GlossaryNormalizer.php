@@ -18,7 +18,7 @@ final class GlossaryNormalizer implements NormalizerInterface
                 ParametersList::OBJECT_ID => (string) $object->parent(),
                 ParametersList::FIELD => $object->field(),
                 ParametersList::VALUE => $object->value(),
-                ParametersList::LOCALE => (string)$object->locale(),
+                ParametersList::LOCALE => (string) $object->locale(),
             ];
     }
 

@@ -56,7 +56,7 @@ final class IdType extends Type
     {
         try {
             return null !== $value
-                ? (string)$value
+                ? (string) $value
                 : null;
         } catch (\InvalidArgumentException) {
             throw ConversionException::conversionFailed($value, $this->getName());

@@ -23,10 +23,10 @@ final class UpdateUnitController extends AbstractController
     {
     }
 
+    #[AccessDeniedResponse]
     #[Put('/api/units', 'Units')]
     #[UpdateRequest]
     #[UpdateResponse]
-    #[AccessDeniedResponse]
     public function __invoke(UpdateUnitRequest $request): JsonResponse
     {
         return new UpdateUnitResponse(
