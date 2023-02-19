@@ -24,13 +24,7 @@ final class AttributeRepository implements AttributeRepositoryInterface
         $this->objectRepository = $entityManager->getRepository(Attribute::class);
     }
 
-    public function create(
-        string $code,
-        I18N $name,
-        I18N $description,
-        AbstractType $type,
-        User $creator
-    ): Attribute {
+    public function create(string $code, I18N $name, I18N $description, AbstractType $type, User $creator): Attribute {
         return new Attribute(
             $code,
             $name,
@@ -46,7 +40,7 @@ final class AttributeRepository implements AttributeRepositoryInterface
             ->objectRepository
             ->createQueryBuilder('a')
             ->where('a.code = :code')
-            ->setParameter('code', (string)$code)
+            ->setParameter('code', (string) $code)
             ->getQuery()
             ->getOneOrNullResult();
     }
@@ -69,7 +63,7 @@ final class AttributeRepository implements AttributeRepositoryInterface
             ->objectRepository
             ->createQueryBuilder('a')
             ->where('a.id = :id')
-            ->setParameter('id', (string)$id)
+            ->setParameter('id', (string) $id)
             ->getQuery()
             ->getOneOrNullResult();
     }

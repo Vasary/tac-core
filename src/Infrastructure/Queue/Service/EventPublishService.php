@@ -12,9 +12,7 @@ use PhpAmqpLib\Exception\AMQPExceptionInterface;
 
 final class EventPublishService implements EventPublisherInterface
 {
-    public function __construct(
-        private readonly ChannelInterface $channel,
-    ) {
+    public function __construct(private readonly ChannelInterface $channel,) {
     }
 
     public function publish(Message $message): void

@@ -20,9 +20,7 @@ final class BooleanCreator implements AttributeCreatorInterface
         'true',
     ];
 
-    public function __construct(
-        private readonly AttributeValueRepositoryInterface $attributeValueRepository
-    ) {
+    public function __construct(private readonly AttributeValueRepositoryInterface $attributeValueRepository) {
     }
 
     public function create(

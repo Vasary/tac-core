@@ -23,10 +23,10 @@ final class AttributesUpdateController extends AbstractController
     {
     }
 
+    #[AccessDeniedResponse]
     #[Put('/api/attributes', 'Attributes')]
     #[UpdateRequest]
     #[UpdateResponse]
-    #[AccessDeniedResponse]
     public function __invoke(UpdateAttributesRequest $request): JsonResponse
     {
         return new UpdateAttributesResponse(

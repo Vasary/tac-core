@@ -19,15 +19,13 @@ use App\Shared\Transfer\GetUnitTransfer;
 #[Route('/units/{id}', methods: 'GET')]
 final class GetUnitController extends AbstractController
 {
-    public function __construct(
-        private readonly UnitFacadeInterface $facade,
-    ) {
+    public function __construct(private readonly UnitFacadeInterface $facade,) {
     }
 
-    #[Get('/api/units/{id}', 'Units')]
-    #[RequestWithId]
-    #[OAGetUnitResponse]
     #[AccessDeniedResponse]
+    #[Get('/api/units/{id}', 'Units')]
+    #[OAGetUnitResponse]
+    #[RequestWithId]
     public function __invoke(GetUnitRequest $request): JsonResponse
     {
         return new GetUnitResponse($this->facade->getUnit(GetUnitTransfer::fromArray($request->toArray())));

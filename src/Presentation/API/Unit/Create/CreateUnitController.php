@@ -19,16 +19,14 @@ use App\Shared\Transfer\CreateUnitTransfer;
 #[Route('/units', methods: 'POST')]
 final class CreateUnitController extends AbstractController
 {
-    public function __construct(
-        private readonly UnitFacadeInterface $facade
-    )
+    public function __construct(private readonly UnitFacadeInterface $facade)
     {
     }
 
-    #[Post('/api/units', 'Units')]
+    #[AccessDeniedResponse]
     #[CreateRequest]
     #[CreateResponse]
-    #[AccessDeniedResponse]
+    #[Post('/api/units', 'Units')]
     public function __invoke(UnitCreateRequest $request): JsonResponse
     {
         return new CreateUnitResponse($this->facade->create(CreateUnitTransfer::fromArray($request->toArray())));

@@ -22,10 +22,10 @@ final class AttributesGetController extends AbstractController
     {
     }
 
-    #[Get('/api/attributes/values', 'Attributes values', true)]
-    #[AttributeSchema]
-    #[GetAttributeValuesResponse]
     #[AccessDeniedResponse]
+    #[AttributeSchema]
+    #[Get('/api/attributes/values', 'Attributes values', true)]
+    #[GetAttributeValuesResponse]
     public function __invoke(AttributesValuesListRequest $request): JsonResponse
     {
         return new GetResponse(

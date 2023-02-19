@@ -11,9 +11,7 @@ use App\Shared\Transfer\UpdateProductTransfer;
 
 final class UnitsUpdater
 {
-    public function __construct(
-        private readonly ProductToUnitFacadeBridgeInterface $unitFacadeBridge,
-    ) {
+    public function __construct(private readonly ProductToUnitFacadeBridgeInterface $unitFacadeBridge,) {
     }
 
     public function updateUnits(Product $product, UpdateProductTransfer $transfer): void
@@ -28,7 +26,7 @@ final class UnitsUpdater
         $save = array_diff($requestedUnits, $currentUnits);
         $remove = array_diff($currentUnits, $requestedUnits);
 
-        $toRemove = $product->getUnits()->filter(fn (Unit $unit) => in_array((string)$unit->getId(), $remove));
+        $toRemove = $product->getUnits()->filter(fn (Unit $unit) => in_array((string) $unit->getId(), $remove));
         foreach ($toRemove as $removeUnit) {
             $product->removeUnit($removeUnit);
         }

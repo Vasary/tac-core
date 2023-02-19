@@ -8,9 +8,7 @@ use App\Domain\Model\AttributeValue;
 
 final class AttributeValueRemoved implements EventInterface
 {
-    public function __construct(
-        private readonly AttributeValue $attributeValue
-    ) {
+    public function __construct(private readonly AttributeValue $attributeValue) {
     }
 
     public function getAttributeValue(): AttributeValue

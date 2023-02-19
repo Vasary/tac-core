@@ -23,10 +23,10 @@ final class CategoryCreateController extends AbstractController
     {
     }
 
-    #[Post('/api/category', 'Category')]
+    #[AccessDeniedResponse]
     #[CreateRequest]
     #[CreateResponse]
-    #[AccessDeniedResponse]
+    #[Post('/api/category', 'Category')]
     public function __invoke(CategoryCreateRequest $request): JsonResponse
     {
         return new CategoryCreateResponse(

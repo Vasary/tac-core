@@ -6,10 +6,7 @@ namespace App\Infrastructure\Queue\Message;
 
 final class Message
 {
-    public function __construct(
-        private readonly string $event,
-        private readonly string $destinationStamp
-    ) {
+    public function __construct(private readonly string $event, private readonly string $destinationStamp) {
     }
 
     public function getEvent(): string

@@ -12,9 +12,7 @@ use Doctrine\ORM\Events;
 
 final class DomainEventsCollector implements EventSubscriberInterface
 {
-    public function __construct(
-        private readonly EventStore $eventStore
-    ) {
+    public function __construct(private readonly EventStore $eventStore) {
     }
 
     public function postPersist(LifecycleEventArgs $event): void

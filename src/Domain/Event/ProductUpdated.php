@@ -8,9 +8,7 @@ use App\Domain\Model\Product;
 
 final class ProductUpdated implements EventInterface
 {
-    public function __construct(
-        private readonly Product $product
-    ) {
+    public function __construct(private readonly Product $product) {
     }
 
     public function getProduct(): Product

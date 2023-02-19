@@ -15,12 +15,7 @@ interface ProductRepositoryInterface
 {
     public function findById(Id $id): ?Product;
 
-    public function create(
-        I18N $name,
-        I18N $description,
-        User $creator,
-        Category $category,
-    ): Product;
+    public function create(I18N $name, I18N $description, User $creator, Category $category,): Product;
 
     public function list(int $page, int $size): Generator;
 

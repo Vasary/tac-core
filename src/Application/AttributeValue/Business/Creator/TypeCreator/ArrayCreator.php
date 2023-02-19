@@ -15,9 +15,7 @@ final class ArrayCreator implements AttributeCreatorInterface
 {
     private const TYPE_NAME = 'array';
 
-    public function __construct(
-        private readonly AttributeValueRepositoryInterface $attributeValueRepository
-    ) {
+    public function __construct(private readonly AttributeValueRepositoryInterface $attributeValueRepository) {
     }
 
     public function create(

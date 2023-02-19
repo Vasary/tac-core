@@ -12,9 +12,7 @@ final class ValidationException extends InvalidArgumentException
 {
     private const MESSAGE = 'Validation fail';
 
-    public function __construct(
-        private readonly ConstraintViolationListInterface $constraints,
-    ) {
+    public function __construct(private readonly ConstraintViolationListInterface $constraints,) {
         parent::__construct(self::MESSAGE, 400);
     }
 

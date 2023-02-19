@@ -8,9 +8,7 @@ use App\Domain\Model\Unit;
 
 final class UnitCreated implements EventInterface
 {
-    public function __construct(
-        private readonly Unit $unit
-    ) {
+    public function __construct(private readonly Unit $unit) {
     }
 
     public function getUnit(): Unit

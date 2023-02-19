@@ -56,7 +56,7 @@ final class AttributeUpdater
                 $valueObject = new Value(
                     null === $resultItem->getValue()
                         ? null
-                        : (string)$resultItem->getValue()
+                        : (string) $resultItem->getValue()
                 );
 
                 $value->setValue($valueObject);
@@ -85,7 +85,7 @@ final class AttributeUpdater
                 fn(AttributeValue $attributeValue) => $attributeValue->getAttribute(),
                 $product->getAttributes()->toArray()
             ),
-            fn($a, $b) => strcmp((string)$a->getId(), (string)$b->getId())
+            fn($a, $b) => strcmp((string) $a->getId(), (string) $b->getId())
         );
 
         $result = [];
@@ -107,14 +107,14 @@ final class AttributeUpdater
         $diff = array_udiff(
             $attributesIds,
             $transferAttributes,
-            fn($a, $b) => strcmp((string)$a->getId(), (string)$b->getId())
+            fn($a, $b) => strcmp((string) $a->getId(), (string) $b->getId())
         );
 
         $filtered = $product->getAttributes()->filter(
             fn(AttributeValue $attributeValue) => in_array(
-                (string)$attributeValue->getAttribute()->getId(),
+                (string) $attributeValue->getAttribute()->getId(),
                 array_map(
-                    fn(Attribute $attribute) => (string)$attribute->getId(),
+                    fn(Attribute $attribute) => (string) $attribute->getId(),
                     $diff
                 )
             )
@@ -140,7 +140,7 @@ final class AttributeUpdater
     {
         $result = array_filter(
             $attributes,
-            fn(AttributeValueTransfer $transferValue) => (string)$attribute->getId() === $transferValue->getId()
+            fn(AttributeValueTransfer $transferValue) => (string) $attribute->getId() === $transferValue->getId()
         );
 
         if (1 === count($result)) {
@@ -156,7 +156,7 @@ final class AttributeUpdater
             return false;
         }
 
-        $isAttribute = (string)$value->getAttribute()->getId() === $transfer->getId();
+        $isAttribute = (string) $value->getAttribute()->getId() === $transfer->getId();
         $isParentHasBeenAdded = $this->isParentHasBeenChanged($value, $transfer, $productId);
 
         return $isAttribute && ($this->isValueChanged($value, $transfer) || $isParentHasBeenAdded);
@@ -171,7 +171,7 @@ final class AttributeUpdater
                 ?->getAttribute()
                 ?->getId();
 
-            return (string)$parentId !== (string)$transfer->getParent();
+            return (string) $parentId !== (string) $transfer->getParent();
         }
 
         return null !== $transfer->getParent();

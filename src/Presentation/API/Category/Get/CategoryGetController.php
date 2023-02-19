@@ -19,15 +19,13 @@ use App\Shared\Transfer\GetCategoryTransfer;
 #[Route('/category/{id}', methods: 'GET')]
 final class CategoryGetController extends AbstractController
 {
-    public function __construct(
-        private readonly CategoryFacadeInterface $facade,
-    ) {
+    public function __construct(private readonly CategoryFacadeInterface $facade,) {
     }
 
-    #[Get('/api/category/{id}', 'Category')]
-    #[RequestWithId]
-    #[OAGetCategoryResponse]
     #[AccessDeniedResponse]
+    #[Get('/api/category/{id}', 'Category')]
+    #[OAGetCategoryResponse]
+    #[RequestWithId]
     public function __invoke(CategoryGetRequest $request): JsonResponse
     {
         return new GetResponse($this->facade->getById(GetCategoryTransfer::fromArray($request->toArray())));

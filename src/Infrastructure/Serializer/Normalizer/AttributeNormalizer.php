@@ -15,11 +15,11 @@ final class AttributeNormalizer implements NormalizerInterface
         /* @var Attribute $object */
         return
             [
-                ParametersList::ID => (string)$object->getId(),
+                ParametersList::ID => (string) $object->getId(),
                 ParametersList::CODE => $object->getCode(),
-                ParametersList::NAME => (string)$object->getName(),
-                ParametersList::TYPE => (string)$object->getType(),
-                ParametersList::DESCRIPTION => (string)$object->getDescription(),
+                ParametersList::NAME => (string) $object->getName(),
+                ParametersList::TYPE => (string) $object->getType(),
+                ParametersList::DESCRIPTION => (string) $object->getDescription(),
                 ParametersList::CREATOR => $object->getCreator()->getSsoId(),
                 ParametersList::CREATED_AT => $object->getCreatedAt()->format(\DATE_ATOM),
                 ParametersList::UPDATED_AT => $object->getUpdatedAt()->format(\DATE_ATOM),

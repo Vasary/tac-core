@@ -29,17 +29,12 @@ final class ProductRepository implements ProductRepositoryInterface
             ->objectRepository
             ->createQueryBuilder('p')
             ->where('p.id = :id')
-            ->setParameter('id', (string)$id)
+            ->setParameter('id', (string) $id)
             ->getQuery()
             ->getOneOrNullResult();
     }
 
-    public function create(
-        I18N $name,
-        I18N $description,
-        User $creator,
-        Category $category,
-    ): Product {
+    public function create(I18N $name, I18N $description, User $creator, Category $category,): Product {
         return new Product($name, $description, $creator, $category);
     }
 

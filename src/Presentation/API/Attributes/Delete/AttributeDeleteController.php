@@ -19,15 +19,13 @@ use App\Shared\Transfer\DeleteAttributeTransfer;
 #[Route('/attributes/{id}', methods: 'DELETE')]
 final class AttributeDeleteController extends AbstractController
 {
-    public function __construct(
-        private readonly AttributeFacadeInterface $attributeFacade,
-    ) {
+    public function __construct(private readonly AttributeFacadeInterface $attributeFacade,) {
     }
 
+    #[AccessDeniedResponse]
     #[Delete('/api/attributes/{id}', 'Attributes')]
     #[RequestWithId]
     #[SuccessfullyDeletedResponse]
-    #[AccessDeniedResponse]
     public function __invoke(AttributeDeleteRequest $request): JsonResponse
     {
         $this->attributeFacade->delete(DeleteAttributeTransfer::fromArray($request->toArray()));

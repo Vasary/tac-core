@@ -15,9 +15,7 @@ final class StringCreator implements AttributeCreatorInterface
 {
     private const TYPE_NAME = 'string';
 
-    public function __construct(
-        private readonly AttributeValueRepositoryInterface $attributeValueRepository
-    ) {
+    public function __construct(private readonly AttributeValueRepositoryInterface $attributeValueRepository) {
     }
 
     public function create(

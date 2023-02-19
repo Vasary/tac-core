@@ -19,15 +19,13 @@ use App\Shared\Transfer\DeleteUnitTransfer;
 #[Route('/units/{id}', methods: 'DELETE')]
 final class UnitDeleteController extends AbstractController
 {
-    public function __construct(
-        private readonly UnitFacadeInterface $facade,
-    ) {
+    public function __construct(private readonly UnitFacadeInterface $facade,) {
     }
 
+    #[AccessDeniedResponse]
     #[Delete('/api/units/{id}', 'Units')]
     #[RequestWithId]
     #[SuccessfullyDeletedResponse]
-    #[AccessDeniedResponse]
     public function __invoke(UnitDeleteRequest $request): JsonResponse
     {
         $this->facade->delete(DeleteUnitTransfer::fromArray($request->toArray()));

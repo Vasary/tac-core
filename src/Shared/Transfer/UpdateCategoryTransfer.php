@@ -8,10 +8,7 @@ final class UpdateCategoryTransfer
 {
     use CreateFromTrait;
 
-    public function __construct(
-        private readonly string $id,
-        private readonly string $name,
-    ) {
+    public function __construct(private readonly string $id, private readonly string $name,) {
     }
 
     public function getId(): string

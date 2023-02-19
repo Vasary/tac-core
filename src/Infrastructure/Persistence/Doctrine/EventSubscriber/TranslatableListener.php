@@ -15,9 +15,7 @@ use ReflectionClass;
 
 final class TranslatableListener implements EventSubscriberInterface
 {
-    public function __construct(
-        private readonly TranslationAdapter $adapter,
-    ) {
+    public function __construct(private readonly TranslationAdapter $adapter,) {
     }
 
     public function getSubscribedEvents(): array

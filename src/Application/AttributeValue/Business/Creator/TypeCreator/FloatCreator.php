@@ -15,9 +15,7 @@ final class FloatCreator implements AttributeCreatorInterface
 {
     private const TYPE_NAME = 'float';
 
-    public function __construct(
-        private readonly AttributeValueRepositoryInterface $attributeValueRepository
-    ) {
+    public function __construct(private readonly AttributeValueRepositoryInterface $attributeValueRepository) {
     }
 
     public function create(
