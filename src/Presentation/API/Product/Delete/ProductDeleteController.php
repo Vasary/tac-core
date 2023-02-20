@@ -1,6 +1,6 @@
 <?php
 
-declare(strict_types=1);
+declare(strict_types = 1);
 
 namespace App\Presentation\API\Product\Delete;
 
@@ -17,7 +17,7 @@ use App\Presentation\API\Product\Delete\Response\DeleteResponse;
 use App\Shared\Transfer\DeleteProductTransfer;
 
 #[Route('/products/{id}', methods: 'DELETE')]
-class ProductDeleteController extends AbstractController
+final class ProductDeleteController extends AbstractController
 {
     public function __construct(private readonly ProductFacadeInterface $productFace)
     {
