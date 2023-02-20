@@ -44,10 +44,7 @@ COPY --from=builder /app/composer.json /app/composer.json
 COPY --from=builder /app/build/config.json /docker-entrypoint.d/.unit.conf.json
 COPY --from=builder /app/build/cmd.sh /cmd.sh
 
-RUN mkdir -p /app/var && \
-    mkdir -p /app/resource && \
-    chown www-data:www-data -R /app && \
-    apt update && \
+RUN apt update && \
     apt install libicu-dev sqlite3 libsqlite3-dev --no-install-recommends --no-install-suggests -y && \
     apt clean autoclean && \
     apt autoremove --yes && \
