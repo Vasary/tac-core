@@ -59,6 +59,32 @@ jobs:
       - name: Validate composer.lock
         run: composer validate --no-check-all --no-check-publish
 
+  cs:
+    name: code standard
+    needs: [artifact]
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: true
+    steps:
+      - uses: actions/download-artifact@master
+        with:
+          name: artifact
+          path: .
+
+      - name: Extracting package
+        run: |
+          tar xvfz artifact.tar.gz -C ../
+          rm artifact.tar.gz
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.2.1'
+          extensions: uopz redis pdo pdo_sqlite sockets intl
+
+      - name: Check coding standard compliance
+        run: vendor/bin/phpcs --standard=phpcs.xml
+
   security:
     needs: [ artifact ]
     runs-on: ubuntu-latest
@@ -112,7 +138,7 @@ jobs:
           file: resource/coverage.xml
 
   build:
-    needs: [ tests, security, validate ]
+    needs: [ tests, security, validate, cs ]
     runs-on: ubuntu-latest
     strategy:
       fail-fast: true
@@ -120,12 +146,12 @@ jobs:
       - name: Login to DockerHub Registry
         run: echo ${{ secrets.DOCKERHUB_TOKEN }} | docker login -u ${{ secrets.DOCKERHUB_USERNAME }} --password-stdin
 
+      - name: Checkout code
+        uses: actions/checkout@v3
+
       - name: Build unit container
         run: build/build-nginx-unit-base.sh
         shell: bash
-
-      - name: Checkout code
-        uses: actions/checkout@v3
 
       - name: Build the tagged Docker image
         run: docker build . --file build/Dockerfile --tag vasary/tac-core:latest
