@@ -42,7 +42,7 @@ RUN apt update && \
     docker-php-ext-install pdo pdo_sqlite sockets intl && \
     docker-php-ext-enable redis intl
 
-#HEALTHCHECK CMD curl --fail http://localhost/api || exit 1
+HEALTHCHECK CMD curl --fail http://localhost/api || exit 1
 
 CMD ["unitd", "--no-daemon", "--control", "unix:/var/run/control.unit.sock"]
 
