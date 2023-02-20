@@ -20,18 +20,6 @@ RUN composer install --no-ansi --no-dev --no-interaction --no-progress --optimiz
 
 FROM unit:1.29.0-php82
 
-ENV APP_ENV="production"
-ENV APP_SECRET=""
-
-ENV REDIS_HOST=""
-ENV REDIS_PORT=""
-
-ENV MQ_HOST=""
-ENV MQ_PORT=""
-ENV MQ_USER=""
-ENV MQ_PASSWORD=""
-ENV MQ_VHOST=""
-
 WORKDIR /app
 
 COPY --from=builder /app/bin /app/bin
