@@ -121,14 +121,7 @@ jobs:
         run: echo ${{ secrets.DOCKERHUB_TOKEN }} | docker login -u ${{ secrets.DOCKERHUB_USERNAME }} --password-stdin
 
       - name: Build unit container
-        run: |
-          git clone https://github.com/nginx/unit
-          cd unit
-          git checkout 1.29.0
-          cd pkg/docker
-          make build-php82 VERSION_php=8.2.1
-          cd ../../../
-          rm -rf unit
+        run: build/build-nginx-unit-base.sh
         shell: bash
 
       - name: Checkout code

@@ -1,4 +1,4 @@
-FROM php:8.2.1-fpm-alpine as builder
+FROM php:8.2.3-fpm-alpine as builder
 
 COPY --from=composer:latest /usr/bin/composer /usr/local/bin/composer
 
@@ -42,6 +42,7 @@ COPY --from=builder /app/src /app/src
 COPY --from=builder /app/vendor /app/vendor
 COPY --from=builder /app/composer.json /app/composer.json
 COPY --from=builder /app/build/config.json /docker-entrypoint.d/.unit.conf.json
+COPY --from=builder /app/build/cmd.sh /cmd.sh
 
 RUN mkdir -p /app/var && \
     mkdir -p /app/resource && \
@@ -56,6 +57,10 @@ RUN mkdir -p /app/var && \
     docker-php-ext-install pdo pdo_sqlite sockets intl && \
     docker-php-ext-enable redis intl
 
+#HEALTHCHECK CMD curl --fail http://localhost/api || exit 1
+
 CMD ["unitd", "--no-daemon", "--control", "unix:/var/run/control.unit.sock"]
+
+ENTRYPOINT ["/cmd.sh"]
 
 EXPOSE 80
