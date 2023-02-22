@@ -1,6 +1,6 @@
 <?php
 
-declare(strict_types=1);
+declare(strict_types = 1);
 
 namespace App\Application\HealthCheck\Communication\Plugins;
 
@@ -19,13 +19,13 @@ final class DoctrineConnectionCheckerPlugin implements HealthCheckerPluginInterf
 
     public function check(): Response
     {
-        if ($this->container->has('doctrine.orm.entity_manager') === false) {
+        if (false === $this->container->has('doctrine.orm.entity_manager')) {
             return new Response(self::CHECK_RESULT_NAME, false, 'Entity Manager Not Found.');
         }
 
         $entityManager = $this->container->get('doctrine.orm.entity_manager');
 
-        if ($entityManager === null) {
+        if (null === $entityManager) {
             return new Response(self::CHECK_RESULT_NAME, false, 'Entity Manager Not Found.');
         }
 
