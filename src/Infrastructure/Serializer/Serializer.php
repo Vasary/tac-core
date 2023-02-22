@@ -8,6 +8,7 @@ use App\Infrastructure\Serializer\Normalizer\AttributeNormalizer;
 use App\Infrastructure\Serializer\Normalizer\AttributeValueNormalizer;
 use App\Infrastructure\Serializer\Normalizer\CategoryNormalizer;
 use App\Infrastructure\Serializer\Normalizer\GlossaryNormalizer;
+use App\Infrastructure\Serializer\Normalizer\HealthCheckResponseNormalizer;
 use App\Infrastructure\Serializer\Normalizer\ProductNormalizer;
 use App\Infrastructure\Serializer\Normalizer\UnitNormalizer;
 use App\Infrastructure\Serializer\Normalizer\UUIDNormalizer;
@@ -63,6 +64,7 @@ final class Serializer implements SerializerInterface
             new UUIDNormalizer(),
             new CategoryNormalizer(),
             new GlossaryNormalizer(),
+            new HealthCheckResponseNormalizer(),
             new ObjectNormalizer(),
         ];
     }

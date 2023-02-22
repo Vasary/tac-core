@@ -22,6 +22,9 @@
         <testsuite name="Application">
             <directory>tests/Application</directory>
         </testsuite>
+        <testsuite name="HealthCheck">
+            <directory>tests/Presentation/HealthCheck</directory>
+        </testsuite>
     </testsuites>
     <coverage processUncoveredFiles="true">
         <include>

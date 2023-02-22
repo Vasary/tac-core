@@ -80,3 +80,18 @@ services:
     Auth0\SDK\Auth0:
         arguments:
             $configuration: '%sso%'
+
+    App\Application\HealthCheck\Communication\Plugins\DoctrineConnectionCheckerPlugin:
+        arguments:
+            $container: '@service_container'
+
+    App\Application\HealthCheck\Communication\Plugins\RabbitMQConnectionCheckerPlugin:
+        arguments:
+            $channel: '@PhpAmqpLib\Connection\AMQPConnection'
+
+    App\Application\HealthCheck\Business\Checker\Checker:
+        arguments:
+            $checkers:
+                - '@App\Application\HealthCheck\Communication\Plugins\DoctrineConnectionCheckerPlugin'
+                - '@App\Application\HealthCheck\Communication\Plugins\RabbitMQConnectionCheckerPlugin'
+

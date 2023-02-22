@@ -3,6 +3,12 @@ api:
   type: attribute
   prefix: /api
 
+health:
+  resource: ../src/Presentation/HealthCheck
+  type: attribute
+  prefix: /health
+
+
 when@develop:
   web_profiler_wdt:
     resource: '@WebProfilerBundle/Resources/config/routing/wdt.xml'

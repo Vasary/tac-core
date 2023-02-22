@@ -30,7 +30,7 @@ COPY --from=builder /app/src /app/src
 COPY --from=builder /app/vendor /app/vendor
 COPY --from=builder /app/composer.json /app/composer.json
 COPY --from=builder /app/build/config.json /docker-entrypoint.d/.unit.conf.json
-COPY --from=builder /app/build/cmd.sh /cmd.sh
+COPY --from=builder /app/build/prepare.sh /docker-entrypoint.d/prepare.sh
 
 RUN apt update && \
     apt install libicu-dev sqlite3 libsqlite3-dev --no-install-recommends --no-install-suggests -y && \
@@ -42,10 +42,6 @@ RUN apt update && \
     docker-php-ext-install pdo pdo_sqlite sockets intl && \
     docker-php-ext-enable redis intl
 
-HEALTHCHECK CMD curl --fail http://localhost/api || exit 1
-
-CMD ["unitd", "--no-daemon", "--control", "unix:/var/run/control.unit.sock"]
-
-ENTRYPOINT ["/cmd.sh"]
+HEALTHCHECK CMD curl --fail http://localhost/health/check || exit 1
 
 EXPOSE 80

@@ -53,4 +53,8 @@ final class ParametersList
     public const TOTAL = 'total';
 
     public const ITEMS = 'items';
+
+    public const SERVICE = 'service';
+
+    public const RESULT = 'result';
 }
