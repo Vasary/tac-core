@@ -1,0 +1,94 @@
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: tac-a-cart
+---
+kind: ConfigMap
+apiVersion: v1
+metadata:
+  name: core-configmap
+  namespace: tac-a-cart
+data:
+  APP_SECRET: c4ca4238a0b923820dcc509a6f75849b
+  REDIS_HOST: ''
+  REDIS_PORT: ''
+
+  MQ_HOST: ''
+  MQ_PORT: ''
+  MQ_USER: ''
+  MQ_PASSWORD: ''
+  MQ_VHOST: '/'
+
+  SSO_DOMAIN: tac01-dev.eu.auth0.com
+  SSO_CLIENT_ID: Ti0NM3jTnugYHIGeqzsowzoHLLUwTpxB
+  SSO_SECRET: GtDua7dVMVIw75z7Q3slKKb-XOQp-laPsu8n-iFkoN78jckuwNH24vut7A4L1mto
+  SSO_COOKIE_SECRET: wQz7jYeu4ewP7uHp
+  SSO_AUDIENCE: https://tac01-dev.eu.auth0.com/api/v2/
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: core-service
+  namespace: tac-a-cart
+spec:
+  ports:
+    - name: core-service-port
+      port: 8080
+      targetPort: 80
+  selector:
+    app: core
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: core
+  namespace: tac-a-cart
+spec:
+  selector:
+    matchLabels:
+      app: core
+  template:
+    metadata:
+      labels:
+        app: core
+    spec:
+      containers:
+        - name: core
+          image: vasary/tac-core:latest
+          envFrom:
+            - configMapRef:
+                name: core-configmap
+          ports:
+            - containerPort: 80
+          resources:
+            requests:
+              memory: "128Mi"
+              cpu: "250m"
+            limits:
+              memory: "128Mi"
+              cpu: "250m"
+          readinessProbe:
+            httpGet:
+              path: /health/check
+              port: 80
+          livenessProbe:
+            httpGet:
+              path: /health/check
+              port: 80
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: persistent-volume-claim
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 100M
+  selector:
+    matchLabels:
+      pv: local
+

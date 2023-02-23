@@ -14,3 +14,6 @@ services:
 
   Auth0\SDK\Auth0:
     public: true
+
+  App\Application\HealthCheck\Business\Checker\CheckerInterface:
+    public: true
