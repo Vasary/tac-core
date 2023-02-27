@@ -18,8 +18,8 @@ chmod 0777 -R /app/var > /dev/null && stat "Fix var directory chown" "OK" || sta
 
 touch /app/resource/events.log > /dev/null && stat "Events.log created" "OK" || stat "Failed to create events.log" "FAIL"
 
-/app/bin/console cache:warmup > /dev/null && stat "Warmup cache" "OK" || stat "Failed to warmup cache" "FAIL"
-/app/bin/console do:mi:mi --no-interaction > /dev/null && stat "Run migrations" "OK" || stat "Failed to run migrations" "FAIL"
+#/app/bin/console cache:warmup > /dev/null && stat "Warmup cache" "OK" || stat "Failed to warmup cache" "FAIL"
+#/app/bin/console do:mi:mi --no-interaction > /dev/null && stat "Run migrations" "OK" || stat "Failed to run migrations" "FAIL"
 
-printf "Starting PHP-FPM daemon\n"
+printf "\n\nStarting PHP-FPM daemon\n\n"
 php-fpm --daemonize
