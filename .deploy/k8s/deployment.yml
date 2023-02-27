@@ -2,40 +2,92 @@
 apiVersion: v1
 kind: Namespace
 metadata:
-  name: tac-a-cart
+  name: take-a-cart
 ---
 kind: ConfigMap
 apiVersion: v1
 metadata:
   name: core-configmap
-  namespace: tac-a-cart
+  namespace: take-a-cart
+  labels:
+    tier: stage
 data:
-  APP_SECRET: c4ca4238a0b923820dcc509a6f75849b
-  REDIS_HOST: ''
-  REDIS_PORT: ''
+  .env: |
+    APP_ENV: 'production'
+    APP_SECRET: 'c4ca4238a0b923820dcc509a6f75849b'
+    MQ_HOST: 'amqp.take-a-cart'
+    MQ_PORT: '5672'
+    MQ_USER: 'guest'
+    MQ_PASSWORD: 'guest'
+    MQ_VHOST: '/'
+    SSO_DOMAIN: 'tac01-dev.eu.auth0.com'
+    SSO_CLIENT_ID: 'Ti0NM3jTnugYHIGeqzsowzoHLLUwTpxB'
+    SSO_SECRET: 'GtDua7dVMVIw75z7Q3slKKb-XOQp-laPsu8n-iFkoN78jckuwNH24vut7A4L1mto'
+    SSO_COOKIE_SECRET: 'wQz7jYeu4ewP7uHp'
+    SSO_AUDIENCE: 'https://tac01-dev.eu.auth0.com/api/v2/'
 
-  MQ_HOST: ''
-  MQ_PORT: ''
-  MQ_USER: ''
-  MQ_PASSWORD: ''
-  MQ_VHOST: '/'
-
-  SSO_DOMAIN: tac01-dev.eu.auth0.com
-  SSO_CLIENT_ID: Ti0NM3jTnugYHIGeqzsowzoHLLUwTpxB
-  SSO_SECRET: GtDua7dVMVIw75z7Q3slKKb-XOQp-laPsu8n-iFkoN78jckuwNH24vut7A4L1mto
-  SSO_COOKIE_SECRET: wQz7jYeu4ewP7uHp
-  SSO_AUDIENCE: https://tac01-dev.eu.auth0.com/api/v2/
+  nginx.conf: |
+    user nginx;
+    worker_processes auto;
+  
+    error_log /var/log/nginx/error.log notice;
+    pid /var/run/nginx.pid;
+  
+  
+    events {
+      worker_connections  1024;
+    }
+  
+    http {
+      include /etc/nginx/mime.types;
+      default_type application/octet-stream;
+  
+      log_format  main  '$remote_addr - $remote_user [$time_local] "$request" '
+        '$status $body_bytes_sent "$http_referer" '
+        '"$http_user_agent" "$http_x_forwarded_for"';
+  
+      access_log /var/log/nginx/access.log main;
+      error_log /var/log/nginx/error.log debug;
+  
+      sendfile on;
+      keepalive_timeout 65;
+  
+      server {
+        listen 80;
+        server_name _;
+  
+        access_log /var/log/nginx/access.log main;
+        error_log /var/log/nginx/error.log debug;
+  
+        location ~* /favicon\.ico$ {
+          root /app/public;
+          try_files /favicon.ico =404;
+        }
+  
+        location / {
+          fastcgi_pass 127.0.0.1:9000;
+          fastcgi_split_path_info ^(.+\.php)(/.*)$;
+          include fastcgi_params;
+          fastcgi_param SCRIPT_FILENAME /app/public/index.php;
+          fastcgi_param DOCUMENT_ROOT $realpath_root;
+        }
+  
+        location ~ \.php$ {
+          return 404;
+        }
+      }
+    }
 
 ---
 apiVersion: v1
 kind: Service
 metadata:
   name: core-service
-  namespace: tac-a-cart
+  namespace: take-a-cart
 spec:
   ports:
     - name: core-service-port
-      port: 8080
+      port: 80
       targetPort: 80
   selector:
     app: core
@@ -44,7 +96,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: core
-  namespace: tac-a-cart
+  namespace: take-a-cart
 spec:
   selector:
     matchLabels:
@@ -54,29 +106,40 @@ spec:
       labels:
         app: core
     spec:
+      volumes:
+        - name: core-configmap-volume
+          configMap:
+            name: core-configmap
       containers:
-        - name: core
-          image: vasary/tac-core:latest
-          envFrom:
-            - configMapRef:
-                name: core-configmap
+        - name: nginx
+          image: nginx:1.23-alpine-slim
           ports:
             - containerPort: 80
-          resources:
-            requests:
-              memory: "128Mi"
-              cpu: "250m"
-            limits:
-              memory: "128Mi"
-              cpu: "250m"
-          readinessProbe:
-            httpGet:
-              path: /health/check
-              port: 80
-          livenessProbe:
-            httpGet:
-              path: /health/check
-              port: 80
+          volumeMounts:
+            - name: core-configmap-volume
+              mountPath: /etc/nginx/nginx.conf
+              subPath: nginx.conf
+        - name: php-fpm
+          image: php:8.2.3-alpine
+          volumeMounts:
+            - name: core-configmap-volume
+              mountPath: /app/.env
+              subPath: .env
+#          resources:
+#            requests:
+#              memory: "512Mi"
+#              cpu: "1000m"
+#            limits:
+#              memory: "512Mi"
+#              cpu: "1000m"
+#          readinessProbe:
+#            httpGet:
+#              path: /health/check
+#              port: 80
+#          livenessProbe:
+#            httpGet:
+#              path: /health/check
+#              port: 80
 ---
 apiVersion: v1
 kind: PersistentVolumeClaim
@@ -91,4 +154,3 @@ spec:
   selector:
     matchLabels:
       pv: local
-

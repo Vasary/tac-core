@@ -9,12 +9,11 @@ COPY . .
 RUN set -ex && \
     apk add --no-cache --virtual .php-deps make && \
     apk add --no-cache --virtual .build-deps $PHPIZE_DEPS zlib-dev icu-dev g++ && \
-    apk add --update --no-cache icu sqlite-dev sqlite pcre-dev linux-headers
-
-RUN pecl install redis xdebug uopz pcov && \
-        docker-php-ext-configure intl && \
-        docker-php-ext-install pdo pdo_sqlite sockets intl && \
-        docker-php-ext-enable redis xdebug uopz intl pcov
+    apk add --update --no-cache icu sqlite-dev sqlite pcre-dev linux-headers && \
+    pecl install redis xdebug uopz pcov && \
+    docker-php-ext-configure intl && \
+    docker-php-ext-install pdo pdo_sqlite sockets intl && \
+    docker-php-ext-enable redis xdebug uopz intl pcov
 
 RUN composer install --no-ansi --no-dev --no-interaction --no-progress --optimize-autoloader --prefer-dist
 
@@ -31,11 +30,10 @@ COPY --from=builder /app/vendor /app/vendor
 COPY --from=builder /app/composer.json /app/composer.json
 COPY --from=builder /app/build/entrypoint.sh /entrypoint.sh
 
-RUN apt update && \
-    apt install libicu-dev sqlite3 libsqlite3-dev --no-install-recommends --no-install-suggests -y && \
-    apt clean autoclean && \
-    apt autoremove --yes && \
-    rm -rf /var/lib/{apt,dpkg,cache,log}/ && \
+RUN set -ex && \
+    apk add --no-cache --virtual .php-deps make && \
+    apk add --no-cache --virtual .build-deps $PHPIZE_DEPS zlib-dev icu-dev g++ && \
+    apk add --update --no-cache icu sqlite-dev sqlite pcre-dev linux-headers && \
     pecl install redis && \
     docker-php-ext-configure intl && \
     docker-php-ext-install pdo pdo_sqlite sockets intl && \
