@@ -17,3 +17,6 @@ chown www-data:www-data -R /app >/dev/null && stat "Fix application directory pe
 
 /app/bin/console cache:warmup >/dev/null && stat "Warmup cache" "OK" || stat "Failed to warmup cache" "FAIL"
 /app/bin/console do:mi:mi --no-interaction >/dev/null && stat "Run migrations" "OK" || stat "Failed to run migrations" "FAIL"
+
+printf "\n\nStarting PHP-FPM daemon\n\n"
+php-fpm --daemonize
