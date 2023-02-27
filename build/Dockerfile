@@ -38,7 +38,7 @@ RUN set -ex && \
     docker-php-ext-configure intl && \
     docker-php-ext-install pdo pdo_sqlite sockets intl && \
     docker-php-ext-enable redis intl && \
-    chwon www-data:www-data -R /app
+    chown www-data:www-data -R /app
 
 HEALTHCHECK CMD curl --fail http://localhost/health/check || exit 1
 ENTRYPOINT ["/entrypoint.sh"]
