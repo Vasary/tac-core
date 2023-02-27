@@ -41,7 +41,7 @@ jobs:
           retention-days: 1
 
   validate:
-    needs: [ artifact ]
+    needs: [artifact]
     runs-on: ubuntu-latest
     strategy:
       fail-fast: true
@@ -86,7 +86,7 @@ jobs:
         run: vendor/bin/phpcs --standard=phpcs.xml
 
   security:
-    needs: [ artifact ]
+    needs: [artifact]
     runs-on: ubuntu-latest
     strategy:
       fail-fast: true
@@ -107,7 +107,7 @@ jobs:
           composer-lock: './composer.lock'
 
   tests:
-    needs: [ artifact ]
+    needs: [artifact]
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
@@ -138,7 +138,7 @@ jobs:
           file: resource/coverage.xml
 
   build:
-    needs: [ tests, security, validate, cs ]
+    needs: [tests, security, validate, cs]
     runs-on: ubuntu-latest
     strategy:
       fail-fast: true
@@ -148,10 +148,6 @@ jobs:
 
       - name: Checkout code
         uses: actions/checkout@v3
-
-      - name: Build unit container
-        run: build/build-nginx-unit-base.sh
-        shell: bash
 
       - name: Build the tagged Docker image
         run: docker build . --file build/Dockerfile --tag vasary/tac-core:latest

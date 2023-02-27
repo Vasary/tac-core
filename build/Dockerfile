@@ -18,7 +18,7 @@ RUN pecl install redis xdebug uopz pcov && \
 
 RUN composer install --no-ansi --no-dev --no-interaction --no-progress --optimize-autoloader --prefer-dist
 
-FROM unit:1.29.0-php82
+FROM php:8.2.3-fpm-alpine
 
 WORKDIR /app
 
