@@ -1,0 +1,36 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: {{ include ".helm.fullname" . }}-migration
+  labels:
+    {{- include ".helm.labels" . | nindent 4 }}
+spec:
+  template:
+    metadata:
+      annotations:
+        "helm.sh/hook": "pre-install,pre-upgrade"
+        "helm.sh/hook-weight": "5"
+        "helm.sh/hook-delete-policy": "before-hook-creation"
+      labels:
+        {{- include ".helm.selectorLabels" . | nindent 8 }}
+    spec:
+      volumes:
+        - name: config
+          configMap:
+            name: {{ include ".helm.fullname" . }}-configmap
+        - name: resource
+          persistentVolumeClaim:
+            claimName: {{ include ".helm.fullname" . }}-resource-volume
+      containers:
+        - name: migration
+          image: "{{ .Values.image.app.repository }}:{{ .Values.image.app.tag }}"
+          imagePullPolicy: {{ .Values.image.app.pullPolicy }}
+          volumeMounts:
+            - mountPath: "/app/resource"
+              name: resource
+            - name: config
+              mountPath: /app/.env
+              subPath: .env
+          command: ["/app/bin/console"]
+          args: ["doctrine:migrations:migrate", "--no-interaction"]
+      restartPolicy: Never

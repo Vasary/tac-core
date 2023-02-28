@@ -40,6 +40,7 @@ RUN set -ex && \
     docker-php-ext-enable redis intl && \
     chown www-data:www-data -R /app
 
-HEALTHCHECK CMD curl --fail http://localhost/health/check || exit 1
+CMD ["php-fpm"]
 ENTRYPOINT ["/entrypoint.sh"]
+
 EXPOSE 9000

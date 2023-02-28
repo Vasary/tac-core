@@ -1,0 +1,81 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include ".helm.fullname" . }}
+  labels:
+    {{- include ".helm.labels" . | nindent 4 }}
+spec:
+  selector:
+    matchLabels:
+      {{- include ".helm.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      {{- with .Values.podAnnotations }}
+      annotations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      labels:
+        {{- include ".helm.selectorLabels" . | nindent 8 }}
+    spec:
+      {{- with .Values.imagePullSecrets }}
+      imagePullSecrets:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      securityContext:
+        {{- toYaml .Values.podSecurityContext | nindent 8 }}
+      volumes:
+        - name: config
+          configMap:
+            name: {{ include ".helm.fullname" . }}-configmap
+        - name: resource
+          persistentVolumeClaim:
+            claimName: {{ include ".helm.fullname" . }}-resource-volume
+      containers:
+        - name: sidecar
+          securityContext:
+            {{- toYaml .Values.securityContext.sidecar | nindent 12}}
+          image: "{{ .Values.image.sidecar.repository }}:{{ .Values.image.sidecar.tag }}"
+          imagePullPolicy: {{ .Values.image.sidecar.pullPolicy }}
+          resources:
+            {{- toYaml .Values.resources.sidecar | nindent 12}}
+          volumeMounts:
+            - name: config
+              mountPath: /etc/nginx/nginx.conf
+              subPath: nginx.conf
+          readinessProbe:
+            httpGet:
+              path: /health/check
+              port: http
+          livenessProbe:
+            httpGet:
+              path: /health/check
+              port: http
+          ports:
+            - name: http
+              containerPort: {{ .Values.service.port }}
+              protocol: TCP
+        - name: php-fpm
+          securityContext:
+            {{- toYaml .Values.securityContext.app | nindent 12 }}
+          image: "{{ .Values.image.app.repository }}:{{ .Values.image.app.tag }}"
+          imagePullPolicy: {{ .Values.image.app.pullPolicy }}
+          volumeMounts:
+            - mountPath: "/app/resource"
+              name: resource
+            - name: config
+              mountPath: /app/.env
+              subPath: .env
+          resources:
+            {{- toYaml .Values.resources.app | nindent 12 }}
+      {{- with .Values.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}

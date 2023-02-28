@@ -1,0 +1,73 @@
+---
+kind: ConfigMap
+apiVersion: v1
+metadata:
+  name: {{ include ".helm.fullname" . }}-configmap
+  labels:
+    {{- include ".helm.labels" . | nindent 4 }}
+data:
+  .env: |
+    APP_ENV=production
+    APP_SECRET=c4ca4238a0b923820dcc509a6f75849b
+    MQ_HOST=amqp.take-a-cart
+    MQ_PORT=5672
+    MQ_USER=guest
+    MQ_PASSWORD=guest
+    MQ_VHOST=/
+    SSO_DOMAIN=tac01-dev.eu.auth0.com
+    SSO_CLIENT_ID=Ti0NM3jTnugYHIGeqzsowzoHLLUwTpxB
+    SSO_SECRET=GtDua7dVMVIw75z7Q3slKKb-XOQp-laPsu8n-iFkoN78jckuwNH24vut7A4L1mto
+    SSO_COOKIE_SECRET=wQz7jYeu4ewP7uHp
+    SSO_AUDIENCE=https://tac01-dev.eu.auth0.com/api/v2/
+
+  nginx.conf: |
+    user nginx;
+    worker_processes auto;
+
+    error_log /var/log/nginx/error.log notice;
+    pid /var/run/nginx.pid;
+
+
+    events {
+      worker_connections  1024;
+    }
+
+    http {
+      include /etc/nginx/mime.types;
+      default_type application/octet-stream;
+
+      log_format  main  '$remote_addr - $remote_user [$time_local] "$request" '
+        '$status $body_bytes_sent "$http_referer" '
+        '"$http_user_agent" "$http_x_forwarded_for"';
+
+      access_log /var/log/nginx/access.log main;
+      error_log /var/log/nginx/error.log debug;
+
+      sendfile on;
+      keepalive_timeout 65;
+
+      server {
+        listen 80;
+        server_name _;
+
+        access_log /var/log/nginx/access.log main;
+        error_log /var/log/nginx/error.log debug;
+
+        location ~* /favicon\.ico$ {
+          root /app/public;
+          try_files /favicon.ico =404;
+        }
+
+        location / {
+          fastcgi_pass 127.0.0.1:9000;
+          fastcgi_split_path_info ^(.+\.php)(/.*)$;
+          include fastcgi_params;
+          fastcgi_param SCRIPT_FILENAME /app/public/index.php;
+          fastcgi_param DOCUMENT_ROOT $realpath_root;
+        }
+
+        location ~ \.php$ {
+          return 404;
+        }
+      }
+    }

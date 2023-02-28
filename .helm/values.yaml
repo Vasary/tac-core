@@ -1,0 +1,32 @@
+image:
+  sidecar:
+    repository: nginx
+    pullPolicy: Always
+    tag: 1.23-alpine-slim
+
+  app:
+    repository: vasary/tac-core
+    pullPolicy: Always
+    tag: latest
+
+imagePullSecrets: []
+nameOverride: "inventory"
+fullnameOverride: "inventory"
+
+service:
+  type: ClusterIP
+  port: 80
+
+resources:
+  sidecar: {}
+  app: {}
+
+securityContext:
+  sidecar: {}
+  app: {}
+
+nodeSelector: {}
+tolerations: []
+affinity: {}
+podAnnotations: {}
+podSecurityContext: {}
