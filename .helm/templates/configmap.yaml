@@ -6,20 +6,6 @@ metadata:
   labels:
     {{- include ".helm.labels" . | nindent 4 }}
 data:
-  .env: |
-    APP_ENV=production
-    APP_SECRET=c4ca4238a0b923820dcc509a6f75849b
-    MQ_HOST=amqp.take-a-cart
-    MQ_PORT=5672
-    MQ_USER=guest
-    MQ_PASSWORD=guest
-    MQ_VHOST=/
-    SSO_DOMAIN=tac01-dev.eu.auth0.com
-    SSO_CLIENT_ID=Ti0NM3jTnugYHIGeqzsowzoHLLUwTpxB
-    SSO_SECRET=GtDua7dVMVIw75z7Q3slKKb-XOQp-laPsu8n-iFkoN78jckuwNH24vut7A4L1mto
-    SSO_COOKIE_SECRET=wQz7jYeu4ewP7uHp
-    SSO_AUDIENCE=https://tac01-dev.eu.auth0.com/api/v2/
-
   nginx.conf: |
     user nginx;
     worker_processes auto;

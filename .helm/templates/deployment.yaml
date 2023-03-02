@@ -17,10 +17,6 @@ spec:
       labels:
         {{- include ".helm.selectorLabels" . | nindent 8 }}
     spec:
-      {{- with .Values.imagePullSecrets }}
-      imagePullSecrets:
-        {{- toYaml . | nindent 8 }}
-      {{- end }}
       securityContext:
         {{- toYaml .Values.podSecurityContext | nindent 8 }}
       volumes:
@@ -59,12 +55,11 @@ spec:
             {{- toYaml .Values.securityContext.app | nindent 12 }}
           image: "{{ .Values.image.app.repository }}:{{ .Values.image.app.tag }}"
           imagePullPolicy: {{ .Values.image.app.pullPolicy }}
+          env:
+            {{- include ".helm.variables" . | nindent 12 }}
           volumeMounts:
             - mountPath: "/app/resource"
               name: resource
-            - name: config
-              mountPath: /app/.env
-              subPath: .env
           resources:
             {{- toYaml .Values.resources.app | nindent 12 }}
       {{- with .Values.nodeSelector }}

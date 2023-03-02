@@ -51,12 +51,15 @@ app.kubernetes.io/instance: {{ .Release.Name }}
 {{- end }}
 
 {{/*
-Create the name of the service account to use
+PHP container environment variables
 */}}
-{{- define ".helm.serviceAccountName" -}}
-{{- if .Values.serviceAccount.create }}
-{{- default (include ".helm.fullname" .) .Values.serviceAccount.name }}
-{{- else }}
-{{- default "default" .Values.serviceAccount.name }}
+{{- define ".helm.variables" -}}
+{{- $secretName := .Values.environment.secret.name -}}
+{{- range $variable, $secretKey := .Values.environment.variables }}
+  - name: {{ $variable }}
+    valueFrom:
+        secretKeyRef:
+            name: {{ $secretName }}
+            key: {{ $secretKey }}
 {{- end }}
 {{- end }}

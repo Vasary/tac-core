@@ -9,26 +9,31 @@ image:
     pullPolicy: Always
     tag: latest
 
-imagePullSecrets: []
 nameOverride: "inventory"
 fullnameOverride: "inventory"
 
 ingress:
-  enabled: false
-  className: nginx
-  annotations:
-    kubernetes.io/ingress.class: nginx
-    kubernetes.io/tls-acme: "true"
-  hosts:
-    - host: inventory.tac.com
-      paths:
-        - path: /
-          pathType: ImplementationSpecific
-  tls: []
+  domain: inventory.tac.com
 
 service:
   type: ClusterIP
   port: 80
+
+environment:
+  secret:
+    name: inventory
+  variables:
+    APP_SECRET: app_secret
+    MQ_HOST: amqp_host
+    MQ_PORT: amqp_port
+    MQ_USER: amqp_user
+    MQ_PASSWORD: amqp_password
+    MQ_VHOST: amqp_vhost
+    SSO_DOMAIN: sso_domain
+    SSO_CLIENT_ID: sso_client_id
+    SSO_SECRET: sso_secret
+    SSO_COOKIE_SECRET: sso_cookie_secret
+    SSO_AUDIENCE: sso_cookie_audience
 
 resources:
   sidecar: {}

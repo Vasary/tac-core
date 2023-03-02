@@ -15,9 +15,6 @@ spec:
         {{- include ".helm.selectorLabels" . | nindent 8 }}
     spec:
       volumes:
-        - name: config
-          configMap:
-            name: {{ include ".helm.fullname" . }}-configmap
         - name: resource
           persistentVolumeClaim:
             claimName: {{ include ".helm.fullname" . }}-resource-volume
@@ -25,12 +22,11 @@ spec:
         - name: migration
           image: "{{ .Values.image.app.repository }}:{{ .Values.image.app.tag }}"
           imagePullPolicy: {{ .Values.image.app.pullPolicy }}
+          env:
+            {{- include ".helm.variables" . | nindent 12 }}
           volumeMounts:
             - mountPath: "/app/resource"
               name: resource
-            - name: config
-              mountPath: /app/.env
-              subPath: .env
           command: ["/app/bin/console"]
           args: ["doctrine:migrations:migrate", "--no-interaction"]
       restartPolicy: Never
